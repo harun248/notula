@@ -1,2 +1,3 @@
+include ':notulaclient'
 include ':app'
 rootProject.name = "notula"

@@ -1,4 +1,4 @@
-package com.alrosyid.notula.ui.home;
+package com.alrosyid.notula.fragment.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

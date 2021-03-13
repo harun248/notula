@@ -1,4 +1,4 @@
-package com.alrosyid.notula.ui.gallery;
+package com.alrosyid.notula.fragment.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

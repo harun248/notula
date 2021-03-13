@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.alrosyid.notula.fragment.gallery.GalleryFragment"
+        android:id="@+id/nav_notula"
+        android:name="com.alrosyid.notula.fragment.notula.NotulaFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_notula" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.alrosyid.notula.fragment.slideshow.SlideshowFragment"
+        android:id="@+id/nav_dokumentasi"
+        android:name="com.alrosyid.notula.fragment.dokumentasi.DokumentasiFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_dokumentasi" />
 </navigation>

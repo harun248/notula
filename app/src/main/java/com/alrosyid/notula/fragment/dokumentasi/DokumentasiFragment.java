@@ -1,4 +1,4 @@
-package com.alrosyid.notula.fragment.slideshow;
+package com.alrosyid.notula.fragment.dokumentasi;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.alrosyid.notula.R;
 
-public class SlideshowFragment extends Fragment {
+public class DokumentasiFragment extends Fragment {
 
     private SlideshowViewModel slideshowViewModel;
 
@@ -22,7 +22,7 @@ public class SlideshowFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
                 ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        View root = inflater.inflate(R.layout.fragment_dokumentasi, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

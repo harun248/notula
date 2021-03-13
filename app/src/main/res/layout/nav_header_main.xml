@@ -16,15 +16,16 @@
    <TableLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_marginTop="10dp">
+       android:layout_marginTop="10dp"
+       android:layout_marginBottom="10dp">
        <TableRow>
            <ImageView
                android:id="@+id/imageView"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
                android:contentDescription="@string/nav_header_desc"
                android:paddingTop="@dimen/nav_header_vertical_spacing"
-               app:srcCompat="@drawable/ic_baseline_assignment_24"
+               app:srcCompat="@drawable/icon_orange"
                />
 
            <TextView
@@ -40,6 +41,8 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:paddingTop="@dimen/nav_header_vertical_spacing"
+               android:layout_gravity="center_vertical"
+               android:layout_marginLeft="20dp"
                android:textColor="@color/colorBlack"
                android:text="Notula"
                android:textSize="18dp"

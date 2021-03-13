@@ -1,96 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingLeft="50dp"
-    android:paddingRight="50dp"
-    android:layout_height="match_parent">
-
-    <TextView
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Notula"
-        android:textSize="32sp"
-        android:textColor="@color/colorPrimary"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="80dp"/>
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/round_cropped"
+            tools:ignore="MissingConstraints" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/txtLayoutEmailSignIn"
-        android:layout_marginBottom="6dp"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <LinearLayout
+            android:id="@+id/form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtEmailSignIn"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:textSize="15sp"/>
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/icon"
+                android:layout_marginTop="20dp"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_margin="30dp"
+                android:elevation="5dp"
+                android:padding="20dp"
+                android:background="@drawable/round_white"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center_horizontal"
+                    android:text="Notula"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="32sp" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLayoutEmailSignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/txtLayoutPasswordSignIn"
-        android:layout_marginBottom="30dp"
-        app:passwordToggleEnabled="true"
-        android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtEmailSignIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textSize="15sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtPasswordSignIn"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textSize="15sp"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:text="Sign in"
-        android:id="@+id/btnSignIn"
-        android:background="@drawable/btn_round"
-        android:textColor="#FFF"
-        android:layout_marginBottom="70dp"
-        android:textSize="17dp"
-        android:textAllCaps="false"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dont have account?"
-            android:layout_marginRight="6dp"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign up"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/txtSignUp"
-            android:layout_marginRight="6dp"
-            android:visibility="gone"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLayoutPasswordSignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:passwordToggleEnabled="true">
 
-</LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtPasswordSignIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textSize="15sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtForgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Lupa Password"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/btnSignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/round"
+                    android:text="Sign in"
+                    android:textAllCaps="false"
+                    android:textColor="#FFF"
+                    android:textSize="17dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:text="Belum Punya Akun ? " />
+
+                    <TextView
+                        android:id="@+id/txtSignUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:text="Daftar"
+                        android:textColor="@color/colorPrimary" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="-100dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/round_cropped_rotate"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</ScrollView>
 
 
 

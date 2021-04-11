@@ -1,4 +1,4 @@
-package com.alrosyid.notula.activity;
+package com.alrosyid.notula.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

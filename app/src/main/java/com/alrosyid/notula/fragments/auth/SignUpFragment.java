@@ -1,13 +1,9 @@
-package com.alrosyid.notula.fragment.auth;
+package com.alrosyid.notula.fragments.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,10 +13,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activity.AuthActivity;
-import com.alrosyid.notula.activity.MainActivity;
-import com.alrosyid.notula.activity.TestActivity;
+import com.alrosyid.notula.activities.AuthActivity;
+import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.api.Constant;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,46 +35,69 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+public class SignUpFragment extends Fragment {
 
-public class SignInFragment extends Fragment {
     private View view;
-    private TextInputLayout layoutEmail,layoutPassword;
-    private TextInputEditText txtEmail,txtPassword;
-    private Button btnSignIn;
-    private TextView txtSignUp;
+    private TextInputLayout layoutName,layoutEmail,layoutPassword,layoutConfirm;
+    private TextInputEditText txtName,txtEmail,txtPassword,txtConfirm;
+    private TextView txtSignIn;
+    private Button btnSignUp;
     private ProgressDialog dialog;
 
-    public SignInFragment(){}
+    public SignUpFragment(){}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_sign_in,container,false);
+        view = inflater.inflate(R.layout.fragment_sign_up,container,false);
         init();
         return view;
     }
 
     private void init() {
-        layoutPassword = view.findViewById(R.id.txtLayoutPasswordSignIn);
-        layoutEmail = view.findViewById(R.id.txtLayoutEmailSignIn);
-        txtPassword = view.findViewById(R.id.txtPasswordSignIn);
-        txtEmail = view.findViewById(R.id.txtEmailSignIn);
-        txtSignUp = view.findViewById(R.id.txtSignUp);
-        btnSignIn = view.findViewById(R.id.btnSignIn);
+        layoutName = view.findViewById(R.id.txtLayoutName);
+        layoutPassword = view.findViewById(R.id.txtLayoutPasswordSignUp);
+        layoutEmail = view.findViewById(R.id.txtLayoutEmailSignUp);
+        layoutConfirm = view.findViewById(R.id.txtLayoutConfirmPassword);
+        txtName = view.findViewById(R.id.txtName);
+        txtPassword = view.findViewById(R.id.txtPasswordSignUp);
+        txtConfirm = view.findViewById(R.id.txtConfirmPassword);
+        txtSignIn = view.findViewById(R.id.txtSignIn);
+        txtEmail = view.findViewById(R.id.txtEmailSignUp);
+        btnSignUp = view.findViewById(R.id.btnSignUp);
         dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
 
-        txtSignUp.setOnClickListener(v->{
+        txtSignIn.setOnClickListener(v->{
             //change fragments
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignUpFragment()).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignInFragment()).commit();
         });
-        btnSignIn.setOnClickListener(v->{
+
+        btnSignUp.setOnClickListener(v->{
             //validate fields first
             if (validate()){
-                login();
+                register();
             }
         });
 
+        txtName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!txtName.getText().toString().isEmpty()){
+                    layoutName.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         txtEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,10 +136,35 @@ public class SignInFragment extends Fragment {
 
             }
         });
+
+        txtConfirm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (txtConfirm.getText().toString().equals(txtPassword.getText().toString())){
+                    layoutConfirm.setErrorEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
     private boolean validate (){
+        if (txtName.getText().toString().isEmpty()){
+            layoutName.setErrorEnabled(true);
+            layoutName.setError("Name is Required");
+            return false;
+        }
         if (txtEmail.getText().toString().isEmpty()){
             layoutEmail.setErrorEnabled(true);
             layoutEmail.setError("Email is Required");
@@ -128,44 +175,57 @@ public class SignInFragment extends Fragment {
             layoutPassword.setError("Required at least 8 characters");
             return false;
         }
+        if (!txtConfirm.getText().toString().equals(txtPassword.getText().toString())){
+            layoutConfirm.setErrorEnabled(true);
+            layoutConfirm.setError("Password does not match");
+            return false;
+        }
+
+
         return true;
     }
 
 
-    private void login (){
-        dialog.setMessage("Logging in");
+    private void register(){
+        dialog.setMessage("Mendaftar..");
         dialog.show();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.LOGIN, response -> {
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.REGISTER, response -> {
             //we get response if connection success
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                boolean success = object.getBoolean("success");
+                if (success){
                     JSONObject user = object.getJSONObject("user");
                     //make shared preference user
                     SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user",getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = userPref.edit();
                     editor.putString("token",object.getString("token"));
                     editor.putInt("id",user.getInt("id"));
-                    editor.putString("name",user.getString("name"));
-                    editor.putString("email",user.getString("email"));
-                    editor.putBoolean("isLoggedIn",true);
+//                    editor.putString("name",user.getString("name"));
+                    editor.putBoolean("isLoggedUp",true);
                     editor.apply();
                     //if success
                     startActivity(new Intent(((AuthActivity)getContext()), MainActivity.class));
                     ((AuthActivity) getContext()).finish();
-                    Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Berhasil Mendaftar", Toast.LENGTH_SHORT).show();
+//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignUpSucessFragment()).commit();
+
+
+                }
+                if (!success){
+                    layoutPassword.setError("Gagal Mendaftar");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             dialog.dismiss();
-            Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+
 
         },error -> {
             // error if connection not success
             error.printStackTrace();
             dialog.dismiss();
-            Toast.makeText(getContext(), "Error Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Pendaftaran Error", Toast.LENGTH_SHORT).show();
 
         }){
 
@@ -175,6 +235,7 @@ public class SignInFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
+                map.put("name",txtName.getText().toString().trim());
                 map.put("email",txtEmail.getText().toString().trim());
                 map.put("password",txtPassword.getText().toString());
                 return map;
@@ -185,4 +246,6 @@ public class SignInFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
+
+
 }

@@ -11,14 +11,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alrosyid.notula.DetailNotulaActivity;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notula.AddNotulaActivity;
-import com.alrosyid.notula.activities.notula.AddNotulasActivity;
 import com.alrosyid.notula.adapters.HomeAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
@@ -28,7 +29,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +46,8 @@ public class HomeFragment extends Fragment {
     private HomeAdapter homeAdapter;
     private TextView txtName,txtEmail;
     private SharedPreferences sharedPreferences;
-    FloatingActionButton AddNotula;
+
+    FloatingActionButton addNotula;
 
     public HomeFragment(){}
 
@@ -76,8 +77,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        AddNotula =(FloatingActionButton)view.findViewById(R.id.fab);
-        AddNotula.setOnClickListener(new View.OnClickListener() {
+
+        addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
+        addNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getAddNotulaActivity();
@@ -85,8 +87,9 @@ public class HomeFragment extends Fragment {
             }
 
             private void getAddNotulaActivity() {
-                Intent sae = new Intent(getActivity(), AddNotulaActivity.class);
-                startActivity(sae);
+                Intent intent = new Intent(getActivity(), AddNotulaActivity.class);
+                startActivity(intent);
+
             }
         });
     }

@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alrosyid.notula.DetailNotulaActivity;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notula.AddNotulaActivity;
 import com.alrosyid.notula.adapters.NotulasAdapter;
@@ -46,7 +48,8 @@ public class NotulaFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private NotulasAdapter notulasAdapter;
     private SharedPreferences sharedPreferences;
-    FloatingActionButton AddNotula;
+    CardView detailNotula;
+    FloatingActionButton addNotula;
     public NotulaFragment(){}
 
     @Nullable
@@ -73,8 +76,19 @@ public class NotulaFragment extends Fragment {
             }
         });
 
-       AddNotula =(FloatingActionButton)view.findViewById(R.id.fab);
-        AddNotula.setOnClickListener(new View.OnClickListener() {
+        detailNotula=(CardView)view.findViewById(R.id.cvNotula);
+        detailNotula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDetailNotulaActivity();
+            }
+            private void getDetailNotulaActivity() {
+                Intent intent = new Intent(getActivity(), DetailNotulaActivity.class);
+                startActivity(intent);
+            }
+        });
+       addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
+        addNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getAddNotulaActivity();
@@ -82,8 +96,8 @@ public class NotulaFragment extends Fragment {
             }
 
             private void getAddNotulaActivity() {
-                Intent sae = new Intent(getActivity(), AddNotulaActivity.class);
-                startActivity(sae);
+                Intent intent = new Intent(getActivity(), AddNotulaActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -14,11 +14,14 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alrosyid.notula.DetailNotulaActivity;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.activities.TestActivity;
+import com.alrosyid.notula.activities.notula.AddNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
@@ -70,6 +73,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 //        } else {
 //            holder.btnPostOption.setVisibility(View.GONE);
 //        }
+
+
+
+
+
+        holder.detailNotula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDetailNotulaActivity();
+            }
+            private void getDetailNotulaActivity() {
+
+        Intent i = new Intent(((MainActivity)context), TestActivity.class);
+                context.startActivity(i);
+            }
+        });
         holder.btnPostOption.setOnClickListener(v->{
             PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
             popupMenu.inflate(R.menu.menu_options);
@@ -173,8 +192,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     class HomeHolder extends RecyclerView.ViewHolder{
         private TextView txtTitle,txtDate,txtSubject;
         private ImageButton btnPostOption;
+        private CardView detailNotula;
         public HomeHolder(@NonNull View itemView) {
             super(itemView);
+            detailNotula=itemView.findViewById(R.id.cvNotula);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtSubject = itemView.findViewById(R.id.txtSubject);
             txtDate = itemView.findViewById(R.id.txtPostDate);

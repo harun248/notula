@@ -13,6 +13,8 @@ import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.alrosyid.notula.R;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -124,6 +126,7 @@ public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHo
                             notifyDataSetChanged();
                             listAll.clear();
                             listAll.addAll(list);
+                            Toast.makeText(context, R.string.delete_notula, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

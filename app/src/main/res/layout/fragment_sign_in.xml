@@ -15,7 +15,6 @@
             tools:ignore="MissingConstraints" />
 
         <LinearLayout
-            android:id="@+id/form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -79,15 +78,15 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/txtForgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Lupa Password"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/colorPrimary" />
+<!--                <TextView-->
+<!--                    android:id="@+id/txtForgotPassword"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginRight="6dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:text="Lupa Password"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="@color/colorPrimary" />-->
 
                 <Button
                     android:id="@+id/btnSignIn"
@@ -127,12 +126,7 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_marginTop="-100dp"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/round_cropped_rotate"
-                tools:ignore="MissingConstraints" />
+            
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

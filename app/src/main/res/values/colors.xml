@@ -8,9 +8,6 @@
     <color name="colorGrey">#666666</color>
     <color name="colorLightGrey">#999999</color>
     <!--colors for modern ui-->
-    <color name="whiteTextColor">#fff</color>
-    <color name="primaryTextColor">#00a5ff</color>
-    <color name="loginBkColor">#f0f0f0</color>
 
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>

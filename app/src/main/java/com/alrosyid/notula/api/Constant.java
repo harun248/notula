@@ -1,7 +1,7 @@
 package com.alrosyid.notula.api;
 
 public class Constant {
-    public static final String URL = "http://10.0.2.2:8000/";
+    public static final String URL = "https://app.jeevva.my.id/";
     public static final String HOME = URL+"api";
     //auth
     public static final String LOGIN = HOME+"/login";

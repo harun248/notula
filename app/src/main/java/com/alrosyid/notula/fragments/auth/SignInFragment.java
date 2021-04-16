@@ -156,7 +156,7 @@ public class SignInFragment extends Fragment {
                     Toast.makeText(getContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
                 }
                 if (!success){
-                    layoutPassword.setError("Username dan Password tidak cocok");
+                    layoutPassword.setError("Username atau Password tidak cocok");
                 }
 
             } catch (JSONException e) {

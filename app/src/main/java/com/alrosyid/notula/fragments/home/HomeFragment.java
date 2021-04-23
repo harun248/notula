@@ -11,13 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.alrosyid.notula.DetailNotulaActivity;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notula.AddNotulaActivity;
 import com.alrosyid.notula.adapters.HomeAdapter;
@@ -34,7 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -140,14 +141,35 @@ public class HomeFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    JSONArray array = new JSONArray(object.getString("notulas"));
+                        JSONArray array = new JSONArray(object.getString("notulas"));
+
+
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notulaObject = array.getJSONObject(i);
+//                        JSONObject meetsObject = notulaObject.getJSONObject("user");
+//
+//                        Meetings meets = new Meetings();
+//                        meets.setId(meetsObject.getInt("id"));
+//                        meets.setTitle(meetsObject.getString("name"));
+
                         Notula notula = new Notula();
                         notula.setId(notulaObject.getInt("id"));
-                        notula.setSubject(notulaObject.getString("subject"));
+//                        notula.setMeetings(meets);
+                        notula.setMeetings_title(notulaObject.getString("meetings_title"));
                         notula.setTitle(notulaObject.getString("title"));
-                        notula.setDate(notulaObject.getString("date"));
+                        //covert string to date
+                        String source = notulaObject.getString("date");
+                        String[] sourceSplit= source.split("-");
+                        int anno= Integer.parseInt(sourceSplit[0]);
+                        int mese= Integer.parseInt(sourceSplit[1]);
+                        int giorno= Integer.parseInt(sourceSplit[2]);
+                        GregorianCalendar calendar = new GregorianCalendar();
+                        calendar.set(anno,mese-1,giorno);
+                        Date data1= calendar.getTime();
+                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+
+                        String   dayFormatted= myFormat.format(data1);
+                        notula.setDate(dayFormatted);
 
 
                         arrayList.add(notula);

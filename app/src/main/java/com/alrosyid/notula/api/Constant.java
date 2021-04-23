@@ -9,6 +9,10 @@ public class Constant {
     public static final String REGISTER = HOME+"/register";
     public static final String ACCOUNT = HOME+"/myAccount";
 
+    //Notula
+    public static final String MEETING = HOME+"/meetings";
+    public static final String MY_MEETING = MEETING+"/myMeetings";
+    public static final String MY_NOTULA_BY_MEETING = MEETING+"/myNotulas/";
 
     //Notula
     public static final String NOTULA = HOME+"/notulas";

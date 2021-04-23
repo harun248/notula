@@ -14,17 +14,17 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.alrosyid.notula.R;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
-import com.alrosyid.notula.activities.notula.DetailNotulaActivity;
 import com.alrosyid.notula.activities.notula.EditNotulaActivity;
+import com.alrosyid.notula.activities.notula.ListsNotulaActivity;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.models.Notula;
+import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,24 +34,22 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-
 import java.util.Map;
 
-public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHolder> {
+public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsHolder> {
+
+
 
     private Context context;
-    private ArrayList<Notula> list;
-    private ArrayList<Notula> listAll;
+    private ArrayList<Meetings> list;
+    private ArrayList<Meetings> listAll;
     private SharedPreferences preferences;
+    String id_meets;
 
-    public NotulasAdapter(Context context, ArrayList<Notula> list) {
+    public MeetingsAdapter(Context context, ArrayList<Meetings> list) {
         this.context = context;
         this.list = list;
         this.listAll = new ArrayList<>(list);
@@ -63,9 +61,9 @@ public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHo
 
     @NonNull
     @Override
-    public NotulaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula,parent,false);
-        return new NotulaHolder(view);
+    public MeetsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_meeting,parent,false);
+        return new MeetsHolder(view);
 
 
     }
@@ -73,45 +71,56 @@ public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHo
 
 
     @Override
-    public void onBindViewHolder(@NonNull NotulaHolder holder, int position) {
-        Notula notula = list.get(position);
-        holder.txtTitle.setText(notula.getTitle());
-        holder.txtMeetTitle.setText(notula.getMeetings_title());
-        holder.txtDate.setText(notula.getDate());
-//        String source = notula.getDate();
-//
-//        String[] sourceSplit= source.split("-");
-//
-//        int anno= Integer.parseInt(sourceSplit[0]);
-//        int mese= Integer.parseInt(sourceSplit[1]);
-//        int giorno= Integer.parseInt(sourceSplit[2]);
-//
-//        GregorianCalendar calendar = new GregorianCalendar();
-//        calendar.set(anno,mese-1,giorno);
-//        Date   data1= calendar.getTime();
-//        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMM yyyy");
-//
-//        String   dayFormatted= myFormat.format(data1);
+    public void onBindViewHolder(@NonNull MeetsHolder holder, int position) {
+        Meetings meetings = list.get(position);
+        holder.txtTitle.setText(meetings.getTitle());
+        holder.txtDate.setText(meetings.getDate());
+
 
 //        holder.txtDate.setText(dayFormatted);
 //        SimpleDateFormat formattgl = new SimpleDateFormat("dd/MM/yyyy");
-//        String currentDateandTime = formattgl.format(notula.getDate());
+//        String currentDateandTime =    formattgl.format(notula.getDate());
 //        holder.txtDate.setText(currentDateandTime);
 //        if(notula.getUser().getId()==preferences.getInt("id",0)){
 //            holder.btnPostOption.setVisibility(View.VISIBLE);
 //        } else {
 //            holder.btnPostOption.setVisibility(View.GONE);
 //        }
-        holder.detailNotula.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDetailNotulaActivity();
-            }
-            private void getDetailNotulaActivity() {
+        holder.listNotula.setOnClickListener(new View.OnClickListener() {
 
-                Intent i = new Intent(((MainActivity)context), DetailNotulaActivity.class);
+
+            @Override
+//            public void onClick(View v) {
+//                getListNotulaActivity();
+//            }
+//
+//            private void getListNotulaActivity() {
+//
+//                Intent i = new Intent(((MainActivity) context), ListsNotulaActivity.class);
+//                context.startActivity(i);
+//            }
+            public void onClick(View view) {
+
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("idMeets",meetings.getId());
+//                NotulasByMeetingsFragment notulasByMeetsFragment = new NotulasByMeetingsFragment();
+//                notulasByMeetsFragment.setArguments(bundle);
+//                Intent i = new Intent(((MainActivity)context), ListsNotulaActivity.class);
+//                i.putExtra("meetId",meetings.getId());
+//                i.putExtra("position",position);
+//                context.startActivity(i);
+//                FragmentManager fragmentManager = ((ListsNotulaActivity)context).getSupportFragmentManager();
+//
+//                fragmentManager.beginTransaction().replace(R.id.fragment_container, notulasByMeetsFragment).commit();
+                Intent i = new Intent(((MainActivity)context), ListsNotulaActivity.class);
+                i.putExtra("meetingsId", meetings.getId());
+                i.putExtra("position",position);
                 context.startActivity(i);
+
             }
+
+
+
         });
         holder.btnPostOption.setOnClickListener(v->{
             PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
@@ -123,14 +132,14 @@ public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHo
                     switch (item.getItemId()){
                         case R.id.item_edit: {
                             Intent i = new Intent(((MainActivity)context), EditNotulaActivity.class);
-                            i.putExtra("notulaId",notula.getId());
+                            i.putExtra("meetingsId", meetings.getId());
                             i.putExtra("position",position);
-                            i.putExtra("title",notula.getTitle());
+                            i.putExtra("title", meetings.getTitle());
                             context.startActivity(i);
                             return true;
                         }
                         case R.id.item_delete: {
-                            deleteNotula(notula.getId(),position);
+                            deleteNotula(meetings.getId(),position);
                             return true;
                         }
                     }
@@ -143,7 +152,7 @@ public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHo
 
     }
 
-    private void deleteNotula(int notulaId,int position){
+    private void deleteNotula(int meetId,int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Confirm");
         builder.setMessage("Delete post?");
@@ -180,7 +189,7 @@ public class NotulasAdapter extends RecyclerView.Adapter<NotulasAdapter.NotulaHo
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String,String> map = new HashMap<>();
-                        map.put("id",notulaId+"");
+                        map.put("id",meetId+"");
                         return map;
                     }
                 };
@@ -209,16 +218,15 @@ Filter filter = new Filter() {
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
 
-        ArrayList<Notula> filteredList = new ArrayList<>();
+        ArrayList<Meetings> filteredList = new ArrayList<>();
         if (constraint.toString().isEmpty()){
             filteredList.addAll(listAll);
         } else {
-            for (Notula notula : listAll){
-                if(notula.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
-                        || notula.getMeetings_title().toLowerCase().contains(constraint.toString().toLowerCase())
-                        || notula.getDate().toLowerCase().contains(constraint.toString().toLowerCase())
+            for (Meetings meetings : listAll){
+                if(meetings.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
+                        || meetings.getDate().toLowerCase().contains(constraint.toString().toLowerCase())
                 ){
-                    filteredList.add(notula);
+                    filteredList.add(meetings);
                 }
             }
 
@@ -232,7 +240,7 @@ Filter filter = new Filter() {
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
         list.clear();
-        list.addAll((Collection<? extends Notula>) results.values);
+        list.addAll((Collection<? extends Meetings>) results.values);
         notifyDataSetChanged();
     }
 };
@@ -241,16 +249,15 @@ Filter filter = new Filter() {
         return filter;
     }
 
-    class NotulaHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle,txtMeetTitle,txtDate;
+    class MeetsHolder extends RecyclerView.ViewHolder{
+        private TextView txtTitle,txtDate;
         private ImageButton btnPostOption;
-        private CardView detailNotula;
-        public NotulaHolder(@NonNull View itemView) {
+        private CardView listNotula;
+        public MeetsHolder(@NonNull View itemView) {
             super(itemView);
-            detailNotula=itemView.findViewById(R.id.cvNotula);
+            listNotula=itemView.findViewById(R.id.cvNotula);
             txtTitle = itemView.findViewById(R.id.tvTitle);
-            txtMeetTitle = itemView.findViewById(R.id.tvMeetTitle);
-            txtDate = itemView.findViewById(R.id.tvNotulatDate);
+            txtDate = itemView.findViewById(R.id.tvDate);
             btnPostOption = itemView.findViewById(R.id.btnPostOption);
             btnPostOption.setVisibility(View.VISIBLE);
         }

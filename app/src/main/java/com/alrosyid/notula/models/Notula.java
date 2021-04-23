@@ -2,17 +2,7 @@ package com.alrosyid.notula.models;
 
 public class Notula {
 
-    private int id,userId;
-    private String title,subject,summary,date,startTime,endTime;
-    private User user;
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
+    private int id,user_id;
 
     public int getId() {
         return id;
@@ -22,15 +12,13 @@ public class Notula {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
-
-
 
     public String getTitle() {
         return title;
@@ -40,36 +28,28 @@ public class Notula {
         this.title = title;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getMeet_id() {
+        return meet_id;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setMeet_id(String meet_id) {
+        this.meet_id = meet_id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getMeetings_title() {
+        return meetings_title;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setMeetings_title(String meets_title) {
+        this.meetings_title = meets_title;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public User getUser() {
@@ -78,5 +58,17 @@ public class Notula {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    private String title,meet_id,meetings_title,date;
+    private User user;
+    private Meetings meetings;
+
+    public Meetings getMeetings() {
+        return meetings;
+    }
+
+    public void setMeetings(Meetings meetings) {
+        this.meetings = meetings;
     }
 }

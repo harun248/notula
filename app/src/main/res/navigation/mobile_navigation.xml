@@ -9,7 +9,11 @@
         android:name="com.alrosyid.notula.fragments.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
+    <fragment
+        android:id="@+id/nav_meet"
+        android:name="com.alrosyid.notula.fragments.meetings.MeetingsFragment"
+        android:label="Rapat"
+        tools:layout="@layout/fragment_meetings" />
     <fragment
         android:id="@+id/nav_notula"
         android:name="com.alrosyid.notula.fragments.notula.NotulaFragment"

@@ -14,12 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".DetailNotulaActivity"
-            android:label="@string/title_activity_detail_notula"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.notula.AddNotulaActivity"></activity>
-        <activity android:name=".activities.TestActivity" />
+        <activity android:name=".activities.notula.DetailMeetingsActivity"></activity>
+        <activity android:name=".activities.notula.EditNotulaActivity" />
+        <activity android:name=".activities.notula.AddNotulaActivity" />
+        <activity android:name=".activities.notula.DetailNotulaActivity" />
+        <activity android:name=".activities.notula.ListsNotulaActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

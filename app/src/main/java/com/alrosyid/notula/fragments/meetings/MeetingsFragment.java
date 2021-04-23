@@ -1,15 +1,9 @@
-package com.alrosyid.notula.fragments.notula;
+package com.alrosyid.notula.fragments.meetings;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,11 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notula.AddNotulaActivity;
-import com.alrosyid.notula.adapters.NotulasAdapter;
+import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.models.Notula;
+import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,21 +43,22 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NotulaFragment extends Fragment {
+
+public class MeetingsFragment extends Fragment {
     private View view;
     public static RecyclerView recyclerView;
-    public static ArrayList<Notula> arrayList;
+    public static ArrayList<Meetings> arrayList;
     private SwipeRefreshLayout refreshLayout;
-    private NotulasAdapter notulasAdapter;
+    private MeetingsAdapter meetingsAdapter;
     private SharedPreferences sharedPreferences;
 
     FloatingActionButton addNotula;
-    public NotulaFragment(){}
+    public MeetingsFragment(){}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_notula,container,false);
+        view = inflater.inflate(R.layout.fragment_meetings,container,false);
         init();
         return view;
     }
@@ -69,16 +71,16 @@ public class NotulaFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        getNotula();
+        getMeets();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNotula();
+                getMeets();
             }
         });
 
 
-       addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
+        addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
         addNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,24 +98,23 @@ public class NotulaFragment extends Fragment {
     }
 
 
-    private void getNotula() {
+    private void getMeets() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_MEETING, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    JSONArray array = new JSONArray(object.getString("notulas"));
+                    JSONArray array = new JSONArray(object.getString("meetings"));
                     for (int i = 0; i < array.length(); i++) {
-                        JSONObject notulaObject = array.getJSONObject(i);
-                        Notula notula = new Notula();
-                        notula.setId(notulaObject.getInt("id"));
-                        notula.setMeetings_title(notulaObject.getString("meetings_title"));
-                        notula.setTitle(notulaObject.getString("title"));
+                        JSONObject meetObject = array.getJSONObject(i);
+                        Meetings meetings = new Meetings();
+                        meetings.setId(meetObject.getInt("id"));
+                        meetings.setTitle(meetObject.getString("title"));
                         //covert string to date
-                        String source = notulaObject.getString("date");
+                        String source = meetObject.getString("date");
                         String[] sourceSplit= source.split("-");
                         int anno= Integer.parseInt(sourceSplit[0]);
                         int mese= Integer.parseInt(sourceSplit[1]);
@@ -124,15 +125,15 @@ public class NotulaFragment extends Fragment {
                         SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
 
                         String   dayFormatted= myFormat.format(data1);
-                        notula.setDate(dayFormatted);
+                        meetings.setDate(dayFormatted);
 
 
 
-                        arrayList.add(notula);
+                        arrayList.add(meetings);
                     }
 
-                    notulasAdapter = new NotulasAdapter(getContext(),arrayList);
-                    recyclerView.setAdapter(notulasAdapter);
+                    meetingsAdapter = new MeetingsAdapter(getContext(),arrayList);
+                    recyclerView.setAdapter(meetingsAdapter);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -175,7 +176,7 @@ public class NotulaFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                notulasAdapter.getFilter().filter(newText);
+                meetingsAdapter.getFilter().filter(newText);
                 return false;
             }
         });

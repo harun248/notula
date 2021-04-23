@@ -1,27 +1,23 @@
-package com.alrosyid.notula.fragments.notula;
+package com.alrosyid.notula.activities.notula;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.notula.AddNotulaActivity;
-import com.alrosyid.notula.adapters.NotulasAdapter;
+import com.alrosyid.notula.adapters.NotulasByMeetsAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
@@ -42,43 +38,44 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NotulaFragment extends Fragment {
-    private View view;
+public class ListsNotulaActivity extends AppCompatActivity {
     public static RecyclerView recyclerView;
     public static ArrayList<Notula> arrayList;
     private SwipeRefreshLayout refreshLayout;
-    private NotulasAdapter notulasAdapter;
-    private SharedPreferences sharedPreferences;
-
+    private NotulasByMeetsAdapter notulasByMeetsAdapter;
     FloatingActionButton addNotula;
-    public NotulaFragment(){}
-
-    @Nullable
+//    private int postId = 0;
+//    public  static  int position = 0;
+    private SharedPreferences sharedPreferences;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_notula,container,false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_notulasbymeets);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("List");
+
+
         init();
-        return view;
     }
     private void init(){
-        sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-        recyclerView = view.findViewById(R.id.recyclerHome);
+        sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        recyclerView = findViewById(R.id.recyclerHome);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        refreshLayout = view.findViewById(R.id.swipeHome);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        refreshLayout = findViewById(R.id.swipeHome);
+//
+//        setHasOptionsMenu(true);
 
-        setHasOptionsMenu(true);
-
-        getNotula();
+        getMeets();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNotula();
+                getMeets();
             }
         });
 
-
-       addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
+//
+        addNotula =(FloatingActionButton)findViewById(R.id.fab);
         addNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,33 +84,31 @@ public class NotulaFragment extends Fragment {
             }
 
             private void getAddNotulaActivity() {
-                Intent intent = new Intent(getActivity(), AddNotulaActivity.class);
+                Intent intent = new Intent(ListsNotulaActivity.this, AddNotulaActivity.class);
                 startActivity(intent);
             }
         });
 
 
     }
-
-
-    private void getNotula() {
+    private void getMeets() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
-
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA, response -> {
+        Integer id_meetings = getIntent().getIntExtra("meetingsId",0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA_BY_MEETING+(id_meetings), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    JSONArray array = new JSONArray(object.getString("notulas"));
+                    JSONArray array = new JSONArray(object.getString("meetings"));
                     for (int i = 0; i < array.length(); i++) {
-                        JSONObject notulaObject = array.getJSONObject(i);
+                        JSONObject meetObject = array.getJSONObject(i);
                         Notula notula = new Notula();
-                        notula.setId(notulaObject.getInt("id"));
-                        notula.setMeetings_title(notulaObject.getString("meetings_title"));
-                        notula.setTitle(notulaObject.getString("title"));
+                        notula.setId(meetObject.getInt("id"));
+                        notula.setTitle(meetObject.getString("title"));
                         //covert string to date
-                        String source = notulaObject.getString("date");
+                        notula.setMeetings_title(meetObject.getString("meetings_title"));
+                        String source = meetObject.getString("date");
                         String[] sourceSplit= source.split("-");
                         int anno= Integer.parseInt(sourceSplit[0]);
                         int mese= Integer.parseInt(sourceSplit[1]);
@@ -131,8 +126,8 @@ public class NotulaFragment extends Fragment {
                         arrayList.add(notula);
                     }
 
-                    notulasAdapter = new NotulasAdapter(getContext(),arrayList);
-                    recyclerView.setAdapter(notulasAdapter);
+                    notulasByMeetsAdapter = new NotulasByMeetsAdapter(this,arrayList);
+                    recyclerView.setAdapter(notulasByMeetsAdapter);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -156,15 +151,25 @@ public class NotulaFragment extends Fragment {
             }
         };
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(ListsNotulaActivity.this);
         queue.add(request);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
-        MenuItem item = menu.findItem(R.id.search);
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem item = menu.findItem(R.id.search);
         SearchView searchView = (SearchView)item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -175,11 +180,15 @@ public class NotulaFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                notulasAdapter.getFilter().filter(newText);
+                notulasByMeetsAdapter.getFilter().filter(newText);
                 return false;
             }
         });
-        super.onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu);
+        return true;
     }
+
+
+
 
 }

@@ -1,4 +1,4 @@
-package com.alrosyid.notula.fragments.notula;
+package com.alrosyid.notula.fragments.meetings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notula.AddNotulaActivity;
-import com.alrosyid.notula.adapters.NotulasAdapter;
+import com.alrosyid.notula.adapters.NotulasByMeetsAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
@@ -42,16 +42,17 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NotulaFragment extends Fragment {
+
+public class NotulasByMeetingsFragment extends Fragment {
     private View view;
     public static RecyclerView recyclerView;
     public static ArrayList<Notula> arrayList;
     private SwipeRefreshLayout refreshLayout;
-    private NotulasAdapter notulasAdapter;
+    private NotulasByMeetsAdapter notulasByMeetsAdapter;
     private SharedPreferences sharedPreferences;
 
     FloatingActionButton addNotula;
-    public NotulaFragment(){}
+    public NotulasByMeetingsFragment(){}
 
     @Nullable
     @Override
@@ -69,16 +70,16 @@ public class NotulaFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        getNotula();
+        getMeets();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNotula();
+                getMeets();
             }
         });
 
 
-       addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
+        addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
         addNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,24 +97,24 @@ public class NotulaFragment extends Fragment {
     }
 
 
-    private void getNotula() {
+    private void getMeets() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
-
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA, response -> {
+        Bundle bundle = this.getArguments();
+        Integer id_meetings = bundle.getInt("idMeetings");
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA_BY_MEETING+(id_meetings), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    JSONArray array = new JSONArray(object.getString("notulas"));
+                    JSONArray array = new JSONArray(object.getString("meetingsId"));
                     for (int i = 0; i < array.length(); i++) {
-                        JSONObject notulaObject = array.getJSONObject(i);
+                        JSONObject meetObject = array.getJSONObject(i);
                         Notula notula = new Notula();
-                        notula.setId(notulaObject.getInt("id"));
-                        notula.setMeetings_title(notulaObject.getString("meetings_title"));
-                        notula.setTitle(notulaObject.getString("title"));
+                        notula.setId(meetObject.getInt("id"));
+                        notula.setTitle(meetObject.getString("title"));
                         //covert string to date
-                        String source = notulaObject.getString("date");
+                        String source = meetObject.getString("date");
                         String[] sourceSplit= source.split("-");
                         int anno= Integer.parseInt(sourceSplit[0]);
                         int mese= Integer.parseInt(sourceSplit[1]);
@@ -131,8 +132,8 @@ public class NotulaFragment extends Fragment {
                         arrayList.add(notula);
                     }
 
-                    notulasAdapter = new NotulasAdapter(getContext(),arrayList);
-                    recyclerView.setAdapter(notulasAdapter);
+                    notulasByMeetsAdapter = new NotulasByMeetsAdapter(getContext(),arrayList);
+                    recyclerView.setAdapter(notulasByMeetsAdapter);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -175,7 +176,7 @@ public class NotulaFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                notulasAdapter.getFilter().filter(newText);
+                notulasByMeetsAdapter.getFilter().filter(newText);
                 return false;
             }
         });

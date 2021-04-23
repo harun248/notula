@@ -17,11 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alrosyid.notula.DetailNotulaActivity;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
-import com.alrosyid.notula.activities.TestActivity;
-import com.alrosyid.notula.activities.notula.AddNotulaActivity;
+import com.alrosyid.notula.activities.notula.DetailNotulaActivity;
+import com.alrosyid.notula.activities.notula.EditNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
@@ -64,11 +63,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeHolder holder, int position) {
         Notula notula = list.get(position);
+//        Meetings meets = meetsList.get(position);
         holder.txtTitle.setText(notula.getTitle());
-        holder.txtSubject.setText(notula.getSubject());
+        holder.txtMeetTitle.setText(notula.getMeetings_title());
         holder.txtDate.setText(notula.getDate());
 
-//        if(notula.getUser().getId()==preferences.getInt("id",0)){
+//        if(notula.g   etUser().getId()==preferences.getInt("id",0)){
 //            holder.btnPostOption.setVisibility(View.VISIBLE);
 //        } else {
 //            holder.btnPostOption.setVisibility(View.GONE);
@@ -85,7 +85,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             }
             private void getDetailNotulaActivity() {
 
-        Intent i = new Intent(((MainActivity)context), TestActivity.class);
+        Intent i = new Intent(((MainActivity)context), DetailNotulaActivity.class);
                 context.startActivity(i);
             }
         });
@@ -98,7 +98,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
                     switch (item.getItemId()){
                         case R.id.item_edit: {
-                            Intent i = new Intent(((MainActivity)context), TestActivity.class);
+                            Intent i = new Intent(((MainActivity)context), EditNotulaActivity.class);
                             i.putExtra("notulaId",notula.getId());
                             i.putExtra("position",position);
                             i.putExtra("title",notula.getTitle());
@@ -190,15 +190,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 //    }
 
     class HomeHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle,txtDate,txtSubject;
+        private TextView txtTitle,txtMeetTitle,txtDate;
         private ImageButton btnPostOption;
         private CardView detailNotula;
         public HomeHolder(@NonNull View itemView) {
             super(itemView);
             detailNotula=itemView.findViewById(R.id.cvNotula);
-            txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtSubject = itemView.findViewById(R.id.txtSubject);
-            txtDate = itemView.findViewById(R.id.txtPostDate);
+            txtTitle = itemView.findViewById(R.id.tvTitle);
+            txtMeetTitle = itemView.findViewById(R.id.tvMeetTitle);
+            txtDate = itemView.findViewById(R.id.tvNotulatDate);
             btnPostOption = itemView.findViewById(R.id.btnPostOption);
             btnPostOption.setVisibility(View.VISIBLE);
         }

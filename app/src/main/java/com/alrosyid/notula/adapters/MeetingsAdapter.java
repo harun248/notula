@@ -1,5 +1,6 @@
 package com.alrosyid.notula.adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -21,8 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
+import com.alrosyid.notula.activities.attendances.AttendacesActivity;
+import com.alrosyid.notula.activities.meetings.DetailMeetingsActivity;
+import com.alrosyid.notula.activities.meetings.EditMeetingsActivity;
 import com.alrosyid.notula.activities.notula.EditNotulaActivity;
-import com.alrosyid.notula.activities.notula.ListsNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
@@ -48,6 +52,8 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
     private ArrayList<Meetings> listAll;
     private SharedPreferences preferences;
     String id_meets;
+
+
 
     public MeetingsAdapter(Context context, ArrayList<Meetings> list) {
         this.context = context;
@@ -76,51 +82,24 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
         holder.txtTitle.setText(meetings.getTitle());
         holder.txtDate.setText(meetings.getDate());
 
-
-//        holder.txtDate.setText(dayFormatted);
-//        SimpleDateFormat formattgl = new SimpleDateFormat("dd/MM/yyyy");
-//        String currentDateandTime =    formattgl.format(notula.getDate());
-//        holder.txtDate.setText(currentDateandTime);
-//        if(notula.getUser().getId()==preferences.getInt("id",0)){
-//            holder.btnPostOption.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.btnPostOption.setVisibility(View.GONE);
-//        }
-        holder.listNotula.setOnClickListener(new View.OnClickListener() {
-
-
+        holder.detailMeetings.setOnClickListener(new View.OnClickListener() {
             @Override
-//            public void onClick(View v) {
-//                getListNotulaActivity();
-//            }
-//
-//            private void getListNotulaActivity() {
-//
-//                Intent i = new Intent(((MainActivity) context), ListsNotulaActivity.class);
-//                context.startActivity(i);
-//            }
             public void onClick(View view) {
-
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("idMeets",meetings.getId());
-//                NotulasByMeetingsFragment notulasByMeetsFragment = new NotulasByMeetingsFragment();
-//                notulasByMeetsFragment.setArguments(bundle);
-//                Intent i = new Intent(((MainActivity)context), ListsNotulaActivity.class);
-//                i.putExtra("meetId",meetings.getId());
-//                i.putExtra("position",position);
-//                context.startActivity(i);
-//                FragmentManager fragmentManager = ((ListsNotulaActivity)context).getSupportFragmentManager();
-//
-//                fragmentManager.beginTransaction().replace(R.id.fragment_container, notulasByMeetsFragment).commit();
-                Intent i = new Intent(((MainActivity)context), ListsNotulaActivity.class);
+                Intent i = new Intent(((Activity)context), DetailMeetingsActivity.class);
                 i.putExtra("meetingsId", meetings.getId());
-                i.putExtra("position",position);
+                i.putExtra("meetingsPosition",position);
                 context.startActivity(i);
-
             }
-
-
-
+        });
+        holder.btnAttendances.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(((Activity)context), AttendacesActivity.class);
+                i.putExtra("meetingsId", meetings.getId());
+                i.putExtra("meetingsTitle", meetings.getTitle());
+                i.putExtra("meetingsPosition",position);
+                context.startActivity(i);
+            }
         });
         holder.btnPostOption.setOnClickListener(v->{
             PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
@@ -131,10 +110,9 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
 
                     switch (item.getItemId()){
                         case R.id.item_edit: {
-                            Intent i = new Intent(((MainActivity)context), EditNotulaActivity.class);
+                            Intent i = new Intent(((Activity)context), EditMeetingsActivity.class);
                             i.putExtra("meetingsId", meetings.getId());
                             i.putExtra("position",position);
-                            i.putExtra("title", meetings.getTitle());
                             context.startActivity(i);
                             return true;
                         }
@@ -154,12 +132,12 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
 
     private void deleteNotula(int meetId,int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Confirm");
-        builder.setMessage("Delete post?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setTitle("Konfirmasi");
+        builder.setMessage("Hapus dari daftar hadir?");
+        builder.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_NOTULA, response -> {
+                StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_MEETINGS, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
@@ -169,7 +147,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
                             notifyDataSetChanged();
                             listAll.clear();
                             listAll.addAll(list);
-                            Toast.makeText(context, R.string.delete_notula, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Berhasil menghapus daftar rapat", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -252,13 +230,15 @@ Filter filter = new Filter() {
     class MeetsHolder extends RecyclerView.ViewHolder{
         private TextView txtTitle,txtDate;
         private ImageButton btnPostOption;
-        private CardView listNotula;
+        private Button btnAttendances;
+        private CardView detailMeetings;
         public MeetsHolder(@NonNull View itemView) {
             super(itemView);
-            listNotula=itemView.findViewById(R.id.cvNotula);
+            detailMeetings=itemView.findViewById(R.id.cvMeetings);
             txtTitle = itemView.findViewById(R.id.tvTitle);
             txtDate = itemView.findViewById(R.id.tvDate);
             btnPostOption = itemView.findViewById(R.id.btnPostOption);
+            btnAttendances = itemView.findViewById(R.id.btnAttendances);
             btnPostOption.setVisibility(View.VISIBLE);
         }
     }

@@ -5,11 +5,42 @@
     android:clickable="true"
     android:focusable="true"
     android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tvLabelMeetingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daftar Rapat"
+        android:textColor="@color/colorBlack"
+        android:textSize="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+    <RelativeLayout
+        android:id="@+id/layoutBtnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:paddingRight="20dp"
+        android:gravity="right">
 
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="70dp"
+            android:layout_gravity="center"
+            android:layout_height="30dp"
+            android:background="@drawable/round"
+            android:textAllCaps="false"
+            android:text="tambah"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            />
+
+    </RelativeLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_below="@+id/layoutBtnAdd"
         android:layout_width="match_parent"
         android:id="@+id/swipeHome"
         android:layout_height="match_parent">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -17,18 +48,6 @@
             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="right"
-        android:layout_gravity="bottom">
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_add_24"
-            android:layout_margin="16dp" />
-    </RelativeLayout>
+
 
 </RelativeLayout>

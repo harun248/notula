@@ -107,7 +107,6 @@ public class HomeFragment extends Fragment {
                     txtName.setText(user.getString("name"));
                     txtEmail.setText(user.getString("email"));
 
-
                 }
 
 
@@ -136,7 +135,7 @@ public class HomeFragment extends Fragment {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.NOTULA, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
@@ -146,18 +145,11 @@ public class HomeFragment extends Fragment {
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notulaObject = array.getJSONObject(i);
-//                        JSONObject meetsObject = notulaObject.getJSONObject("user");
-//
-//                        Meetings meets = new Meetings();
-//                        meets.setId(meetsObject.getInt("id"));
-//                        meets.setTitle(meetsObject.getString("name"));
 
                         Notula notula = new Notula();
                         notula.setId(notulaObject.getInt("id"));
-//                        notula.setMeetings(meets);
                         notula.setMeetings_title(notulaObject.getString("meetings_title"));
                         notula.setTitle(notulaObject.getString("title"));
-                        //covert string to date
                         String source = notulaObject.getString("date");
                         String[] sourceSplit= source.split("-");
                         int anno= Integer.parseInt(sourceSplit[0]);

@@ -14,22 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.notula.DetailMeetingsActivity"></activity>
+        <activity android:name=".activities.meetings.AddMeetingsActivity"></activity>
+        <activity android:name=".activities.attendances.EditAttendancesActivity" />
+        <activity android:name=".activities.meetings.EditMeetingsActivity" />
+        <activity android:name=".activities.attendances.AddAttendancesActivity" />
+        <activity android:name=".activities.attendances.AttendacesActivity" />
+        <activity android:name=".activities.ActivityDataKosong" />
+        <activity android:name=".activities.meetings.DetailMeetingsActivity" />
         <activity android:name=".activities.notula.EditNotulaActivity" />
         <activity android:name=".activities.notula.AddNotulaActivity" />
         <activity android:name=".activities.notula.DetailNotulaActivity" />
         <activity android:name=".activities.notula.ListsNotulaActivity" />
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.AuthActivity"
             android:label="@string/app_name"

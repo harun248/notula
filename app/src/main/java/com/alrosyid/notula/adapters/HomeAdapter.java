@@ -47,14 +47,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         this.context = context;
         this.list = list;
         this.listAll = new ArrayList<>(list);
-        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
 
 
     @NonNull
     @Override
     public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula, parent, false);
         return new HomeHolder(view);
 
 
@@ -63,21 +63,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeHolder holder, int position) {
         Notula notula = list.get(position);
-//        Meetings meets = meetsList.get(position);
         holder.txtTitle.setText(notula.getTitle());
         holder.txtMeetTitle.setText(notula.getMeetings_title());
         holder.txtDate.setText(notula.getDate());
-
-//        if(notula.g   etUser().getId()==preferences.getInt("id",0)){
-//            holder.btnPostOption.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.btnPostOption.setVisibility(View.GONE);
-//        }
-
-
-
-
-
         holder.detailNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,28 +73,31 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             }
             private void getDetailNotulaActivity() {
 
-        Intent i = new Intent(((MainActivity)context), DetailNotulaActivity.class);
+                Intent i = new Intent(((MainActivity)context), DetailNotulaActivity.class);
+                i.putExtra("notulaId", notula.getId());
+                i.putExtra("position", position);
+                i.putExtra("title", notula.getTitle());
                 context.startActivity(i);
             }
         });
-        holder.btnPostOption.setOnClickListener(v->{
-            PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
+        holder.btnPostOption.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(context, holder.btnPostOption);
             popupMenu.inflate(R.menu.menu_options);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
 
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.item_edit: {
-                            Intent i = new Intent(((MainActivity)context), EditNotulaActivity.class);
-                            i.putExtra("notulaId",notula.getId());
-                            i.putExtra("position",position);
-                            i.putExtra("title",notula.getTitle());
+                            Intent i = new Intent(((MainActivity) context), EditNotulaActivity.class);
+                            i.putExtra("notulaId", notula.getId());
+                            i.putExtra("position", position);
+                            i.putExtra("title", notula.getTitle());
                             context.startActivity(i);
                             return true;
                         }
                         case R.id.item_delete: {
-                            deleteNotula(notula.getId(),position);
+                            deleteNotula(notula.getId(), position);
                             return true;
                         }
                     }
@@ -119,18 +110,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     }
 
-    private void deleteNotula(int notulaId,int position){
+    private void deleteNotula(int notulaId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Confirm");
-        builder.setMessage("Delete post?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setTitle("Konfirmasi");
+        builder.setMessage("Hapus dari daftar hadir?");
+        builder.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_NOTULA, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")){
+                        if (object.getBoolean("success")) {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
@@ -141,21 +132,21 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                         e.printStackTrace();
                     }
 
-                },error -> {
+                }, error -> {
 
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token","");
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("Authorization","Bearer "+token);
+                        String token = preferences.getString("token", "");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("Authorization", "Bearer " + token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("id",notulaId+"");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", notulaId + "");
                         return map;
                     }
                 };
@@ -173,29 +164,28 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         });
         builder.show();
     }
+
     private final int limit = 3;
+
     @Override
     public int getItemCount() {
-        if(list.size() > limit){
+        if (list.size() > limit) {
             return limit;
-        }
-        else
-        {
+        } else {
             return list.size();
         }
 
     }
-//    public int getItemCount() {
-//        return list.size();
-//    }
 
-    class HomeHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle,txtMeetTitle,txtDate;
+
+    class HomeHolder extends RecyclerView.ViewHolder {
+        private TextView txtTitle, txtMeetTitle, txtDate;
         private ImageButton btnPostOption;
         private CardView detailNotula;
+
         public HomeHolder(@NonNull View itemView) {
             super(itemView);
-            detailNotula=itemView.findViewById(R.id.cvNotula);
+            detailNotula = itemView.findViewById(R.id.cvNotula);
             txtTitle = itemView.findViewById(R.id.tvTitle);
             txtMeetTitle = itemView.findViewById(R.id.tvMeetTitle);
             txtDate = itemView.findViewById(R.id.tvNotulatDate);

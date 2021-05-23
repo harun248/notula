@@ -1,31 +1,30 @@
-package com.alrosyid.notula.fragments.notula;
+package com.alrosyid.notula.fragments.notulas;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.alrosyid.notula.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PointFragment#newInstance} factory method to
+ * Use the {@link ActionsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PointFragment extends Fragment {
+public class ActionsFragment extends Fragment {
 
-    public PointFragment() {
+    public ActionsFragment() {
         // Required empty public constructor
     }
 
-    public static PointFragment newInstance() {
+    public static ActionsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        PointFragment fragment = new PointFragment();
+        ActionsFragment fragment = new ActionsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,6 +34,6 @@ public class PointFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_notula, container, false);
+        return inflater.inflate(R.layout.fragment_actions, container, false);
     }
 }

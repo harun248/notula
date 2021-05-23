@@ -22,8 +22,15 @@ import com.alrosyid.notula.activities.AuthActivity;
 import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.api.Constant;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
@@ -191,6 +198,7 @@ public class SignUpFragment extends Fragment {
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.REGISTER, response -> {
             //we get response if connection success
+
             try {
                 JSONObject object = new JSONObject(response);
                 boolean success = object.getBoolean("success");
@@ -212,9 +220,10 @@ public class SignUpFragment extends Fragment {
 
 
                 }
-                if (!success){
+                else if (!success){
                     layoutPassword.setError("Gagal Mendaftar");
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -222,12 +231,28 @@ public class SignUpFragment extends Fragment {
 
 
         },error -> {
-            // error if connection not success
-            error.printStackTrace();
-            dialog.dismiss();
-            Toast.makeText(getContext(), "Pendaftaran Error", Toast.LENGTH_SHORT).show();
-
-        }){
+                    if (error instanceof NetworkError) {
+                    } else if (error instanceof ServerError) {
+                        Toast.makeText(getContext(),
+                                "Oops. Timeout error!",
+                                Toast.LENGTH_LONG).show();
+                    } else if (error instanceof AuthFailureError) {
+                    } else if (error instanceof ParseError) {
+                    } else if (error instanceof NoConnectionError) {
+                    } else if (error instanceof TimeoutError) {
+                        Toast.makeText(getContext(),
+                                "Timeout error!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+//        ,error -> {
+//            // error if connection not success
+//            error.printStackTrace();
+//            dialog.dismiss();
+//            Toast.makeText(getContext(), "Pendaftaran Error", Toast.LENGTH_SHORT).show();
+//
+//        }
+        ){
 
             // add parameters
 

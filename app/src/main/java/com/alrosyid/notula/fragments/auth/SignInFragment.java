@@ -44,6 +44,7 @@ public class SignInFragment extends Fragment {
     private TextView txtSignUp;
     private ProgressDialog dialog;
 
+
     public SignInFragment(){}
 
     @Nullable

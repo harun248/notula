@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".activities.attendances.AttendacesActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
+        android:layout_width="match_parent"
+        android:id="@+id/swipeHome"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvLabelMeetingsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rapat :"
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                app:layout_constraintLeft_toRightOf="@+id/tvLabelMeetingsTitle"
+                android:id="@+id/tvMeetingsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorBlack"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/tvMeetingsTitle"
+                android:layout_width="match_parent"
+                android:id="@+id/recyclerAttendances"
+                android:paddingTop="10dp"
+                android:paddingBottom="40dp"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="70dp"
+            android:layout_gravity="center"
+            android:layout_height="30dp"
+            android:background="@drawable/round"
+            android:textAllCaps="false"
+            android:text="tambah"
+            android:textColor="#FFF"
+            android:textSize="12dp"
+            tools:ignore="MissingConstraints" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

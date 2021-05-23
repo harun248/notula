@@ -1,4 +1,4 @@
-package com.alrosyid.notula.fragments.notula;
+package com.alrosyid.notula.fragments.notulas;
 
 import android.content.Context;
 import android.content.Intent;
@@ -100,7 +100,7 @@ public class NotulaFragment extends Fragment {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.NOTULA, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);

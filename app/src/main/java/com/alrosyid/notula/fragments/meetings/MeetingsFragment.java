@@ -3,6 +3,7 @@ package com.alrosyid.notula.fragments.meetings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
 import com.alrosyid.notula.activities.notula.AddNotulaActivity;
 import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
@@ -52,7 +55,7 @@ public class MeetingsFragment extends Fragment {
     private MeetingsAdapter meetingsAdapter;
     private SharedPreferences sharedPreferences;
 
-    FloatingActionButton addNotula;
+    private Button addNotula;
     public MeetingsFragment(){}
 
     @Nullable
@@ -61,6 +64,7 @@ public class MeetingsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_meetings,container,false);
         init();
         return view;
+
     }
     private void init(){
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -80,16 +84,16 @@ public class MeetingsFragment extends Fragment {
         });
 
 
-        addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
+        addNotula =(Button)view.findViewById(R.id.btnAdd);
         addNotula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAddNotulaActivity();
+                getAddMeetingsActivity();
 
             }
 
-            private void getAddNotulaActivity() {
-                Intent intent = new Intent(getActivity(), AddNotulaActivity.class);
+            private void getAddMeetingsActivity() {
+                Intent intent = new Intent(getActivity(), AddMeetingsActivity.class);
                 startActivity(intent);
             }
         });
@@ -98,7 +102,7 @@ public class MeetingsFragment extends Fragment {
     }
 
 
-    private void getMeets() {
+    private void  getMeets() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
@@ -160,6 +164,7 @@ public class MeetingsFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

@@ -1,7 +1,6 @@
 package com.alrosyid.notula.activities.notula;
 
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,8 +9,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.fragments.notula.DetailNotulaFragment;
-import com.alrosyid.notula.fragments.notula.PointFragment;
+import com.alrosyid.notula.fragments.notulas.ActionsFragment;
+import com.alrosyid.notula.fragments.notulas.DetailNotulasFragment;
+import com.alrosyid.notula.fragments.notulas.PointFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public class DetailNotulaActivity extends AppCompatActivity {
 
 
 
+    private int notulaId = 0, position =0;
     ViewPager viewPager;
     TabLayout tabLayout;
 
@@ -33,22 +34,22 @@ public class DetailNotulaActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detail Notula");
 
 
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         viewPager = findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        notulaId = getIntent().getIntExtra("notulaId",0);
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(DetailNotulaFragment.newInstance(), "Notula");
+        adapter.addFragment(DetailNotulasFragment.newInstance(), "Notula");
+
         adapter.addFragment(PointFragment.newInstance(), "Point");
-        adapter.addFragment(DetailNotulaFragment.newInstance(), "Aksi");
+
+        adapter.addFragment(ActionsFragment.newInstance(), "Aksi");
         viewPager.setAdapter(adapter);
     }
 
@@ -90,5 +91,6 @@ public class DetailNotulaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
     }
 }

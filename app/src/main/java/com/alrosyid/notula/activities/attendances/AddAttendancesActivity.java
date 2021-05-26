@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
+import com.alrosyid.notula.fragments.attendances.ListAttendancesFragments;
 import com.alrosyid.notula.models.Attendances;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -101,9 +102,9 @@ public class AddAttendancesActivity extends AppCompatActivity {
                     attendances.setPosition(attendancesObject.getString("position"));
 
 
-                    AttendacesActivity.arrayList.add(0, attendances);
-                    AttendacesActivity.recyclerView.getAdapter().notifyItemInserted(0);
-                    AttendacesActivity.recyclerView.getAdapter().notifyDataSetChanged();
+                    ListAttendancesFragments.arrayList.add(0, attendances);
+                    ListAttendancesFragments.recyclerView.getAdapter().notifyItemInserted(0);
+                    ListAttendancesFragments.recyclerView.getAdapter().notifyDataSetChanged();
 
                     Toast.makeText(this, "Daftar kehaditan di tambah", Toast.LENGTH_SHORT).show();
                     finish();

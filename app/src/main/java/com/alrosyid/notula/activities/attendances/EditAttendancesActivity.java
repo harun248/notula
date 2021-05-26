@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
+import com.alrosyid.notula.fragments.attendances.ListAttendancesFragments;
 import com.alrosyid.notula.models.Attendances;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -129,14 +130,14 @@ public class EditAttendancesActivity extends AppCompatActivity {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    Attendances attendances = AttendacesActivity.arrayList.get(position);
+                    Attendances attendances = ListAttendancesFragments.arrayList.get(position);
 
 
                     attendances.setName(txtName.getText().toString());
                     attendances.setPosition(txtPosition.getText().toString());
-                    AttendacesActivity.arrayList.set(position,attendances);
-                    AttendacesActivity.recyclerView.getAdapter().notifyItemChanged(position);
-                    AttendacesActivity.recyclerView.getAdapter().notifyDataSetChanged();
+                    ListAttendancesFragments.arrayList.set(position,attendances);
+                    ListAttendancesFragments.recyclerView.getAdapter().notifyItemChanged(position);
+                    ListAttendancesFragments.recyclerView.getAdapter().notifyDataSetChanged();
                     Toast.makeText(this, "Pembaharuan tersimpan", Toast.LENGTH_SHORT).show();
                     finish();
 

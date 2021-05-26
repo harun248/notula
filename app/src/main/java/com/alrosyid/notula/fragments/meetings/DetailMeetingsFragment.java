@@ -1,7 +1,11 @@
 package com.alrosyid.notula.fragments.meetings;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,58 +13,166 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.api.Constant;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetailMeetingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class DetailMeetingsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private TextInputLayout layoutTitle,  layoutDate ,layoutStartTime ,layoutEndTime ,layoutAgenda;
+    private TextInputEditText txtTitle, txtDate, txtStartTime, txtEndTime, txtAgenda;
+    private int notulaId = 0, position =0;
+    private View view;
+    private SharedPreferences sharedPreferences;
+    public static DetailMeetingsFragment newInstance() {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DetailMeetingsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailMeetingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailMeetingsFragment newInstance(String param1, String param2) {
-        DetailMeetingsFragment fragment = new DetailMeetingsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
+        DetailMeetingsFragment fragment = new DetailMeetingsFragment();
         fragment.setArguments(args);
         return fragment;
     }
+    public DetailMeetingsFragment(){}
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_detail_meetings,container,false);
+        init();
+        return view;
+
+    }
+    private void init(){
+        sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        layoutTitle = view.findViewById(R.id.tilTitle);
+        layoutDate =  view.findViewById(R.id.tilDate);
+        layoutStartTime =  view.findViewById(R.id.tilStartTime);
+        layoutEndTime =  view.findViewById(R.id.tilEndTime);
+        layoutAgenda =  view.findViewById(R.id.tilAgenda);
+        txtTitle =  view.findViewById(R.id.tieTitle);
+        txtDate =  view.findViewById(R.id.tieDate);
+        txtStartTime =  view.findViewById(R.id.tieStartTime);
+        txtEndTime =  view.findViewById(R.id.tieEndTime);
+        txtAgenda =  view.findViewById(R.id.tieAgenda);
+
+
+        setHasOptionsMenu(true);
+
+        getDetailMeetings();
+
+
+
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_meetings, container, false);
+
+    private void  getDetailMeetings() {
+        Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId",0);
+        StringRequest request = new StringRequest(Request.Method.GET,Constant.DETAIL_MEETING+(id_meetings),response->{
+
+            try {
+                JSONObject object = new JSONObject(response);
+
+                if (object.getBoolean("success")){
+                    JSONArray array = new JSONArray(object.getString("meetings"));
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject meetings = array.getJSONObject(i);
+
+                        txtTitle.setText(meetings.getString("title"));
+                        String source = meetings.getString("date");
+                        String[] sourceSplit= source.split("-");
+                        int anno= Integer.parseInt(sourceSplit[0]);
+                        int mese= Integer.parseInt(sourceSplit[1]);
+                        int giorno= Integer.parseInt(sourceSplit[2]);
+                        GregorianCalendar calendar = new GregorianCalendar();
+                        calendar.set(anno,mese-1,giorno);
+                        Date data1= calendar.getTime();
+                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+                        String   dayFormatted= myFormat.format(data1);
+                        txtDate.setText(dayFormatted);
+                        txtTitle.setText(meetings.getString("title"));
+
+                        String startTime = meetings.getString("start_time");
+
+                        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                        //Desired format: 24 hour format: Change the pattern as per the need
+                        DateFormat outputformat = new SimpleDateFormat("HH:mm");
+                        Date stInput = null;
+                        String stOutput = null;
+                        try{
+                            //Converting the input String to time
+                            stInput= df.parse(startTime);
+                            //Changing the format of date and storing it in String
+                            stOutput = outputformat.format(stInput);
+                            //Displaying the time
+                            txtStartTime.setText(stOutput);
+                        }catch(ParseException pe){
+                            pe.printStackTrace();
+                        }
+
+                        String endTime = meetings.getString("start_time");
+
+                        DateFormat endDf = new SimpleDateFormat("HH:mm:ss");
+                        //Desired format: 24 hour format: Change the pattern as per the need
+                        DateFormat endOutputformat = new SimpleDateFormat("HH:mm");
+                        Date enInput = null;
+                        String enOutput = null;
+                        try{
+                            //Converting the input String to time
+                            enInput= endDf.parse(endTime);
+                            //Changing the format of date and storing it in String
+                            enOutput = endOutputformat.format(enInput);
+                            //Displaying the time
+                            txtEndTime.setText(enOutput);
+                        }catch(ParseException pe){
+                            pe.printStackTrace();
+                        }
+                        txtAgenda.setText(meetings.getString("agenda"));
+
+
+                    }
+                }
+
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        },error -> {
+            error.printStackTrace();
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = sharedPreferences.getString("token","");
+                HashMap<String,String> map = new HashMap<>();
+                map.put("Authorization","Bearer "+token);
+                return map;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(request);
     }
+
+
 }

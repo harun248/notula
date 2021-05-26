@@ -158,16 +158,13 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
 
     @Override
     public int getItemCount() { return list.size(); }
-//    public int getItemCount() {
-//        return list.size();
-//    }
+
 
     class AttendancesHolder extends RecyclerView.ViewHolder{
         private TextView txtName,txtPosition;
         private ImageButton btnPostOption;
         public AttendancesHolder(@NonNull View itemView) {
             super(itemView);
-//            btnAttendaces= itemView.findViewById(R.id.btnAttendaces);
             txtName = itemView.findViewById(R.id.tvName);
             txtPosition = itemView.findViewById(R.id.tvPosition);
             btnPostOption = itemView.findViewById(R.id.btnPostOption);

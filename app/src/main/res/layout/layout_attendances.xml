@@ -5,6 +5,8 @@
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
         android:id="@+id/cvMeetings"

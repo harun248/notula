@@ -15,21 +15,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.meetings.DetailMeetingsActivity2"
-            android:label="@string/title_activity_detail_meetings2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".activities.meetings.DetailMeetingsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity
+            android:name=".activities.notulas.DetailNotulaActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activities.meetings.AddMeetingsActivity" />
         <activity android:name=".activities.attendances.EditAttendancesActivity" />
         <activity android:name=".activities.meetings.EditMeetingsActivity" />
         <activity android:name=".activities.attendances.AddAttendancesActivity" />
         <activity android:name=".activities.attendances.AttendacesActivity" />
         <activity android:name=".activities.ActivityDataKosong" />
-        <activity android:name=".activities.meetings.DetailMeetingsActivity" />
         <activity android:name=".activities.notulas.EditNotulaActivity" />
         <activity android:name=".activities.notulas.AddNotulaActivity" />
-        <activity
-            android:name=".activities.notulas.DetailNotulaActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity android:name=".activities.notulas.ListsNotulaActivity" />
         <activity
             android:name=".activities.MainActivity"

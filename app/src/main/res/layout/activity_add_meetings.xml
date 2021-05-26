@@ -126,7 +126,7 @@
                     android:id="@+id/tieStartTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tilLayoutLocation"
+
                     android:clickable="true"
                     android:drawableRight="@drawable/ic_baseline_access_time_24"
                     android:focusable="false"
@@ -153,7 +153,7 @@
                     android:id="@+id/tieEndTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tilLayoutLocation"
+
                     android:clickable="true"
                     android:drawableRight="@drawable/ic_baseline_access_time_24"
                     android:focusable="false"

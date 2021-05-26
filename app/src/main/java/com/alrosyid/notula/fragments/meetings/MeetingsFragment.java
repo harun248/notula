@@ -3,7 +3,6 @@ package com.alrosyid.notula.fragments.meetings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,6 @@ import android.widget.Button;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
-import com.alrosyid.notula.activities.notula.AddNotulaActivity;
 import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Meetings;
@@ -33,7 +31,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;

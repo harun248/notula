@@ -11,18 +11,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.MainActivity;
-import com.alrosyid.notula.activities.attendances.AddAttendancesActivity;
-import com.alrosyid.notula.activities.attendances.AttendacesActivity;
-import com.alrosyid.notula.activities.notula.AddNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.meetings.MeetingsFragment;
-import com.alrosyid.notula.models.Attendances;
 import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

@@ -19,6 +19,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +30,17 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DetailMeetingsActivity extends AppCompatActivity {
+    private TextInputLayout lytTitle, lytAgenda, lytStartTime, lytEndTime, lytDate;
+
+    private TextInputEditText txtTitle, txtAgenda, txtStartTime, txtEndTime, txtDate;
+
     private RecyclerView recyclerView;
     private ArrayList<Meetings> list;
     private SwipeRefreshLayout refreshLayout;

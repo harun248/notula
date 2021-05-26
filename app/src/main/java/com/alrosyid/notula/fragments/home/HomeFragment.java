@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.notula.AddNotulaActivity;
+import com.alrosyid.notula.activities.notulas.AddNotulaActivity;
 import com.alrosyid.notula.adapters.HomeAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;

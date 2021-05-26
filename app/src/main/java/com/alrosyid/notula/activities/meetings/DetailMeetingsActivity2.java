@@ -1,12 +1,6 @@
-package com.alrosyid.notula.activities.notula;
+package com.alrosyid.notula.activities.meetings;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.fragments.notulas.ActionsFragment;
@@ -14,14 +8,18 @@ import com.alrosyid.notula.fragments.notulas.DetailNotulasFragment;
 import com.alrosyid.notula.fragments.notulas.PointFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailNotulaActivity extends AppCompatActivity {
+public class DetailMeetingsActivity2 extends AppCompatActivity {
 
-
-
-    private int notulaId = 0, position =0;
+    private int meetingsId = 0, position =0;
     ViewPager viewPager;
     TabLayout tabLayout;
 
@@ -39,12 +37,12 @@ public class DetailNotulaActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        notulaId = getIntent().getIntExtra("notulaId",0);
+        meetingsId = getIntent().getIntExtra("meetingsId",0);
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
+        DetailMeetingsActivity2.SectionPagerAdapter adapter = new DetailMeetingsActivity2.SectionPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(DetailNotulasFragment.newInstance(), "Notula");
 
         adapter.addFragment(PointFragment.newInstance(), "Point");

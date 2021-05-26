@@ -22,11 +22,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.activities.attendances.AttendacesActivity;
 import com.alrosyid.notula.activities.meetings.DetailMeetingsActivity;
+import com.alrosyid.notula.activities.meetings.DetailMeetingsActivity2;
 import com.alrosyid.notula.activities.meetings.EditMeetingsActivity;
-import com.alrosyid.notula.activities.notula.EditNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
@@ -85,7 +84,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
         holder.detailMeetings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(((Activity)context), DetailMeetingsActivity.class);
+                Intent i = new Intent(((Activity)context), DetailMeetingsActivity2.class);
                 i.putExtra("meetingsId", meetings.getId());
                 i.putExtra("meetingsPosition",position);
                 context.startActivity(i);

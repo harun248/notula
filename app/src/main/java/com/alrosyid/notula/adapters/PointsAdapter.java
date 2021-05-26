@@ -1,10 +1,13 @@
 package com.alrosyid.notula.adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,17 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.MainActivity;
-import com.alrosyid.notula.activities.notulas.DetailNotulaActivity;
-import com.alrosyid.notula.activities.notulas.EditNotulaActivity;
+import com.alrosyid.notula.activities.attendances.EditAttendancesActivity;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.models.Notula;
+import com.alrosyid.notula.models.Attendances;
+import com.alrosyid.notula.models.Points;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,68 +38,60 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
+public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.PointsHolder>  {
 
     private Context context;
-    private ArrayList<Notula> list;
-    private ArrayList<Notula> listAll;
+    private ArrayList<Points> list;
+    private ArrayList<Points> listAll;
     private SharedPreferences preferences;
 
-    public HomeAdapter(Context context, ArrayList<Notula> list) {
+    public PointsAdapter(Context context,  ArrayList<Points> list) {
         this.context = context;
+
         this.list = list;
         this.listAll = new ArrayList<>(list);
-        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
     }
+
+//    public PointsAdapter(Context context, ArrayList<Points> arrayList) {
+//    }
 
 
     @NonNull
     @Override
-    public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula, parent, false);
-        return new HomeHolder(view);
+    public PointsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_points,parent,false);
+        return new PointsHolder(view);
 
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeHolder holder, int position) {
-        Notula notula = list.get(position);
-        holder.txtTitle.setText(notula.getTitle());
-        holder.txtMeetTitle.setText(notula.getMeetings_title());
-        holder.txtDate.setText(notula.getDate());
-        holder.detailNotula.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDetailNotulaActivity();
-            }
-            private void getDetailNotulaActivity() {
-
-                Intent i = new Intent(((MainActivity)context), DetailNotulaActivity.class);
-                i.putExtra("notulaId", notula.getId());
-                i.putExtra("position", position);
-                i.putExtra("title", notula.getTitle());
-                context.startActivity(i);
-            }
-        });
-        holder.btnPostOption.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(context, holder.btnPostOption);
+    public void onBindViewHolder(@NonNull PointsHolder holder, int position) {
+//        int num = position+1;
+//        holder.txtNumber.setText(+num + ". " + list[position]);
+//        num++;
+        Points points = list.get(position);
+        holder.txtPoints.setText(points.getPoints());
+        holder.txtNumber.setText(String.valueOf(position+1+" .") );
+        holder.btnPostOption.setOnClickListener(v->{
+            PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
             popupMenu.inflate(R.menu.menu_options);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
 
-                    switch (item.getItemId()) {
+                    switch (item.getItemId()){
                         case R.id.item_edit: {
-                            Intent i = new Intent(((MainActivity) context), EditNotulaActivity.class);
-                            i.putExtra("notulaId", notula.getId());
-                            i.putExtra("position", position);
-                            i.putExtra("title", notula.getTitle());
+                            Intent i = new Intent(((Activity)context), EditAttendancesActivity.class);
+                            i.putExtra("pointsId",points.getId());
+                            i.putExtra("position",position);
+                            i.putExtra("points",points.getPoints());
                             context.startActivity(i);
                             return true;
                         }
                         case R.id.item_delete: {
-                            deleteNotula(notula.getId(), position);
+                            deleteAttendances(points.getId(),position);
                             return true;
                         }
                     }
@@ -110,43 +104,44 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     }
 
-    private void deleteNotula(int notulaId, int position) {
+    private void deleteAttendances(int attendancesId,int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Konfirmasi");
         builder.setMessage("Hapus dari daftar hadir?");
         builder.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_NOTULA, response -> {
+                StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_ATTENDANCES, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")) {
+                        if (object.getBoolean("success")){
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
                             listAll.clear();
                             listAll.addAll(list);
+                            Toast.makeText(context, "Hapus berhasil", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                }, error -> {
+                },error -> {
 
-                }) {
+                }){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token", "");
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("Authorization", "Bearer " + token);
+                        String token = preferences.getString("token","");
+                        HashMap<String,String> map = new HashMap<>();
+                        map.put("Authorization","Bearer "+token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("id", notulaId + "");
+                        HashMap<String,String> map = new HashMap<>();
+                        map.put("id",attendancesId+"");
                         return map;
                     }
                 };
@@ -165,30 +160,23 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         builder.show();
     }
 
-    private final int limit = 3;
-
-    @Override
-    public int getItemCount() {
-        if (list.size() > limit) {
-            return limit;
-        } else {
-            return list.size();
-        }
-
+    public Object getItem(int position) {
+        return this.list.get(position);
     }
+    @Override
+    public int getItemCount() { return list.size(); }
+//    public int getItemCount() {
+//        return list.size();
+//    }
 
-
-    class HomeHolder extends RecyclerView.ViewHolder {
-        private TextView txtTitle, txtMeetTitle, txtDate;
+    class PointsHolder extends RecyclerView.ViewHolder{
+        private TextView txtNumber,txtPoints;
         private ImageButton btnPostOption;
-        private CardView detailNotula;
-
-        public HomeHolder(@NonNull View itemView) {
+        public PointsHolder(@NonNull View itemView) {
             super(itemView);
-            detailNotula = itemView.findViewById(R.id.cvNotula);
-            txtTitle = itemView.findViewById(R.id.tvTitle);
-            txtMeetTitle = itemView.findViewById(R.id.tvMeetTitle);
-            txtDate = itemView.findViewById(R.id.tvNotulatDate);
+//            btnAttendaces= itemView.findViewById(R.id.btnAttendaces);
+            txtNumber = itemView.findViewById(R.id.tvNumber);
+            txtPoints = itemView.findViewById(R.id.tvPoints);
             btnPostOption = itemView.findViewById(R.id.btnPostOption);
             btnPostOption.setVisibility(View.VISIBLE);
         }

@@ -1,6 +1,9 @@
 package com.alrosyid.notula.models;
 
 public class Attendances {
+    private int id,user_id, meetings_id;
+    private String name,position;
+
     public int getId() {
         return id;
     }
@@ -41,6 +44,5 @@ public class Attendances {
         this.position = position;
     }
 
-    private int id,user_id, meetings_id;
-    private String name,position;
+
 }

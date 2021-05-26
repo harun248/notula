@@ -21,8 +21,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.activities.MainActivity;
-import com.alrosyid.notula.activities.notula.DetailNotulaActivity;
-import com.alrosyid.notula.activities.notula.EditNotulaActivity;
+import com.alrosyid.notula.activities.notulas.DetailNotulaActivity;
+import com.alrosyid.notula.activities.notulas.EditNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
@@ -34,12 +34,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import java.util.Map;

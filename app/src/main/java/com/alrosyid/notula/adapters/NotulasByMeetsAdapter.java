@@ -21,9 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
-import com.alrosyid.notula.activities.notula.DetailNotulaActivity;
-import com.alrosyid.notula.activities.notula.EditNotulaActivity;
-import com.alrosyid.notula.activities.notula.ListsNotulaActivity;
+import com.alrosyid.notula.activities.notulas.DetailNotulaActivity;
+import com.alrosyid.notula.activities.notulas.EditNotulaActivity;
+import com.alrosyid.notula.activities.notulas.ListsNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;

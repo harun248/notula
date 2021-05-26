@@ -2,6 +2,10 @@ package com.alrosyid.notula.models;
 
 public class Notula {
 
+    private String title,meet_id,meetings_title,date;
+    private User user;
+    private Meetings meetings;
+
     private int id,user_id;
 
     public int getId() {
@@ -59,10 +63,6 @@ public class Notula {
     public void setUser(User user) {
         this.user = user;
     }
-
-    private String title,meet_id,meetings_title,date;
-    private User user;
-    private Meetings meetings;
 
     public Meetings getMeetings() {
         return meetings;

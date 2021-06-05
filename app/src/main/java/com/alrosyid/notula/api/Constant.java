@@ -11,6 +11,7 @@ public class Constant {
     public static final String LOGOUT = HOME+"/logout";
     public static final String REGISTER = HOME+"/register";
     public static final String ACCOUNT = HOME+"/myAccount";
+    public static final String CHANGE_PASSWORD = HOME+"/changePassword";
     public static final String UPDATE_USER = HOME+"/user/update";
     //Meetings
     public static final String MEETING = HOME+"/meetings";

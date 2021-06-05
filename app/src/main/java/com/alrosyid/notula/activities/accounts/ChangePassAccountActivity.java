@@ -11,11 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.AuthActivity;
 import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
-import com.alrosyid.notula.models.Attendances;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,25 +21,24 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditAccountsActivity extends AppCompatActivity {
+public class ChangePassAccountActivity extends AppCompatActivity {
     private Button btnSave;
-    private TextInputLayout lytName, lytEmail;
-    private TextInputEditText txtName, txtEmail;
+    private TextInputLayout lytPassword, lytConfirmPass;
+    private TextInputEditText txtPassword, txtConfirmPass;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_account);
+        setContentView(R.layout.activity_change_pass_account);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.edit_account);
+        getSupportActionBar().setTitle(R.string.change_password);
         init();
     }
     private void init(){
@@ -50,10 +46,10 @@ public class EditAccountsActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         btnSave = findViewById(R.id.btnSave);
-        lytName = findViewById(R.id.tilName);
-        lytEmail = findViewById(R.id.tilEmail);
-        txtName = findViewById(R.id.tieName);
-        txtEmail = findViewById(R.id.tieEmail);
+        lytPassword = findViewById(R.id.tilPassword);
+        lytConfirmPass = findViewById(R.id.tilConfirmPass);
+        txtPassword = findViewById(R.id.tiePass);
+        txtConfirmPass = findViewById(R.id.tieConfirmPass);
         btnSave.setOnClickListener(v -> {
             if (validate()){
                 update();
@@ -61,75 +57,48 @@ public class EditAccountsActivity extends AppCompatActivity {
         });
 
 
-        getUser();
-
-
     }
     private boolean validate (){
-        if (txtName.getText().toString().isEmpty()){
-            lytName.setErrorEnabled(true);
-            lytName.setError(getString(R.string.required));
+        if (txtPassword.getText().toString().isEmpty()){
+            lytPassword.setErrorEnabled(true);
+            lytPassword.setError(getString(R.string.required));
             return false;
         }
-        if (txtEmail.getText().toString().isEmpty()){
-            lytEmail.setErrorEnabled(true);
-            lytEmail.setError(getString(R.string.required));
+        if (txtConfirmPass.getText().toString().isEmpty()){
+            lytConfirmPass.setErrorEnabled(true);
+            lytConfirmPass.setError(getString(R.string.required));
+            return false;
+        }
+
+        if (txtPassword.getText().toString().length()<8){
+            lytPassword.setErrorEnabled(true);
+            lytPassword.setError(getString(R.string.required_password_characters));
+            return false;
+        }
+        if (!txtConfirmPass.getText().toString().equals(txtPassword.getText().toString())){
+            lytConfirmPass.setErrorEnabled(true);
+            lytConfirmPass.setError(getString(R.string.password_does_not_match));
             return false;
         }
 
 
         return true;
     }
-    private void getUser() {
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res->{
-
-            try {
-                JSONObject object = new JSONObject(res);
-                if (object.getBoolean("success")){
-
-                    JSONObject user = object.getJSONObject("user");
-                    txtName.setText(user.getString("name"));
-                    txtEmail.setText(user.getString("email"));
-
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        },error -> {
-            error.printStackTrace();
-        }){
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
-                return map;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(EditAccountsActivity.this);
-        queue.add(request);
-    }
 
     private void update() {
         dialog.setMessage(getString(R.string.update));
         dialog.show();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_USER, response -> {
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.CHANGE_PASSWORD, response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("name",txtName.getText().toString().trim());
-                    editor.putString("email",txtEmail.getText().toString().trim());
+                    editor.putString("password",txtPassword.getText().toString().trim());
 
                     editor.apply();
-                    Intent restarter = new Intent(EditAccountsActivity.this, MainActivity.class);
+                    Intent restarter = new Intent(ChangePassAccountActivity.this, MainActivity.class);
                     startActivity(restarter);
-                    Toast.makeText(this, R.string.update_successfully, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.change_successfully, Toast.LENGTH_SHORT).show();
                     finish();
 
                 }
@@ -154,13 +123,12 @@ public class EditAccountsActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put("name",txtName.getText().toString());
-                map.put("email",txtEmail.getText().toString());
+                map.put("password",txtPassword.getText().toString());
                 return map;
             }
         };
 
-        RequestQueue queue = Volley.newRequestQueue(EditAccountsActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(ChangePassAccountActivity.this);
         queue.add(request);
     }
 

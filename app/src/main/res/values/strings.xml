@@ -75,6 +75,8 @@
     <string name="change_password">Change Password</string>
     <string name="want_to_logout">Do you want to logout?</string>
     <string name="logout">Logout</string>
+    <string name="new_password">New Password</string>
+    <string name="change_successfully">Change Password Successfully</string>
 
 
     <string-array name="meetings_status">

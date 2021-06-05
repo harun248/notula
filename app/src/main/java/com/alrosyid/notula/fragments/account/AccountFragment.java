@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.AuthActivity;
 import com.alrosyid.notula.activities.MainActivity;
+import com.alrosyid.notula.activities.accounts.ChangePassAccountActivity;
 import com.alrosyid.notula.activities.accounts.EditAccountsActivity;
 import com.alrosyid.notula.activities.attendances.EditAttendancesActivity;
 import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
@@ -42,23 +43,26 @@ import java.util.Map;
 
 public class AccountFragment extends Fragment {
     private View view;
-    private TextView txtName,txtEmail;
+    private TextView txtName, txtEmail;
     private SharedPreferences sharedPreferences;
-private Button btnEdit, btnChangePass;
+    private Button btnEdit, btnChangePass;
 
 
-    public AccountFragment(){}
+    public AccountFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_account,container,false);
+        view = inflater.inflate(R.layout.fragment_account, container, false);
         init();
         return view;
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-btnEdit=view.findViewById(R.id.btnEdit);
+        btnEdit = view.findViewById(R.id.btnEdit);
+        btnChangePass = view.findViewById(R.id.btnChangePassword);
         txtName = view.findViewById(R.id.tieName);
         txtEmail = view.findViewById(R.id.tieEmail);
         setHasOptionsMenu(true);
@@ -80,15 +84,30 @@ btnEdit=view.findViewById(R.id.btnEdit);
             }
         });
 
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getChangePassAccountActivity();
+
+            }
+
+            private void getChangePassAccountActivity() {
+
+                Intent i = new Intent(getActivity(), ChangePassAccountActivity.class);
+
+                startActivity(i);
+            }
+        });
+
 
     }
 
     private void getUser() {
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res->{
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res -> {
 
             try {
                 JSONObject object = new JSONObject(res);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
 
                     JSONObject user = object.getJSONObject("user");
 
@@ -102,15 +121,15 @@ btnEdit=view.findViewById(R.id.btnEdit);
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -118,16 +137,17 @@ btnEdit=view.findViewById(R.id.btnEdit);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_account,menu);
+        inflater.inflate(R.menu.menu_account, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.item_logout: {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setMessage(R.string.want_to_logout);
@@ -150,31 +170,31 @@ btnEdit=view.findViewById(R.id.btnEdit);
         return super.onOptionsItemSelected(item);
     }
 
-    private void logout(){
-        StringRequest request = new StringRequest(Request.Method.GET,Constant.LOGOUT,res->{
+    private void logout() {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LOGOUT, res -> {
 
             try {
                 JSONObject object = new JSONObject(res);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
-                    startActivity(new Intent(((MainActivity)getContext()), AuthActivity.class));
-                    ((MainActivity)getContext()).finish();
+                    startActivity(new Intent(((MainActivity) getContext()), AuthActivity.class));
+                    ((MainActivity) getContext()).finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -186,7 +206,7 @@ btnEdit=view.findViewById(R.id.btnEdit);
     @Override
     public void onHiddenChanged(boolean hidden) {
 
-        if (!hidden){
+        if (!hidden) {
             getUser();
         }
 

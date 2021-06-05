@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.notulas.PointFragment">
@@ -8,45 +9,56 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:layout_height="wrap_content">
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipePoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="60dp"/>
+            </RelativeLayout>
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         <RelativeLayout
             android:id="@+id/layoutBtnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:paddingRight="20dp"
-            android:gravity="right">
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:paddingBottom="30dp">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnAdd"
-                android:layout_width="70dp"
-                android:layout_gravity="center"
-                android:layout_height="30dp"
-                android:background="@drawable/round"
-                android:textAllCaps="false"
-                android:text="tambah"
-                android:textColor="#FFF"
-                android:textSize="12dp"
-                />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/round_accent"
+                android:src="@drawable/ic_baseline_add_24" />
 
         </RelativeLayout>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:id="@+id/swipePoints"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layoutBtnAdd">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/recyclerPoints"
-                android:layout_marginTop="20dp"
-                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
     </RelativeLayout>
+
 
 </FrameLayout>

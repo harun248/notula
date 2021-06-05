@@ -1,18 +1,24 @@
 package com.alrosyid.notula.activities.attendances;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.activities.MainActivity;
+import com.alrosyid.notula.activities.accounts.EditAccountsActivity;
+import com.alrosyid.notula.activities.meetings.DetailMeetingsActivity;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.fragments.attendances.ListAttendancesFragments;
+import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
+import com.alrosyid.notula.fragments.meetings.MeetingsFragment;
 import com.alrosyid.notula.models.Attendances;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,7 +47,8 @@ public class EditAttendancesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_attendances);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Ubah daftar hadir rapat");
+        getSupportActionBar().setTitle(R.string.edit_attendances
+        );
         init();
     }
     private void init(){
@@ -65,16 +72,18 @@ public class EditAttendancesActivity extends AppCompatActivity {
         getAttendances();
 
 
+
+
     }
     private boolean validate (){
         if (txtName.getText().toString().isEmpty()){
             layoutName.setErrorEnabled(true);
-            layoutName.setError("Nama Wajib di isi");
+            layoutName.setError(getString(R.string.required));
             return false;
         }
         if (txtPosition.getText().toString().isEmpty()){
             layoutPosition.setErrorEnabled(true);
-            layoutPosition.setError("Jabatan wajib di isi");
+            layoutPosition.setError(getString(R.string.required));
             return false;
         }
 
@@ -124,21 +133,21 @@ public class EditAttendancesActivity extends AppCompatActivity {
     }
 
     private void update() {
-        dialog.setMessage("Simpan");
+        dialog.setMessage(getString(R.string.update));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_ATTENDANCES, response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    Attendances attendances = ListAttendancesFragments.arrayList.get(position);
-
+                    Attendances attendances = AttendancesListFragments.arrayList.get(position);
 
                     attendances.setName(txtName.getText().toString());
                     attendances.setPosition(txtPosition.getText().toString());
-                    ListAttendancesFragments.arrayList.set(position,attendances);
-                    ListAttendancesFragments.recyclerView.getAdapter().notifyItemChanged(position);
-                    ListAttendancesFragments.recyclerView.getAdapter().notifyDataSetChanged();
-                    Toast.makeText(this, "Pembaharuan tersimpan", Toast.LENGTH_SHORT).show();
+                    AttendancesListFragments.arrayList.set(position,attendances);
+                    AttendancesListFragments.recyclerView.getAdapter().notifyItemChanged(position);
+                    AttendancesListFragments.recyclerView.getAdapter().notifyDataSetChanged();
+
+                    Toast.makeText(this, R.string.update_successfully, Toast.LENGTH_SHORT).show();
                     finish();
 
                 }

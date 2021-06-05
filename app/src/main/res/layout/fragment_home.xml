@@ -1,141 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="145dp"
-        tools:ignore="MissingConstraints"
-        android:background="@drawable/round_cropped"/>
+    android:background="@color/grey"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:overScrollMode="always"
+    android:scrollbarStyle="insideInset"
+    android:scrollbars="vertical">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeHome"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
+            android:layout_height="match_parent">
 
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Notula Karang Taruna 06"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="0dp"
-                android:textColor="@color/colorWhite"/>
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical">
 
-
-
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/layoutMeetings"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingLeft="6dp">
+                    android:layout_height="wrap_content">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/hallo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="Hallo,"
-                            android:textStyle="bold"
-                            android:textColor="@color/whiteCardColor"
-                            android:textSize="16sp" />
-                        <TextView
-                            android:id="@+id/tvName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_toRightOf="@+id/hallo"
-                            android:text=""
-                            android:textStyle="bold"
-                            android:textColor="@color/whiteCardColor"
-                            android:textSize="16sp" />
-                    </RelativeLayout>
-
-
-
-                    <TextView
-                        android:id="@+id/tvEmail"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/LayoutMeetings"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/colorWhite"
-                        android:textSize="12sp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
 
-                </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Rapat Yang akan datang"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="15dp" />
 
 
-
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Daftar Notula Terkini"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="15dp"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/colorBlack"/>
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:layout_width="match_parent"
-                android:id="@+id/swipeHome"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/recyclerHome"
-                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
 
 
 
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    </LinearLayout>
 
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerMeetings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/LayoutMeetings"></androidx.recyclerview.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/LayoutNotulas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recyclerMeetings"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTitleNotula"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Notula Terkini"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="15dp" />
 
 
+                        </LinearLayout>
 
 
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerNotulas"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/LayoutNotulas"></androidx.recyclerview.widget.RecyclerView>
+
+                </RelativeLayout>
+            </ScrollView>
 
 
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:gravity="right">
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_baseline_add_24" />
-        </RelativeLayout>
+
     </RelativeLayout>
 
 
 </RelativeLayout>
+
+

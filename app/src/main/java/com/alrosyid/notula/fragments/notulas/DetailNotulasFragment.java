@@ -49,7 +49,7 @@ import java.util.Map;
 public class DetailNotulasFragment extends Fragment {
     private TextInputLayout layoutTitle, layoutMeetingsTitle, layoutDate;
     private TextInputEditText txtTitle, txtMeetingsTitle, txtDate;
-    private int notulaId = 0, position =0;
+    private int notulasId = 0, position =0;
     private View view;
     private SharedPreferences sharedPreferences;
     public static DetailNotulasFragment newInstance() {
@@ -91,8 +91,8 @@ public class DetailNotulasFragment extends Fragment {
 
 
     private void  getDetailNotulas() {
-        Integer id_notula = getActivity().getIntent().getIntExtra("notulaId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_NOTULA+ (id_notula), response -> {
+        Integer id_notula = getActivity().getIntent().getIntExtra("notulasId",0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTULA+ (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
@@ -100,21 +100,22 @@ public class DetailNotulasFragment extends Fragment {
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("notulas"));
                     for (int i = 0; i < array.length(); i++) {
-                        JSONObject attendance = array.getJSONObject(i);
+                        JSONObject notula = array.getJSONObject(i);
 
-                        txtTitle.setText(attendance.getString("title"));
-                        txtMeetingsTitle.setText(attendance.getString("meetings_title"));
-                        String source = attendance.getString("date");
-                        String[] sourceSplit= source.split("-");
-                        int anno= Integer.parseInt(sourceSplit[0]);
-                        int mese= Integer.parseInt(sourceSplit[1]);
-                        int giorno= Integer.parseInt(sourceSplit[2]);
-                        GregorianCalendar calendar = new GregorianCalendar();
-                        calendar.set(anno,mese-1,giorno);
-                        Date data1= calendar.getTime();
-                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
-                        String   dayFormatted= myFormat.format(data1);
-                        txtDate.setText(dayFormatted);
+                        txtTitle.setText(notula.getString("title"));
+                        txtMeetingsTitle.setText(notula.getString("meetings_title"));
+                        txtDate.setText(notula.getString("date"));
+//                        String source = notula.getString("date");
+//                        String[] sourceSplit= source.split("-");
+//                        int anno= Integer.parseInt(sourceSplit[0]);
+//                        int mese= Integer.parseInt(sourceSplit[1]);
+//                        int giorno= Integer.parseInt(sourceSplit[2]);
+//                        GregorianCalendar calendar = new GregorianCalendar();
+//                        calendar.set(anno,mese-1,giorno);
+//                        Date data1= calendar.getTime();
+//                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+//                        String   dayFormatted= myFormat.format(data1);
+//                        txtDate.setText(dayFormatted);
 
 
                     }

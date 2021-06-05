@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.attendances.AddAttendancesActivity">
@@ -14,6 +15,8 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/colorAccent"
             android:id="@+id/tilName"
             android:layout_below="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -24,7 +27,9 @@
                 android:id="@+id/tieName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama"
+                android:hint="@string/name"
+
+                android:padding="10dp"
                 android:inputType="text"
                 android:textSize="15sp" />
 
@@ -32,6 +37,8 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/colorAccent"
             android:id="@+id/tilPosition"
             android:layout_below="@+id/tilName"
             android:layout_width="match_parent"
@@ -43,7 +50,9 @@
                 android:id="@+id/tiePosition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Jabatan"
+                android:hint="@string/position"
+
+                android:padding="10dp"
                 android:inputType="text"
                 android:textSize="15sp" />
 
@@ -57,7 +66,7 @@
             android:layout_height="42dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/round"
-            android:text="Simpan"
+            android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="#FFF"
             android:textSize="17dp" />

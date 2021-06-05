@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -20,9 +21,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.activities.attendances.EditAttendancesActivity;
+import com.alrosyid.notula.activities.notulas.EditNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Attendances;
+import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,46 +70,43 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
     @Override
     public void onBindViewHolder(@NonNull AttendancesHolder holder, int position) {
         Attendances attendances = list.get(position);
-//        Meetings meets = meetsList.get(position);
-        holder.txtName.setText(attendances.getName());
-        holder.txtPosition.setText(attendances.getPosition());
+        if(attendances.getId()==preferences.getInt("id",0)){
+            holder.txtName.setText("Data Kosong");
+        }
+        else{
+            holder.txtName.setText(attendances.getName());
+            holder.txtPosition.setText(attendances.getPosition());
 
-        holder.btnPostOption.setOnClickListener(v->{
-            PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
-            popupMenu.inflate(R.menu.menu_options);
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onMenuItemClick(MenuItem item) {
+                public void onClick(View v) {
+                    Intent i = new Intent(((Activity)context), EditAttendancesActivity.class);
+                    i.putExtra("attendancesId",attendances.getId());
+                    i.putExtra("position",position);
+                    i.putExtra("positions",attendances.getPosition());
+                    i.putExtra("name",attendances.getName());
+                    context.startActivity(i);
 
-                    switch (item.getItemId()){
-                        case R.id.item_edit: {
-                            Intent i = new Intent(((Activity)context), EditAttendancesActivity.class);
-                            i.putExtra("attendancesId",attendances.getId());
-                            i.putExtra("position",position);
-                            i.putExtra("positions",attendances.getPosition());
-                            i.putExtra("name",attendances.getName());
-                            context.startActivity(i);
-                            return true;
-                        }
-                        case R.id.item_delete: {
-                            deleteAttendances(attendances.getId(),position);
-                            return true;
-                        }
-                    }
-
-                    return false;
                 }
             });
-            popupMenu.show();
-        });
+            holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteAttendances(attendances.getId(),position);
+
+                }
+            });
+
+
+        }
 
     }
 
     private void deleteAttendances(int attendancesId,int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Konfirmasi");
-        builder.setMessage("Hapus dari daftar hadir?");
-        builder.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.confirm);
+        builder.setMessage(R.string.delete_dialog);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_ATTENDANCES, response -> {
@@ -117,7 +119,7 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
                             notifyDataSetChanged();
                             listAll.clear();
                             listAll.addAll(list);
-                            Toast.makeText(context, "Hapus berhasil", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.delete_successfully, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -146,7 +148,7 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
                 queue.add(request);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -158,17 +160,50 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
 
     @Override
     public int getItemCount() { return list.size(); }
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
 
+            ArrayList<Attendances> filteredList = new ArrayList<>();
+            if (constraint.toString().isEmpty()){
+                filteredList.addAll(listAll);
+            } else {
+                for (Attendances attendances : listAll){
+                    if(attendances.getName().toLowerCase().contains(constraint.toString().toLowerCase())
+                            || attendances.getPosition().toLowerCase().contains(constraint.toString().toLowerCase())
+                    ){
+                        filteredList.add(attendances);
+                    }
+                }
+
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return  results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((Collection<? extends Attendances>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public  Filter getFilter() {
+        return filter;
+    }
 
     class AttendancesHolder extends RecyclerView.ViewHolder{
         private TextView txtName,txtPosition;
-        private ImageButton btnPostOption;
+        private ImageButton btnEdit, btnDelete;
         public AttendancesHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.tvName);
             txtPosition = itemView.findViewById(R.id.tvPosition);
-            btnPostOption = itemView.findViewById(R.id.btnPostOption);
-            btnPostOption.setVisibility(View.VISIBLE);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 

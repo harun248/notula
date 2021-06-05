@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.fragments.attendances.ListAttendancesFragments;
+import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
 import com.alrosyid.notula.models.Attendances;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -40,7 +40,7 @@ public class AddAttendancesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_attendances);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Tambah daftar hadir rapat");
+        getSupportActionBar().setTitle(R.string.add_attendances);
 
         init();
     }
@@ -65,23 +65,24 @@ public class AddAttendancesActivity extends AppCompatActivity {
 
 
     }
-//validasi
+
+    //validasi
     private boolean validate() {
         if (txtName.getText().toString().isEmpty()) {
             layoutName.setErrorEnabled(true);
-            layoutName.setError("Nama Wajib di isi");
+            layoutName.setError(getString(R.string.required));
             return false;
         }
         if (txtPosition.getText().toString().isEmpty()) {
             layoutPosition.setErrorEnabled(true);
-            layoutPosition.setError("Jabatan wajib di isi");
+            layoutPosition.setError(getString(R.string.required));
             return false;
         }
         return true;
     }
 
     private void create() {
-        dialog.setMessage("Tambah kehadiran..");
+        dialog.setMessage(getString(R.string.save));
         dialog.show();
         String nameText = txtName.getText().toString();
         String positionText = txtPosition.getText().toString();
@@ -102,11 +103,11 @@ public class AddAttendancesActivity extends AppCompatActivity {
                     attendances.setPosition(attendancesObject.getString("position"));
 
 
-                    ListAttendancesFragments.arrayList.add(0, attendances);
-                    ListAttendancesFragments.recyclerView.getAdapter().notifyItemInserted(0);
-                    ListAttendancesFragments.recyclerView.getAdapter().notifyDataSetChanged();
+                    AttendancesListFragments.arrayList.add(0, attendances);
+                    AttendancesListFragments.recyclerView.getAdapter().notifyItemInserted(0);
+                    AttendancesListFragments.recyclerView.getAdapter().notifyDataSetChanged();
 
-                    Toast.makeText(this, "Daftar kehaditan di tambah", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.added_successfully, Toast.LENGTH_SHORT).show();
                     finish();
 
 

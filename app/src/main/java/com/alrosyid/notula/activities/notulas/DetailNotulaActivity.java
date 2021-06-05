@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.fragments.notulas.ActionsFragment;
 import com.alrosyid.notula.fragments.notulas.DetailNotulasFragment;
+import com.alrosyid.notula.fragments.notulas.FollowUpFragment;
 import com.alrosyid.notula.fragments.notulas.PointFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DetailNotulaActivity extends AppCompatActivity {
 
-    private int notulaId = 0, position =0;
+    private int notulasId = 0, position =0;
     ViewPager viewPager;
     TabLayout tabLayout;
 
@@ -29,7 +29,7 @@ public class DetailNotulaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_notula);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Detail Notula");
+        getSupportActionBar().setTitle(R.string.notula_detail);
 
 
         viewPager = findViewById(R.id.view_pager);
@@ -37,17 +37,17 @@ public class DetailNotulaActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        notulaId = getIntent().getIntExtra("notulaId",0);
+        notulasId = getIntent().getIntExtra("notulasId",0);
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(DetailNotulasFragment.newInstance(), "Notula");
+        adapter.addFragment(DetailNotulasFragment.newInstance(), getString(R.string.notula));
 
-        adapter.addFragment(PointFragment.newInstance(), "Point");
+        adapter.addFragment(PointFragment.newInstance(), getString(R.string.points));
 
-        adapter.addFragment(ActionsFragment.newInstance(), "Aksi");
+        adapter.addFragment(FollowUpFragment.newInstance(), getString(R.string.follow_up));
         viewPager.setAdapter(adapter);
     }
 

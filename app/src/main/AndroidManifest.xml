@@ -20,19 +20,25 @@
         <activity
             android:name=".activities.notulas.DetailNotulaActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.followups.DetailFollowUpActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activities.meetings.AddMeetingsActivity" />
         <activity android:name=".activities.attendances.EditAttendancesActivity" />
         <activity android:name=".activities.meetings.EditMeetingsActivity" />
         <activity android:name=".activities.attendances.AddAttendancesActivity" />
-        <activity android:name=".activities.attendances.AttendacesActivity" />
-        <activity android:name=".activities.ActivityDataKosong" />
         <activity android:name=".activities.notulas.EditNotulaActivity" />
-        <activity android:name=".activities.notulas.AddNotulaActivity" />
+        <activity android:name=".activities.notulas.AddNotulasActivity" />
+        <activity android:name=".activities.points.AddPointsActivity" />
+        <activity android:name=".activities.points.EditPointsActivity" />
+        <activity android:name=".activities.followups.AddFollowUpActivity" />
+        <activity android:name=".activities.followups.EditFollowUpActivity" />
 
-        <activity android:name=".activities.notulas.ListsNotulaActivity" />
+        <activity android:name=".activities.accounts.EditAccountsActivity" />
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".activities.AuthActivity"
             android:label="@string/app_name"

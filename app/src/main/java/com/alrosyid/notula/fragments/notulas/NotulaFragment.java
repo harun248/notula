@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,16 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.notulas.AddNotulaActivity;
+import com.alrosyid.notula.activities.notulas.AddNotulasActivity;
 import com.alrosyid.notula.adapters.NotulasAdapter;
 import com.alrosyid.notula.api.Constant;
+import com.alrosyid.notula.fragments.meetings.DetailMeetingsFragment;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +51,7 @@ public class NotulaFragment extends Fragment {
     private NotulasAdapter notulasAdapter;
     private SharedPreferences sharedPreferences;
 
-    FloatingActionButton addNotula;
+    ImageButton addNotula;
     public NotulaFragment(){}
 
     @Nullable
@@ -78,19 +79,7 @@ public class NotulaFragment extends Fragment {
         });
 
 
-       addNotula =(FloatingActionButton)view.findViewById(R.id.fab);
-        addNotula.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getAddNotulaActivity();
 
-            }
-
-            private void getAddNotulaActivity() {
-                Intent intent = new Intent(getActivity(), AddNotulaActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
     }
@@ -113,18 +102,19 @@ public class NotulaFragment extends Fragment {
                         notula.setMeetings_title(notulaObject.getString("meetings_title"));
                         notula.setTitle(notulaObject.getString("title"));
                         //covert string to date
-                        String source = notulaObject.getString("date");
-                        String[] sourceSplit= source.split("-");
-                        int anno= Integer.parseInt(sourceSplit[0]);
-                        int mese= Integer.parseInt(sourceSplit[1]);
-                        int giorno= Integer.parseInt(sourceSplit[2]);
-                        GregorianCalendar calendar = new GregorianCalendar();
-                        calendar.set(anno,mese-1,giorno);
-                        Date data1= calendar.getTime();
-                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
-
-                        String   dayFormatted= myFormat.format(data1);
-                        notula.setDate(dayFormatted);
+                        notula.setDate(notulaObject.getString("date"));
+//                        String source = notulaObject.getString("date");
+//                        String[] sourceSplit= source.split("-");
+//                        int anno= Integer.parseInt(sourceSplit[0]);
+//                        int mese= Integer.parseInt(sourceSplit[1]);
+//                        int giorno= Integer.parseInt(sourceSplit[2]);
+//                        GregorianCalendar calendar = new GregorianCalendar();
+//                        calendar.set(anno,mese-1,giorno);
+//                        Date data1= calendar.getTime();
+//                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+//
+//                        String   dayFormatted= myFormat.format(data1);
+//                        notula.setDate(dayFormatted);
 
 
 

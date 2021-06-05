@@ -1,22 +1,30 @@
 package com.alrosyid.notula.fragments.notulas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.activities.notulas.AddNotulasActivity;
+import com.alrosyid.notula.activities.points.AddPointsActivity;
 import com.alrosyid.notula.adapters.NotulasAdapter;
 import com.alrosyid.notula.adapters.PointsAdapter;
 import com.alrosyid.notula.api.Constant;
@@ -48,6 +56,7 @@ public class PointFragment extends Fragment {
     public static ArrayList<Points> arrayList;
     private SwipeRefreshLayout refreshLayout;
     private PointsAdapter pointsAdapter;
+    private ImageButton addPoints;
     private SharedPreferences sharedPreferences;
 
     public PointFragment() {
@@ -87,13 +96,30 @@ public class PointFragment extends Fragment {
                 getPoints();
             }
         });
+
+        addPoints =(ImageButton)view.findViewById(R.id.btnAdd);
+        addPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAddPointsActivity();
+
+            }
+
+            private void getAddPointsActivity() {
+
+                Integer id_notulas = getActivity().getIntent().getIntExtra("notulasId", 0);
+                Intent i = new Intent(getActivity(), AddPointsActivity.class);
+                i.putExtra("notulasId", (id_notulas));
+                startActivity(i);
+            }
+        });
     }
 
     private void getPoints() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
-
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.POINTS, response -> {
+        Integer id_notula = getActivity().getIntent().getIntExtra("notulasId",0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_POINTS+ (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
@@ -137,7 +163,27 @@ public class PointFragment extends Fragment {
         queue.add(request);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search,menu);
+        MenuItem item = menu.findItem(R.id.search);
 
+        SearchView searchView = (SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                pointsAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
 
 

@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
@@ -37,8 +39,8 @@ import java.util.Map;
 
 public class DetailMeetingsFragment extends Fragment {
 
-    private TextInputLayout layoutTitle,  layoutDate ,layoutStartTime ,layoutEndTime ,layoutAgenda;
-    private TextInputEditText txtTitle, txtDate, txtStartTime, txtEndTime, txtAgenda;
+    private TextInputLayout layoutTitle,  layoutDate ,layoutStartTime ,layoutEndTime ,layoutAgenda,layoutLocation;
+    private TextInputEditText txtTitle, txtDate, txtStartTime, txtEndTime, txtAgenda,txtLocation;
     private int notulaId = 0, position =0;
     private View view;
     private SharedPreferences sharedPreferences;
@@ -67,11 +69,13 @@ public class DetailMeetingsFragment extends Fragment {
         layoutStartTime =  view.findViewById(R.id.tilStartTime);
         layoutEndTime =  view.findViewById(R.id.tilEndTime);
         layoutAgenda =  view.findViewById(R.id.tilAgenda);
+        layoutLocation =  view.findViewById(R.id.tilLocation);
         txtTitle =  view.findViewById(R.id.tieTitle);
         txtDate =  view.findViewById(R.id.tieDate);
         txtStartTime =  view.findViewById(R.id.tieStartTime);
         txtEndTime =  view.findViewById(R.id.tieEndTime);
         txtAgenda =  view.findViewById(R.id.tieAgenda);
+        txtLocation =  view.findViewById(R.id.tieLocation);
 
 
         setHasOptionsMenu(true);
@@ -97,17 +101,18 @@ public class DetailMeetingsFragment extends Fragment {
                         JSONObject meetings = array.getJSONObject(i);
 
                         txtTitle.setText(meetings.getString("title"));
-                        String source = meetings.getString("date");
-                        String[] sourceSplit= source.split("-");
-                        int anno= Integer.parseInt(sourceSplit[0]);
-                        int mese= Integer.parseInt(sourceSplit[1]);
-                        int giorno= Integer.parseInt(sourceSplit[2]);
-                        GregorianCalendar calendar = new GregorianCalendar();
-                        calendar.set(anno,mese-1,giorno);
-                        Date data1= calendar.getTime();
-                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
-                        String   dayFormatted= myFormat.format(data1);
-                        txtDate.setText(dayFormatted);
+                        txtDate.setText(meetings.getString("date"));
+//                        String source = meetings.getString("date");
+//                        String[] sourceSplit= source.split("-");
+//                        int anno= Integer.parseInt(sourceSplit[0]);
+//                        int mese= Integer.parseInt(sourceSplit[1]);
+//                        int giorno= Integer.parseInt(sourceSplit[2]);
+//                        GregorianCalendar calendar = new GregorianCalendar();
+//                        calendar.set(anno,mese-1,giorno);
+//                        Date data1= calendar.getTime();
+//                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+//                        String   dayFormatted= myFormat.format(data1);
+//                        txtDate.setText(dayFormatted);
                         txtTitle.setText(meetings.getString("title"));
 
                         String startTime = meetings.getString("start_time");
@@ -146,6 +151,7 @@ public class DetailMeetingsFragment extends Fragment {
                             pe.printStackTrace();
                         }
                         txtAgenda.setText(meetings.getString("agenda"));
+                        txtLocation.setText(meetings.getString("location"));
 
 
                     }

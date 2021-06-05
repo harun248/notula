@@ -2,7 +2,24 @@ package com.alrosyid.notula.models;
 
 public class Meetings {
     private int id;
-    private String title,agenda,date,start_time,end_time;
+    private String title,agenda,date,start_time,end_time,location,status;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

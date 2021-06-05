@@ -5,14 +5,14 @@
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:background="@color/grey"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
         android:id="@+id/cvMeetings"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_marginTop="10dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="5dp"
         >
         <LinearLayout
@@ -54,13 +54,23 @@
 
 
             <ImageButton
-                android:id="@+id/btnPostOption"
+                android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="8dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_more_vert_black_24dp" />
+                android:src="@drawable/ic_baseline_edit_24" />
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_delete_24" />
+
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

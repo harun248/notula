@@ -22,8 +22,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.activities.meetings.DetailMeetingsActivity;
 import com.alrosyid.notula.activities.meetings.EditMeetingsActivity;
+import com.alrosyid.notula.activities.notulas.EditNotulaActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
@@ -48,7 +50,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
     private ArrayList<Meetings> list;
     private ArrayList<Meetings> listAll;
     private SharedPreferences preferences;
-    String id_meets;
+
 
 
 
@@ -56,6 +58,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
         this.context = context;
         this.list = list;
         this.listAll = new ArrayList<>(list);
+        this.notifyDataSetChanged();
         preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
     }
 
@@ -65,7 +68,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
     @NonNull
     @Override
     public MeetsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_meeting,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_meetings_list,parent,false);
         return new MeetsHolder(view);
 
 
@@ -88,41 +91,60 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
                 context.startActivity(i);
             }
         });
-
-        holder.btnPostOption.setOnClickListener(v->{
-            PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
-            popupMenu.inflate(R.menu.menu_options);
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-
-                    switch (item.getItemId()){
-                        case R.id.item_edit: {
-                            Intent i = new Intent(((Activity)context), EditMeetingsActivity.class);
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(((Activity)context), EditMeetingsActivity.class);
                             i.putExtra("meetingsId", meetings.getId());
                             i.putExtra("position",position);
                             context.startActivity(i);
-                            return true;
-                        }
-                        case R.id.item_delete: {
-                            deleteNotula(meetings.getId(),position);
-                            return true;
-                        }
-                    }
 
-                    return false;
-                }
-            });
-            popupMenu.show();
+
+            }
         });
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteNotula(meetings.getId(),position);
+
+            }
+        });
+
+
+//        holder.btnPostOption.setOnClickListener(v->{
+//            PopupMenu popupMenu = new PopupMenu(context,holder.btnPostOption);
+//            popupMenu.inflate(R.menu.menu_options);
+//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//
+//                    switch (item.getItemId()){
+//                        case R.id.item_edit: {
+//                            Intent i = new Intent(((Activity)context), EditMeetingsActivity.class);
+//                            i.putExtra("meetingsId", meetings.getId());
+//                            i.putExtra("position",position);
+//                            context.startActivity(i);
+//                            return true;
+//                        }
+//                        case R.id.item_delete: {
+//                            deleteNotula(meetings.getId(),position);
+//                            return true;
+//                        }
+//                    }
+//
+//                    return false;
+//                }
+//            });
+//            popupMenu.show();
+//        });
 
     }
 
     private void deleteNotula(int meetId,int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Konfirmasi");
-        builder.setMessage("Hapus dari daftar hadir?");
-        builder.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.confirm);
+        builder.setMessage(R.string.delete_dialog);
+        builder.setPositiveButton(R.string.delete,  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_MEETINGS, response -> {
@@ -135,7 +157,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
                             notifyDataSetChanged();
                             listAll.clear();
                             listAll.addAll(list);
-                            Toast.makeText(context, "Berhasil menghapus daftar rapat", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.delete_successfully, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -164,7 +186,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
                 queue.add(request);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -217,16 +239,16 @@ Filter filter = new Filter() {
 
     class MeetsHolder extends RecyclerView.ViewHolder{
         private TextView txtTitle,txtDate;
-        private ImageButton btnPostOption;
-        private Button btnAttendances;
+        private ImageButton btnEdit, btnDelete;
         private CardView detailMeetings;
         public MeetsHolder(@NonNull View itemView) {
             super(itemView);
             detailMeetings=itemView.findViewById(R.id.cvMeetings);
             txtTitle = itemView.findViewById(R.id.tvTitle);
             txtDate = itemView.findViewById(R.id.tvDate);
-            btnPostOption = itemView.findViewById(R.id.btnPostOption);
-            btnPostOption.setVisibility(View.VISIBLE);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+
         }
     }
 

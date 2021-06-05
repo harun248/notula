@@ -27,10 +27,8 @@ import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
@@ -169,22 +167,22 @@ public class SignUpFragment extends Fragment {
     private boolean validate (){
         if (txtName.getText().toString().isEmpty()){
             layoutName.setErrorEnabled(true);
-            layoutName.setError("Name is Required");
+            layoutName.setError(getString(R.string.required));
             return false;
         }
         if (txtEmail.getText().toString().isEmpty()){
             layoutEmail.setErrorEnabled(true);
-            layoutEmail.setError("Email is Required");
+            layoutEmail.setError(getString(R.string.required));
             return false;
         }
         if (txtPassword.getText().toString().length()<8){
             layoutPassword.setErrorEnabled(true);
-            layoutPassword.setError("Required at least 8 characters");
+            layoutPassword.setError(getString(R.string.required_password_characters));
             return false;
         }
         if (!txtConfirm.getText().toString().equals(txtPassword.getText().toString())){
             layoutConfirm.setErrorEnabled(true);
-            layoutConfirm.setError("Password does not match");
+            layoutConfirm.setError(getString(R.string.password_does_not_match));
             return false;
         }
 
@@ -194,7 +192,7 @@ public class SignUpFragment extends Fragment {
 
 
     private void register(){
-        dialog.setMessage("Mendaftar..");
+        dialog.setMessage(getString(R.string.sign_up_load));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.REGISTER, response -> {
             //we get response if connection success
@@ -215,13 +213,13 @@ public class SignUpFragment extends Fragment {
                     //if success
                     startActivity(new Intent(((AuthActivity)getContext()), MainActivity.class));
                     ((AuthActivity) getContext()).finish();
-                    Toast.makeText(getContext(), "Berhasil Mendaftar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.sign_up_successfully, Toast.LENGTH_SHORT).show();
 //                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignUpSucessFragment()).commit();
 
 
                 }
                 else if (!success){
-                    layoutPassword.setError("Gagal Mendaftar");
+                    layoutPassword.setError(getString(R.string.sign_up_failed));
                 }
 
             } catch (JSONException e) {
@@ -234,14 +232,14 @@ public class SignUpFragment extends Fragment {
                     if (error instanceof NetworkError) {
                     } else if (error instanceof ServerError) {
                         Toast.makeText(getContext(),
-                                "Oops. Timeout error!",
+                                R.string.oops_timeout,
                                 Toast.LENGTH_LONG).show();
                     } else if (error instanceof AuthFailureError) {
                     } else if (error instanceof ParseError) {
                     } else if (error instanceof NoConnectionError) {
                     } else if (error instanceof TimeoutError) {
                         Toast.makeText(getContext(),
-                                "Timeout error!",
+                                R.string.timeout_error,
                                 Toast.LENGTH_LONG).show();
                     }
                 }

@@ -8,9 +8,12 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -35,12 +38,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class AddMeetingsActivity extends AppCompatActivity {
+public class AddMeetingsActivity extends AppCompatActivity  {
     private Button btnSave;
-    private TextInputLayout lytTitle, lytAgenda, lytStartTime, lytEndTime, lytDate;
+    private TextInputLayout lytTitle, lytAgenda, lytStartTime, lytEndTime, lytDate,lytLocation;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
-    private TextInputEditText txtTitle, txtAgenda, txtStartTime, txtEndTime, txtDate;
+    private TextInputEditText txtTitle, txtAgenda, txtStartTime, txtEndTime, txtDate, txtLocation;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
 
@@ -49,7 +52,7 @@ public class AddMeetingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meetings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Membuat Rapat");
+        getSupportActionBar().setTitle(R.string.add_meetings);
 
         txtDate = findViewById(R.id.tieDate);
 //Date Picker
@@ -120,12 +123,14 @@ public class AddMeetingsActivity extends AppCompatActivity {
         init();
     }
     private void init() {
+//        dialog.setMessage(getString(R.string.save));
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         lytTitle = findViewById(R.id.tilTitle);
         lytAgenda= findViewById(R.id.tilAgenda);
+        lytLocation= findViewById(R.id.tilLocation);
         lytDate= findViewById(R.id.tilDate);
         lytStartTime= findViewById(R.id.tilStartTime);
         lytEndTime= findViewById(R.id.tilEndTime);
@@ -133,10 +138,10 @@ public class AddMeetingsActivity extends AppCompatActivity {
 
         txtTitle= findViewById(R.id.tieTitle);
         txtAgenda= findViewById(R.id.tieAgenda);
+        txtLocation= findViewById(R.id.tieLocation);
         txtDate= findViewById(R.id.tieDate);
         txtStartTime= findViewById(R.id.tieStartTime);
         txtEndTime= findViewById(R.id.tieEndTime);
-
 
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
@@ -147,40 +152,57 @@ public class AddMeetingsActivity extends AppCompatActivity {
         });
     }
 
+
     private boolean validate() {
         if (txtTitle.getText().toString().isEmpty()) {
             lytTitle.setErrorEnabled(true);
-            lytTitle.setError("Judul Rapat wajib di isi");
+            lytTitle.setError(getString(R.string.required));
             return false;
         }
         if (txtAgenda.getText().toString().isEmpty()) {
             lytAgenda.setErrorEnabled(true);
-            lytAgenda.setError("Agenda wajib di isi");
+            lytAgenda.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtLocation.getText().toString().isEmpty()) {
+            lytLocation.setErrorEnabled(true);
+            lytLocation.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtAgenda.getText().toString().trim().length() >200) {
+            lytAgenda.setErrorEnabled(true);
+            lytAgenda.setError(getString(R.string.maximum_character));
+            return false;
+        }
+        if (txtLocation.getText().toString().trim().length() >200) {
+            lytLocation.setErrorEnabled(true);
+            lytLocation.setError(getString(R.string.maximum_character));
             return false;
         }
         if (txtDate.getText().toString().isEmpty()) {
             lytDate.setErrorEnabled(true);
-            lytDate.setError("Tanggal wajib di isi");
+            lytDate.setError(getString(R.string.required));
             return false;
         }
         if (txtStartTime.getText().toString().isEmpty()) {
             lytStartTime.setErrorEnabled(true);
-            lytStartTime.setError("Waktu mulai wajib di isi");
+            lytStartTime.setError(getString(R.string.required));
             return false;
         }
         if (txtEndTime.getText().toString().isEmpty()) {
             lytEndTime.setErrorEnabled(true);
-            lytEndTime.setError("Waktu selesai wajib di isi");
+            lytEndTime.setError(getString(R.string.required));
             return false;
         }
         return true;
     }
 
     private void create() {
-        dialog.setMessage("Menyimpan Rapat");
+        dialog.setMessage(getString(R.string.save_load));
         dialog.show();
         String titleText = txtTitle.getText().toString();
         String agendaText = txtAgenda.getText().toString();
+        String locationText = txtLocation.getText().toString();
         String dateText = txtDate.getText().toString();
         String startTimeText = txtStartTime.getText().toString();
         String endTimeText = txtEndTime.getText().toString();
@@ -193,9 +215,9 @@ public class AddMeetingsActivity extends AppCompatActivity {
 
                     Meetings meetings = new Meetings();
                     meetings.setId(meetingObject.getInt("id"));
-
                     meetings.setTitle(meetingObject.getString("title"));
                     meetings.setAgenda(meetingObject.getString("agenda"));
+                    meetings.setLocation(meetingObject.getString("location"));
                     meetings.setDate(meetingObject.getString("date"));
                     meetings.setStart_time(meetingObject.getString("start_time"));
                     meetings.setEnd_time(meetingObject.getString("end_time"));
@@ -204,8 +226,10 @@ public class AddMeetingsActivity extends AppCompatActivity {
                     MeetingsFragment.recyclerView.getAdapter().notifyItemInserted(0);
                     MeetingsFragment.recyclerView.getAdapter().notifyDataSetChanged();
 
-                    Toast.makeText(this, "Rapat berhasil di buat", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(this, getString(R.string.added_successfully), Toast.LENGTH_SHORT).show();
                     finish();
+
 
 
                 }
@@ -240,6 +264,7 @@ public class AddMeetingsActivity extends AppCompatActivity {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("title", titleText);
                 map.put("agenda", agendaText);
+                map.put("location", locationText);
                 map.put("date", dateText);
                 map.put("start_time", startTimeText);
                 map.put("end_time", endTimeText);
@@ -265,4 +290,6 @@ public class AddMeetingsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }

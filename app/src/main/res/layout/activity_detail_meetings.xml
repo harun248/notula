@@ -2,6 +2,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.meetings.DetailMeetingsActivity">
@@ -9,14 +10,15 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlays">
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
                 app:tabTextAppearance="@style/MineCustomTabText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                />
+                app:tabBackground="@drawable/tab_color_selector"
+                app:tabSelectedTextColor="@color/colorWhite"
+                app:tabTextColor="@color/colorAccent"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager

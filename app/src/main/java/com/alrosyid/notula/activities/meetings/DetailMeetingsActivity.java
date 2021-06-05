@@ -3,8 +3,9 @@ package com.alrosyid.notula.activities.meetings;
 import android.os.Bundle;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.fragments.attendances.ListAttendancesFragments;
+import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
 import com.alrosyid.notula.fragments.meetings.DetailMeetingsFragment;
+import com.alrosyid.notula.fragments.notulas.NotulasListFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -28,13 +29,14 @@ public class DetailMeetingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_meetings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Detail Rapat");
+        getSupportActionBar().setTitle(R.string.meeting_detail);
 
 
         viewPager = findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 
         tabLayout = findViewById(R.id.tabs);
+
         tabLayout.setupWithViewPager(viewPager);
         meetingsId = getIntent().getIntExtra("meetingsId",0);
 
@@ -42,8 +44,10 @@ public class DetailMeetingsActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         DetailMeetingsActivity.SectionPagerAdapter adapter = new DetailMeetingsActivity.SectionPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(DetailMeetingsFragment.newInstance(), "Rapat");
-        adapter.addFragment(ListAttendancesFragments.newInstance(), "Kehadiran");
+        adapter.addFragment(DetailMeetingsFragment.newInstance(), getString(R.string.meetings));
+        adapter.addFragment(NotulasListFragment.newInstance(), getString(R.string.notula));
+        adapter.addFragment(AttendancesListFragments.newInstance(), getString(R.string.attendances));
+        adapter.addFragment(NotulasListFragment.newInstance(), getString(R.string.photos));
 
         viewPager.setAdapter(adapter);
     }

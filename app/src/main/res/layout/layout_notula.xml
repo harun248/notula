@@ -11,7 +11,7 @@
         android:id="@+id/cvNotula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="5dp">
 
         <LinearLayout
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="Rapat"
                     android:textColor="@color/colorLightGrey"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvNotulatDate"
@@ -51,27 +51,16 @@
                     android:layout_height="wrap_content"
                     android:text="10-10-2010"
                     android:textColor="@color/colorLightGrey"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/btnPostOption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_more_vert_black_24dp" />
+
 
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <!--    <TextView-->
-    <!--        android:id="@+id/dataEmpty"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Anda belum memiliki data"/>-->
+
 
 </LinearLayout>

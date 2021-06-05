@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
+        <item
+            android:id="@+id/nav_blank1"
+            android:title="" />
+        <item
+            android:id="@+id/nav_blank2"
+            android:title="" />
+        <item
+            android:id="@+id/nav_blank3"
+            android:title="" />
+
+
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_baseline_dashboard_24"
-            android:title="@string/menu_home" />
+            android:title="@string/dashboard" />
         <item
             android:id="@+id/nav_meet"
-            android:icon="@drawable/ic_baseline_assignment_24"
-            android:title="Rapat" />
+            android:icon="@drawable/ic_baseline_meeting_room_24"
+            android:title="@string/meetings" />
         <item
             android:id="@+id/nav_notula"
             android:icon="@drawable/ic_baseline_assignment_24"
-            android:title="Notula" />
+            android:title="@string/notula" />
         <item
-            android:id="@+id/nav_dokumentasi"
+            android:id="@+id/nav_photos"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Dokumentasi" />
+            android:title="@string/photos" />
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_baseline_account_box_24"
-            android:title="Akun" />
+            android:title="@string/account" />
     </group>
 </menu>

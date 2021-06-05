@@ -3,6 +3,7 @@ package com.alrosyid.notula.fragments.auth;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +42,7 @@ public class SignInFragment extends Fragment {
     private TextInputLayout layoutEmail,layoutPassword;
     private TextInputEditText txtEmail,txtPassword;
     private Button btnSignIn;
-    private TextView txtSignUp;
+    private TextView txtSignUp, txtForgot;
     private ProgressDialog dialog;
 
 
@@ -61,6 +62,7 @@ public class SignInFragment extends Fragment {
         txtPassword = view.findViewById(R.id.txtPasswordSignIn);
         txtEmail = view.findViewById(R.id.txtEmailSignIn);
         txtSignUp = view.findViewById(R.id.txtSignUp);
+        txtForgot= view.findViewById(R.id.tvForgot);
         btnSignIn = view.findViewById(R.id.btnSignIn);
         dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
@@ -114,18 +116,28 @@ public class SignInFragment extends Fragment {
 
             }
         });
+
+        txtForgot.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://www.google.com"));
+                startActivity(intent);
+            }
+        });
     }
 
 
     private boolean validate (){
         if (txtEmail.getText().toString().isEmpty()){
             layoutEmail.setErrorEnabled(true);
-            layoutEmail.setError("Email is Required");
+            layoutEmail.setError(getString(R.string.required));
             return false;
         }
         if (txtPassword.getText().toString().length()<8){
             layoutPassword.setErrorEnabled(true);
-            layoutPassword.setError("Required at least 8 characters");
+            layoutPassword.setError(getString(R.string.required_password_characters));
             return false;
         }
         return true;
@@ -133,7 +145,7 @@ public class SignInFragment extends Fragment {
 
 
     private void login (){
-        dialog.setMessage("Sedang Login..");
+        dialog.setMessage(getString(R.string.sign_in_load));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.LOGIN, response -> {
             //we get response if connection success
@@ -154,10 +166,10 @@ public class SignInFragment extends Fragment {
                     //if success
                     startActivity(new Intent(((AuthActivity)getContext()), MainActivity.class));
                     ((AuthActivity) getContext()).finish();
-                    Toast.makeText(getContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.sign_in_successfully, Toast.LENGTH_SHORT).show();
                 }
                 if (!success){
-                    layoutPassword.setError("Username atau Password tidak cocok");
+                    layoutPassword.setError(getString(R.string.incorrect));
                 }
 
             } catch (JSONException e) {
@@ -170,7 +182,7 @@ public class SignInFragment extends Fragment {
             // error if connection not success
             error.printStackTrace();
             dialog.dismiss();
-            Toast.makeText(getContext(), "Koneksi Bermasalah", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.bad_connection, Toast.LENGTH_SHORT).show();
 
         }){
 

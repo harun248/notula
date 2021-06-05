@@ -20,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.activities.attendances.AddAttendancesActivity;
 import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
 import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
@@ -52,7 +54,7 @@ public class MeetingsFragment extends Fragment {
     private MeetingsAdapter meetingsAdapter;
     private SharedPreferences sharedPreferences;
 
-    private Button addNotula;
+    private ImageButton addMeetings;
     public MeetingsFragment(){}
 
     @Nullable
@@ -81,8 +83,8 @@ public class MeetingsFragment extends Fragment {
         });
 
 
-        addNotula =(Button)view.findViewById(R.id.btnAdd);
-        addNotula.setOnClickListener(new View.OnClickListener() {
+        addMeetings =(ImageButton)view.findViewById(R.id.btnAdd);
+        addMeetings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getAddMeetingsActivity();
@@ -90,8 +92,11 @@ public class MeetingsFragment extends Fragment {
             }
 
             private void getAddMeetingsActivity() {
-                Intent intent = new Intent(getActivity(), AddMeetingsActivity.class);
-                startActivity(intent);
+
+                Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
+                Intent i = new Intent(getActivity(), AddMeetingsActivity.class);
+                i.putExtra("meetingsId", (id_meetings));
+                startActivity(i);
             }
         });
 
@@ -114,19 +119,20 @@ public class MeetingsFragment extends Fragment {
                         Meetings meetings = new Meetings();
                         meetings.setId(meetObject.getInt("id"));
                         meetings.setTitle(meetObject.getString("title"));
+                        meetings.setDate(meetObject.getString("date"));
                         //covert string to date
-                        String source = meetObject.getString("date");
-                        String[] sourceSplit= source.split("-");
-                        int anno= Integer.parseInt(sourceSplit[0]);
-                        int mese= Integer.parseInt(sourceSplit[1]);
-                        int giorno= Integer.parseInt(sourceSplit[2]);
-                        GregorianCalendar calendar = new GregorianCalendar();
-                        calendar.set(anno,mese-1,giorno);
-                        Date data1= calendar.getTime();
-                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
-
-                        String   dayFormatted= myFormat.format(data1);
-                        meetings.setDate(dayFormatted);
+//                        String source = meetObject.getString("date");
+//                        String[] sourceSplit= source.split("-");
+//                        int anno= Integer.parseInt(sourceSplit[0]);
+//                        int mese= Integer.parseInt(sourceSplit[1]);
+//                        int giorno= Integer.parseInt(sourceSplit[2]);
+//                        GregorianCalendar calendar = new GregorianCalendar();
+//                        calendar.set(anno,mese-1,giorno);
+//                        Date data1= calendar.getTime();
+//                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
+//
+//                        String   dayFormatted= myFormat.format(data1);
+//                        meetings.setDate(dayFormatted);
 
 
 

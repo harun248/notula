@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     android:orientation="vertical">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -19,122 +22,138 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
+
             <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:background="@drawable/icon" />
 
-           <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
-               android:elevation="5dp"
-               android:layout_margin="20dp"
-               app:cardCornerRadius="10dp"
-               android:layout_height="wrap_content">
-               <RelativeLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:padding="20dp"
-                   android:orientation="vertical">
-                   <TextView
-                       android:id="@+id/tvTitle"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_marginTop="10dp"
-                       android:layout_marginBottom="30dp"
-                       android:gravity="center_horizontal"
-                       android:text="Notula"
-                       android:textColor="@color/colorPrimary"
-                       android:textSize="32sp" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:elevation="5dp"
+                app:cardCornerRadius="10dp">
 
-                   <com.google.android.material.textfield.TextInputLayout
-                       android:id="@+id/txtLayoutEmailSignIn"
-                       android:layout_below="@+id/tvTitle"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_marginBottom="6dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                       <com.google.android.material.textfield.TextInputEditText
-                           android:id="@+id/txtEmailSignIn"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:hint="Email"
-                           android:text="2@gmail.com"
-                           android:inputType="textEmailAddress"
-                           android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/notula"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="32sp" />
 
-                   </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtLayoutEmailSignIn"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvTitle"
+                        android:layout_marginBottom="6dp"
+                        app:boxStrokeColor="@color/colorAccent">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtEmailSignIn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/email"
 
-                   <com.google.android.material.textfield.TextInputLayout
-                       android:id="@+id/txtLayoutPasswordSignIn"
-                       android:layout_below="@+id/txtLayoutEmailSignIn"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_marginBottom="20dp"
-                       app:passwordToggleEnabled="true">
+                            android:inputType="textEmailAddress"
+                            android:padding="10dp"
+                            android:text="2@gmail.com"
+                            android:textSize="15sp" />
 
-                       <com.google.android.material.textfield.TextInputEditText
-                           android:id="@+id/txtPasswordSignIn"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:hint="Password"
-                           android:text="12345678"
-                           android:inputType="textPassword"
-                           android:textSize="15sp" />
-
-                   </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-                   <Button
-                       android:layout_below="@+id/txtLayoutPasswordSignIn"
-                       android:id="@+id/btnSignIn"
-                       android:layout_width="match_parent"
-                       android:layout_height="42dp"
-                       android:layout_marginBottom="40dp"
-                       android:background="@drawable/round"
-                       android:text="Masuk"
-                       android:textAllCaps="false"
-                       android:textColor="#FFF"
-                       android:textSize="17dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtLayoutPasswordSignIn"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtLayoutEmailSignIn"
+                        android:layout_marginBottom="10dp"
+                        app:boxStrokeColor="@color/colorAccent"
+                        app:passwordToggleEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtPasswordSignIn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/password"
 
 
-                   <LinearLayout
-                       android:layout_below="@+id/btnSignIn"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:gravity="center_horizontal"
-                       android:layout_marginBottom="10dp"
-                       android:orientation="horizontal">
+                            android:inputType="textPassword"
+                            android:padding="10dp"
+                            android:text="12345678"
+                            android:textSize="15sp" />
 
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginRight="6dp"
-                           android:text="Belum Punya Akun ? " />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                       <TextView
-                           android:id="@+id/txtSignUp"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginRight="6dp"
-                           android:text="Daftar"
-                           android:textColor="@color/colorPrimary" />
+                    <TextView
+                        android:id="@+id/tvForgot"
+                        android:layout_below="@id/txtLayoutPasswordSignIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/forgot_password_"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/btnSignIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_below="@+id/tvForgot"
+                        android:layout_marginBottom="40dp"
+                        android:background="@drawable/round"
+                        android:text="@string/sign_in"
+                        android:textAllCaps="false"
+                        android:textColor="#FFF"
+                        android:textSize="17dp" />
 
 
-                   </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/btnSignIn"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
 
-               </RelativeLayout>
-           </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:id="@+id/txtSignUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="6dp"
+                            android:text="@string/sign_up"
+                            android:textColor="@color/colorPrimary" />
 
-            
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </ScrollView>

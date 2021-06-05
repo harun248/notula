@@ -2,32 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
     app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
         android:name="com.alrosyid.notula.fragments.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/dashboard"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_meet"
         android:name="com.alrosyid.notula.fragments.meetings.MeetingsFragment"
-        android:label="Rapat"
+        android:label="@string/meetings"
         tools:layout="@layout/fragment_meetings" />
     <fragment
         android:id="@+id/nav_notula"
         android:name="com.alrosyid.notula.fragments.notulas.NotulaFragment"
-        android:label="Notula"
+        android:label="@string/notula"
         tools:layout="@layout/fragment_notula" />
 
     <fragment
-        android:id="@+id/nav_dokumentasi"
-        android:name="com.alrosyid.notula.fragments.documentations.DokumentasiFragment"
-        android:label="Dokumentasi"
-        tools:layout="@layout/fragment_dokumentasi" />
+        android:id="@+id/nav_photos"
+        android:name="com.alrosyid.notula.fragments.photos.PhotosFragment"
+        android:label="@string/photos"
+        tools:layout="@layout/fragment_photos" />
     <fragment
         android:id="@+id/nav_account"
         android:name="com.alrosyid.notula.fragments.account.AccountFragment"
-        android:label="Akun"
-        tools:layout="@layout/frament_account" />
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account" />
 </navigation>

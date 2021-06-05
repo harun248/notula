@@ -2,21 +2,85 @@
     <string name="app_name">notula</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="menu_home">Beranda</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="tanggal">Tanggal</string>
-
     <string name="delete_notula">Notula berhasil dihapus</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="rapat">Rapat</string>
-    <string name="agenda">Agenda</string>
-    <string name="mulai">Mulai</string>
-    <string name="selesai">Selesai</string>
-    <string name="kehadiran">Daftar Kehadiran</string>
+
     <string name="title_activity_detail_meetings2">DetailMeetingsActivity2</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="meetings">Meetings</string>
+    <string name="notula">Notula</string>
+    <string name="add_attendances">Add Attendances</string>
+    <string name="required">Required</string>
+    <string name="add_new">Add new..</string>
+    <string name="added_successfully">Added Successfully</string>
+    <string name="attendances">Attendances</string>
+    <string name="edit_attendances">Edit Attendances</string>
+    <string name="update">Update..</string>
+    <string name="update_successfully">Updated Successfully</string>
+    <string name="add_meetings">Add Meetings</string>
+    <string name="meeting_detail">Meetings Detail</string>
+    <string name="edit_meetings">Edit Meetings</string>
+    <string name="maximum_character">Maximum 200 character</string>
+    <string name="add_notula">Add Notula</string>
+    <string name="notula_detail">Notula Detail</string>
+    <string name="edit_notula">Edit Notula</string>
+    <string name="sign_in_load">Sign in ..</string>
+    <string name="sign_in_successfully">Sign in Successfully</string>
+    <string name="incorrect">Username or Password incorrect</string>
+    <string name="bad_connection">"Bad connection "</string>
+    <string name="required_password_characters">Required at least 8 characters</string>
+    <string name="password_does_not_match">Password does not match</string>
+    <string name="sign_up_load">Sign Up..</string>
+    <string name="sign_up_successfully">Sign Up Successfully</string>
+    <string name="sign_up_failed">Registration Failed</string>
+    <string name="date">Date</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End Time</string>
+    <string name="name">Name</string>
+    <string name="oops_timeout">Oops. Timeout error!</string>
+    <string name="timeout_error">Timeout error!</string>
+    <string name="position">Position</string>
+    <string name="save">Save</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="account">Account</string>
+    <string name="agenda">Agenda</string>
+    <string name="status">Status</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete_dialog">Are you sure, want to delete this item?</string>
+    <string name="delete">Delete</string>
+    <string name="delete_successfully">Delete Successfully</string>
+    <string name="location">Location</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="pending">Pending</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="select_status">Select Status</string>
+    <string name="photos">Photos</string>
+    <string name="save_load">Save..</string>
+    <string name="points">Points</string>
+    <string name="follow_up">Folow Up</string>
+    <string name="due_date">Due Date</string>
+    <string name="pic">PIC</string>
+    <string name="follow_up_detail">Follow Up Detail</string>
+    <string name="forgot_password_">forgot password ?</string>
+    <string name="account_information">Account Information</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="change_password">Change Password</string>
+    <string name="want_to_logout">Do you want to logout?</string>
+    <string name="logout">Logout</string>
+
+
+    <string-array name="meetings_status">
+        <item>Upcoming</item>
+        <item>Pending</item>
+        <item>Cancel</item>
+        <item>Done</item>
+    </string-array>
 </resources>

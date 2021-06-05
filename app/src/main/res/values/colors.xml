@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#f16e21</color>
     <color name="colorPrimaryDark">#D36728</color>
     <color name="colorAccent">#FFB953</color>
+    <color name="colorAccent2">#F6C276</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#666666</color>
     <color name="colorLightGrey">#999999</color>
+    <color name="tab_background_selected">#f16e21</color>
+    <color name="tab_background_unselected">#FFFFFF</color>
+    <color name="grey">#F8F7F7</color>
     <!--colors for modern ui-->
 
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#FFB953</color>
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>
+
+
 </resources>

@@ -86,7 +86,7 @@ public class EditNotulaActivity extends AppCompatActivity {
     }
     private void  getNotulas() {
         Integer id_notula = getIntent().getIntExtra("notulasId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.EDIT_NOTULA+ (id_notula), response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTULA+ (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);

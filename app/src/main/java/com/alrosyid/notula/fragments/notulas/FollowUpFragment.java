@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.followups.AddFollowUpActivity;
 import com.alrosyid.notula.activities.notulas.AddNotulasActivity;
 import com.alrosyid.notula.activities.points.AddPointsActivity;
@@ -29,6 +29,7 @@ import com.alrosyid.notula.adapters.PointsAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.models.FollowUp;
 import com.alrosyid.notula.models.Points;
+import com.alrosyid.notula.R;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -55,6 +56,8 @@ public class FollowUpFragment extends Fragment {
     private FollowUpAdapter followUpAdapter;
     private SharedPreferences sharedPreferences;
     private ImageButton addFollowUp;
+    private ImageButton addNotulas;
+    private TextView dataEmpty,dataBadConnect;
 
     public FollowUpFragment() {
         // Required empty public constructor
@@ -81,6 +84,8 @@ public class FollowUpFragment extends Fragment {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerFollowUp);
         recyclerView.setHasFixedSize(true);
+        dataEmpty = view.findViewById(R.id.dataEmpty);
+        dataBadConnect =view.findViewById(R.id.dataBadConnect);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeFollowUp);
         addFollowUp =(ImageButton)view.findViewById(R.id.btnAdd);
@@ -120,13 +125,14 @@ public class FollowUpFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("followup"));
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject followUpObject = array.getJSONObject(i);
-                        FollowUp followUp = new FollowUp();
-                        followUp.setId(followUpObject.getInt("id"));
-                        followUp.setTitle(followUpObject.getString("title"));
-                        followUp.setPic(followUpObject.getString("pic"));
-                        followUp.setDue_date(followUpObject.getString("due_date"));
+                    if(array.length() >0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject followUpObject = array.getJSONObject(i);
+                            FollowUp followUp = new FollowUp();
+                            followUp.setId(followUpObject.getInt("id"));
+                            followUp.setTitle(followUpObject.getString("title"));
+                            followUp.setPic(followUpObject.getString("pic"));
+                            followUp.setDue_date(followUpObject.getString("due_date"));
 //                        String source = followUpObject.getString("due_date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -140,7 +146,13 @@ public class FollowUpFragment extends Fragment {
 //                        String   dayFormatted= myFormat.format(data1);
 //                        followUp.setDueDate(dayFormatted);
 
-                        arrayList.add(followUp);
+                            arrayList.add(followUp);
+                        }
+
+
+                    }else{
+                        recyclerView.setVisibility(View.GONE);
+                        dataEmpty.setVisibility(View.VISIBLE);
                     }
 
                     followUpAdapter = new FollowUpAdapter(getContext(),arrayList);

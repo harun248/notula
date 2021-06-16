@@ -36,8 +36,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/follow_up"
                     android:enabled="false"
-                    android:padding="10dp"
-                    android:inputType="text"
+                     android:inputType="text"
                     android:textColor="@color/colorBlack"
                     android:textSize="15sp" />
 

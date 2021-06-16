@@ -145,14 +145,11 @@ public class HomeMeetingsAdapter extends RecyclerView.Adapter<HomeMeetingsAdapte
     }
 
 
-    private final int limit = 3;
     @Override
     public int getItemCount() {
-        if (list.size() > limit) {
-            return limit;
-        } else {
+
             return list.size();
-        }
+
 
     }
 

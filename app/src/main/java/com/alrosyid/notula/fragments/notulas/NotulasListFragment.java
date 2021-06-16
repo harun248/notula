@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +51,7 @@ public class NotulasListFragment extends Fragment {
     private NotulasListAdapter notulasListAdapter;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
+    private TextView dataEmpty,dataBadConnect;
 
     public NotulasListFragment(){}
     public static NotulasListFragment newInstance() {
@@ -70,9 +72,14 @@ public class NotulasListFragment extends Fragment {
     private void init(){
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerNotulas);
+        dataEmpty = view.findViewById(R.id.dataEmpty);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
+
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeNotulas);
+//        dataEmpty=view.findViewById(R.id.tvEmpty);
         addNotulas =(ImageButton)view.findViewById(R.id.btnAdd);
         addNotulas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,20 +125,25 @@ public class NotulasListFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("notulas"));
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject notulaObject = array.getJSONObject(i);
-                        Notula notula = new Notula();
-                        notula.setId(notulaObject.getInt("id"));
-                        notula.setTitle(notulaObject.getString("title"));
-                        //covert string to date
+                    String data = object.getString("notulas");
+                    if(array.length() >0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject notulaObject = array.getJSONObject(i);
+                            Notula notula = new Notula();
+                            notula.setId(notulaObject.getInt("id"));
+                            notula.setTitle(notulaObject.getString("title"));
 
-
-
-                        arrayList.add(notula);
+                            arrayList.add(notula);
+                        }
+                    }else{
+                        recyclerView.setVisibility(View.GONE);
+                        dataEmpty.setVisibility(View.VISIBLE);
                     }
-
                     notulasListAdapter = new NotulasListAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(notulasListAdapter);
+
+
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -141,6 +153,7 @@ public class NotulasListFragment extends Fragment {
 
         },error -> {
             error.printStackTrace();
+            dataBadConnect.setVisibility(View.VISIBLE);
             refreshLayout.setRefreshing(false);
         }){
 

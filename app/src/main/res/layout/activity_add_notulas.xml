@@ -34,12 +34,18 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/notula"
 
-                android:padding="10dp"
-                android:inputType="text"
+                 android:inputType="text"
                 android:textColor="@color/colorBlack"
                 android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/border"
+                />
 
         <Button
             android:id="@+id/btnSave"
@@ -54,6 +60,8 @@
             android:textSize="17dp"
             android:layout_below="@+id/tilMeetingsTitle"
             tools:ignore="MissingConstraints" />
+
+
 
     </LinearLayout>
 

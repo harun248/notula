@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="20dp"
+    android:orientation="vertical"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginTop="6dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:id="@+id/imgAddPhotos"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Chose Photo"
+                android:onClick="changePhoto"
+                android:background="@drawable/round_accent"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="12dp"
+                android:textSize="17dp"
+                android:layout_marginBottom="10dp"
+                android:textAllCaps="false"/>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/colorAccent"
+                android:id="@+id/tilTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                app:counterOverflowTextAppearance="@style/CounterOverFlow"
+                app:counterTextAppearance="@style/CounterText"
+                app:counterTextColor="@color/colorBlack"
+                app:hintTextAppearance="@style/HintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tieTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title"
+
+                     android:inputType="text"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:text="Upload"
+                android:id="@+id/btnUpload"
+                android:background="@drawable/round"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="12dp"
+                android:textSize="17dp"
+                android:textAllCaps="false"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </ScrollView>
+
+</LinearLayout>

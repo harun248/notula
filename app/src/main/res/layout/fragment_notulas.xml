@@ -25,15 +25,36 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-
+<!--                <TextView-->
+<!--                    android:id="@+id/tvEmpty"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="Empty Data"-->
+<!--                    android:gravity="center"/>-->
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/dataEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:text="@string/data_is_empty"/>
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/dataBadConnect"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:text="Can't display data. \nPlease, check your connection"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerNotulas"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:paddingBottom="60dp"/>
             </RelativeLayout>
+
 
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

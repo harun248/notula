@@ -77,6 +77,17 @@
     <string name="logout">Logout</string>
     <string name="new_password">New Password</string>
     <string name="change_successfully">Change Password Successfully</string>
+    <string name="upload_successfully">Upload Successfully</string>
+    <string name="title">Title</string>
+    <string name="rename_photo">Rename Photo</string>
+    <string name="upcoming_meeting">Upcoming Meeting</string>
+    <string name="latest_notula">Latest Notula</string>
+    <string name="next_meetings">Next Meetings</string>
+    <string name="add_to_event_calender">Add to event Calender</string>
+    <string name="send_schedule_to_email">Send Schedule to email</string>
+    <string name="preview">Preview</string>
+    <string name="data_is_empty">Data is empty</string>
+    <string name="meeting_today">Meetings Today</string>
 
 
     <string-array name="meetings_status">

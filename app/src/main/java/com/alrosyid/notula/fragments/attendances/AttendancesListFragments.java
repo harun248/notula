@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.attendances.AddAttendancesActivity;
@@ -48,6 +49,8 @@ public class AttendancesListFragments extends Fragment {
     private ImageButton addAttendances;
     private AttendancesAdapter attendancesAdapter;
     private SharedPreferences sharedPreferences;
+    private ImageButton addNotulas;
+    private TextView dataEmpty,dataBadConnect;
 
     public AttendancesListFragments() {
         // Required empty public constructor
@@ -77,6 +80,8 @@ public class AttendancesListFragments extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeAttandances);
         setHasOptionsMenu(true);
+        dataEmpty = view.findViewById(R.id.dataEmpty);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
 
         getAttendances();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -115,7 +120,10 @@ public class AttendancesListFragments extends Fragment {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")) {
+
                        JSONArray array = new JSONArray(object.getString("attendances"));
+
+                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject attendancesObject = array.getJSONObject(i);
                             Attendances attendances = new Attendances();
@@ -123,8 +131,13 @@ public class AttendancesListFragments extends Fragment {
                             attendances.setName(attendancesObject.getString("name"));
                             attendances.setPosition(attendancesObject.getString("position"));
                             arrayList.add(attendances);
-
                         }
+                    }else{
+                        recyclerView.setVisibility(View.GONE);
+                        dataEmpty.setVisibility(View.VISIBLE);
+                    }
+
+
 
                         attendancesAdapter = new AttendancesAdapter(getContext(), arrayList);
                         recyclerView.setAdapter(attendancesAdapter);
@@ -140,6 +153,7 @@ public class AttendancesListFragments extends Fragment {
         }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
+            dataBadConnect.setVisibility(View.GONE);
         }) {
 
             // provide token in header

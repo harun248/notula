@@ -214,7 +214,7 @@ public class EditMeetingsActivity extends AppCompatActivity {
     private void getMeetings() {
 
         Integer id_meetings = getIntent().getIntExtra("meetingsId", 0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.EDIT_MEETINGS + (id_meetings), res -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_MEETING + (id_meetings), res -> {
 
             try {
                 JSONObject object = new JSONObject(res);

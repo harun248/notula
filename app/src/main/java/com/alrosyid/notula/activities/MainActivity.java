@@ -1,10 +1,16 @@
 package com.alrosyid.notula.activities;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
@@ -15,6 +21,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,12 +38,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final int MANAGE_EXTERNAL_STORAGE_SET = 1;
+    private static final int WRITE_EXTERNAL_STORAGE_SET= 2;
     private AppBarConfiguration mAppBarConfiguration;
     private TextView txtName,txtEmail;
     private SharedPreferences sharedPreferences;
 
-
+    private static final String TAG="MainActivity";
+    private static final String [] STORAGE_PERMISSIONS={
+            Manifest.permission.ACCESS_MEDIA_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +58,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         init();
+        getPermissions();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_meet, R.id.nav_notula, R.id.nav_photos, R.id.nav_account)
+                R.id.nav_home, R.id.nav_meet, R.id.nav_notula,  R.id.nav_account
+//                R.id.nav_photos,
+        )
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.fragment_container);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
     }
 
     private void init(){
@@ -117,5 +136,52 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    public void getPermissions() {
+        /* Check and Request permission */
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_SET);
+        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.MANAGE_EXTERNAL_STORAGE},
+                MANAGE_EXTERNAL_STORAGE_SET);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+//            case WRITE_EXTERNAL_STORAGE_SET: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                } else {
+//
+////                    Toast.makeText(MainActivity.this, "Permission denied to get Account", Toast.LENGTH_SHORT).show();
+//
+//                }
+//                return;
+//            }
+            case MANAGE_EXTERNAL_STORAGE_SET: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                } else {
+
+//                    Toast.makeText(MainActivity.this, "Permission denied to get Account", Toast.LENGTH_SHORT).show();
+
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+//private void verifyPermissions(){
+//Log.d(TAG,"verifyPermissions: Checking Permissions");
+//int
+//
+//}
 }

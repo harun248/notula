@@ -1,31 +1,20 @@
 package com.alrosyid.notula.fragments.notulas;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
-import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,10 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +35,7 @@ public class DetailNotulasFragment extends Fragment {
     private TextInputLayout layoutTitle, layoutMeetingsTitle, layoutDate;
     private TextInputEditText txtTitle, txtMeetingsTitle, txtDate;
     private int notulasId = 0, position =0;
+    private  Button btnExport;
     private View view;
     private SharedPreferences sharedPreferences;
     public static DetailNotulasFragment newInstance() {
@@ -76,6 +62,7 @@ public class DetailNotulasFragment extends Fragment {
         layoutMeetingsTitle =  view.findViewById(R.id.tilMeetingsTitle);
         layoutDate =  view.findViewById(R.id.tilDate);
         txtTitle =  view.findViewById(R.id.tieTitle);
+//        btnExport= view.findViewById(R.id.btnExport);
         txtMeetingsTitle =  view.findViewById(R.id.tieMeetingsTitle);
         txtDate =  view.findViewById(R.id.tieDate);
 //        notulaId = getIntent().getIntExtra("notulaId",0);
@@ -87,7 +74,40 @@ public class DetailNotulasFragment extends Fragment {
 
 
 
+//        btnExport.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//
+////                Intent intent = new Intent();
+////                intent.setAction(Intent.ACTION_VIEW);
+////                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+////                intent.setData(Uri.parse(Constant.EXPORT));
+////                startActivity(intent);
+////                Uri uri = Uri.parse(Constant.EXPORT); // missing 'http://' will cause crashed
+////                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+////                startActivity(intent);
+//
+////                getAddNotulasActivity();
+//
+//            }
+//
+////            private void getAddNotulasActivity() {
+////
+////                Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
+////                Intent i = new Intent(getActivity(), AddNotulasActivity.class);
+////                i.putExtra("meetingsId", (id_meetings));
+////                startActivity(i);
+////            }
+//        });
+
+
+
+
+
     }
+
 
 
     private void  getDetailNotulas() {
@@ -142,6 +162,39 @@ public class DetailNotulasFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
+//    public void DownloadFiles() {
+////        dialog.setMessage("Downloading..");
+////        dialog.show();
+//
+//        try {
+//            URL u = new URL(Constant.EXPORT);
+//            InputStream is = u.openStream();
+//
+//            DataInputStream dis = new DataInputStream(is);
+//
+//            byte[] buffer = new byte[1024];
+//            int length;
+//
+//            FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/" + "Download/" + "tes.pdf"));
+//
+//
+//            while ((length = dis.read(buffer)) > 0) {
+//                fos.write(buffer, 0, length);
+//
+//            }
+//
+//
+//        } catch (MalformedURLException mue) {
+//            Log.e("SYNC getUpdate", "malformed url error", mue);
+//        } catch (IOException ioe) {
+//            Log.e("SYNC getUpdate", "io error", ioe);
+//        } catch (SecurityException se) {
+//            Log.e("SYNC getUpdate", "security error", se);
+//        }
+//
+//
+//    }
+
 
 
 

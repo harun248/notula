@@ -6,6 +6,7 @@ import com.alrosyid.notula.R;
 import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
 import com.alrosyid.notula.fragments.meetings.DetailMeetingsFragment;
 import com.alrosyid.notula.fragments.notulas.NotulasListFragment;
+import com.alrosyid.notula.fragments.photos.PhotosListFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -47,7 +48,7 @@ public class DetailMeetingsActivity extends AppCompatActivity {
         adapter.addFragment(DetailMeetingsFragment.newInstance(), getString(R.string.meetings));
         adapter.addFragment(NotulasListFragment.newInstance(), getString(R.string.notula));
         adapter.addFragment(AttendancesListFragments.newInstance(), getString(R.string.attendances));
-        adapter.addFragment(NotulasListFragment.newInstance(), getString(R.string.photos));
+        adapter.addFragment(PhotosListFragment.newInstance(), getString(R.string.photos));
 
         viewPager.setAdapter(adapter);
     }

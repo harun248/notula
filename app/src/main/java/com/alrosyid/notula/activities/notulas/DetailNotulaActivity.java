@@ -12,6 +12,7 @@ import com.alrosyid.notula.R;
 import com.alrosyid.notula.fragments.notulas.DetailNotulasFragment;
 import com.alrosyid.notula.fragments.notulas.FollowUpFragment;
 import com.alrosyid.notula.fragments.notulas.PointFragment;
+import com.alrosyid.notula.fragments.notulas.PreviewNotulasFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class DetailNotulaActivity extends AppCompatActivity {
         adapter.addFragment(PointFragment.newInstance(), getString(R.string.points));
 
         adapter.addFragment(FollowUpFragment.newInstance(), getString(R.string.follow_up));
+        adapter.addFragment(PreviewNotulasFragment.newInstance(), getString(R.string.preview));
         viewPager.setAdapter(adapter);
     }
 

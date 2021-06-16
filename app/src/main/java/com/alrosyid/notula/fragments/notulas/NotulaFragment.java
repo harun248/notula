@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notulas.AddNotulasActivity;
+import com.alrosyid.notula.activities.notulas.AddNotulasOnlyActivity;
 import com.alrosyid.notula.adapters.NotulasAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.meetings.DetailMeetingsFragment;
@@ -50,8 +52,10 @@ public class NotulaFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private NotulasAdapter notulasAdapter;
     private SharedPreferences sharedPreferences;
+    private ImageButton addNotulas;
+    private TextView dataEmpty,dataBadConnect;
 
-    ImageButton addNotula;
+
     public NotulaFragment(){}
 
     @Nullable
@@ -67,6 +71,8 @@ public class NotulaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeHome);
+        dataEmpty = view.findViewById(R.id.dataEmpty);
+        dataBadConnect =view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -78,6 +84,22 @@ public class NotulaFragment extends Fragment {
             }
         });
 
+//        addNotulas =(ImageButton)view.findViewById(R.id.btnAdd);
+//        addNotulas.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getAddNotulasActivity();
+//
+//            }
+//
+//            private void getAddNotulasActivity() {
+//
+//                Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
+//                Intent i = new Intent(getActivity(), AddNotulasOnlyActivity.class);
+//                i.putExtra("meetingsId", (id_meetings));
+//                startActivity(i);
+//            }
+//        });
 
 
 
@@ -95,14 +117,15 @@ public class NotulaFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("notulas"));
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject notulaObject = array.getJSONObject(i);
-                        Notula notula = new Notula();
-                        notula.setId(notulaObject.getInt("id"));
-                        notula.setMeetings_title(notulaObject.getString("meetings_title"));
-                        notula.setTitle(notulaObject.getString("title"));
-                        //covert string to date
-                        notula.setDate(notulaObject.getString("date"));
+                    if(array.length() >0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject notulaObject = array.getJSONObject(i);
+                            Notula notula = new Notula();
+                            notula.setId(notulaObject.getInt("id"));
+                            notula.setMeetings_title(notulaObject.getString("meetings_title"));
+                            notula.setTitle(notulaObject.getString("title"));
+                            //covert string to date
+                            notula.setDate(notulaObject.getString("date"));
 //                        String source = notulaObject.getString("date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -118,8 +141,14 @@ public class NotulaFragment extends Fragment {
 
 
 
-                        arrayList.add(notula);
+                            arrayList.add(notula);
+                        }
+
+                    }else{
+                        recyclerView.setVisibility(View.GONE);
+                        dataEmpty.setVisibility(View.VISIBLE);
                     }
+
 
                     notulasAdapter = new NotulasAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(notulasAdapter);

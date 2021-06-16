@@ -30,8 +30,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
 
-                android:padding="10dp"
-                android:inputType="text"
+                 android:inputType="text"
                 android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -53,8 +52,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/position"
 
-                android:padding="10dp"
-                android:inputType="text"
+                 android:inputType="text"
                 android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>

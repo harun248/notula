@@ -21,11 +21,11 @@
         android:label="@string/notula"
         tools:layout="@layout/fragment_notula" />
 
-    <fragment
-        android:id="@+id/nav_photos"
-        android:name="com.alrosyid.notula.fragments.photos.PhotosFragment"
-        android:label="@string/photos"
-        tools:layout="@layout/fragment_photos" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_photos"-->
+<!--        android:name="com.alrosyid.notula.fragments.photos.PhotosFragment"-->
+<!--        android:label="@string/photos"-->
+<!--        tools:layout="@layout/fragment_photos" />-->
     <fragment
         android:id="@+id/nav_account"
         android:name="com.alrosyid.notula.fragments.account.AccountFragment"

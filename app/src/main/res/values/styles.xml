@@ -21,6 +21,10 @@
             <item name="colorAccent">@color/colorAccent</item>
         </style>
 
+    <style name="Button.Accent" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 <!--    </resources>-->
 
     <style name="CounterOverFlow" parent="">

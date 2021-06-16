@@ -40,8 +40,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/meetings"
 
-                    android:padding="10dp"
-                    android:inputType="text"
+                     android:inputType="text"
                     android:textColor="@color/colorBlack"
                     android:textSize="15sp" />
 
@@ -95,11 +94,11 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
 
-                        android:padding="10dp"
                         android:drawableRight="@drawable/ic_baseline_access_time_24"
                         android:focusable="false"
-                        android:inputType="time"
                         android:hint="@string/start_time"
+                        android:inputType="time"
+                        android:padding="10dp"
                         android:textColor="@color/colorBlack"
 
                         android:textSize="15sp" />

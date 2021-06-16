@@ -12,6 +12,14 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/imgPhoto"
+            android:scaleType="centerCrop"
+            android:src="@color/colorLightGrey"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,40 +47,25 @@
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/btnEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_edit_24" />
-            <ImageButton
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_delete_24" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnEdit"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:src="@drawable/ic_baseline_edit_24" />-->
+<!--            <ImageButton-->
+<!--                android:id="@+id/btnDelete"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:src="@drawable/ic_baseline_delete_24" />-->
 
 
         </LinearLayout>
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:id="@+id/imgPostPhoto"
-            android:src="@color/colorLightGrey"/>
-
-
-
-
-
-
-
     </LinearLayout>
 
 

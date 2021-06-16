@@ -30,10 +30,10 @@
             android:id="@+id/nav_notula"
             android:icon="@drawable/ic_baseline_assignment_24"
             android:title="@string/notula" />
-        <item
-            android:id="@+id/nav_photos"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/photos" />
+<!--        <item-->
+<!--            android:id="@+id/nav_photos"-->
+<!--            android:icon="@drawable/ic_menu_gallery"-->
+<!--            android:title="@string/photos" />-->
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_baseline_account_box_24"

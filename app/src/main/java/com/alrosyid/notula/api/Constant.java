@@ -1,9 +1,25 @@
 package com.alrosyid.notula.api;
 
 public class Constant {
-//    public static final String URL = "https://app.jeevva.my.id/";
-    public static final String URL = "http://10.0.2.2:81/";
+    public static final String URL = "https://app.jeevva.my.id/";
+//    public static final String URL = "http://10.0.2.2:81/";
 //    public static final String URL = "http://192.168.100.4:81/";
+//public static final String URL = "http://192.168.100.116:81/";
+//    public static final String URL = "http://192.168.64.133:81/";
+//    public static final String URL = "http://10.100.141.228:81/";
+//    public static final String EXPORT= URL+"generate-pdf";
+
+//    public static final String URL = "http://172.10.52.31:81/";
+
+
+    //JSON array name
+
+
+
+
+
+
+
     //Root
     public static final String HOME = URL+"api";
     //auth
@@ -12,29 +28,30 @@ public class Constant {
     public static final String REGISTER = HOME+"/register";
     public static final String ACCOUNT = HOME+"/myAccount";
     public static final String CHANGE_PASSWORD = HOME+"/changePassword";
-    public static final String UPDATE_USER = HOME+"/user/update";
+    public static final String UPDATE_USER = HOME+"/userUpdate";
     //Meetings
     public static final String MEETING = HOME+"/meetings";
-    public static final String MY_MEETING = MEETING+"/myMeetings";
+    public static final String DATA_URL = MEETING+"/spinner";
+    public static final String LIST_MEETING = MEETING+"/listMeetings";
+    public static final String LIST_MEETING_TODAY = MEETING+"/listMeetingsToday";
+
     public static final String DETAIL_MEETING = MEETING+"/detailMeetings/";
     public static final String DELETE_MEETINGS = MEETING+"/delete";
-    public static final String EDIT_MEETINGS = MEETING+"/editMeetings/";
     public static final String CREATE_MEETINGS = MEETING+"/create";
     public static final String UPDATE_MEETINGS = MEETING+"/update";
     //Attendances
     public static final String ATTENDANCES =HOME+"/attendances";
     public static final String LIST_ATTENDANCES =ATTENDANCES+"/listAttendances/";
+    public static final String DETAIL_ATTENDANCES = ATTENDANCES+"/detailAttendances/";
     public static final String DELETE_ATTENDANCES = ATTENDANCES+"/delete";
     public static final String CREATE_ATTENDANCES = ATTENDANCES+"/create";
-    public static final String DETAIL_ATTENDANCES = ATTENDANCES+"/detailAttendances/";
     public static final String UPDATE_ATTENDANCES = ATTENDANCES+"/update";
     //Notula
     public static final String NOTULA = HOME+"/notulas";
-    public static final String EDIT_NOTULA = NOTULA+"/editNotulas/";
+    public static final String LIST_NOTULA = NOTULA+"/listNotulas/";
     public static final String  DETAIL_NOTULA = NOTULA+"/detailNotulas/";
     public static final String CREATE_NOTULA = NOTULA+"/create";
     public static final String DELETE_NOTULA = NOTULA+"/delete";
-    public static final String LIST_NOTULA = NOTULA+"/listNotulas/";
     public static final String UPDATE_NOTULA = NOTULA+"/update";
     //Points
     public static final String POINTS = HOME+"/points";
@@ -50,6 +67,14 @@ public class Constant {
     public static final String CREATE_FOLLOW_UP = FOLLOW_UP+"/create";
     public static final String DELETE_FOLLOW_UP = FOLLOW_UP+"/delete";
     public static final String UPDATE_FOLLOW_UP = FOLLOW_UP+"/update";
+    //Photos
+    public static final String PHOTOS = HOME+"/photos";
+    public static final String LIST_PHOTOS = PHOTOS+"/listPhotos/";
+    public static final String DETAIL_PHOTOS = PHOTOS+"/detailPhotos/";
+    public static final String CREATE_PHOTOS = PHOTOS+"/create";
+    public static final String DELETE_PHOTOS = PHOTOS+"/delete";
+    public static final String UPDATE_PHOTOS = PHOTOS+"/update";
+
 
 
 }

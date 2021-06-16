@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="20dp"
+    android:orientation="vertical"
+    tools:context=".activities.notulas.AddNotulasActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/colorAccent"
+            android:id="@+id/tilTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            app:counterOverflowTextAppearance="@style/CounterOverFlow"
+            app:counterTextAppearance="@style/CounterText"
+            app:counterTextColor="@color/colorBlack"
+            app:hintTextAppearance="@style/HintText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/notula"
+
+                 android:inputType="text"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/colorAccent"
+            android:id="@+id/tilMeetings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilTitle"
+            android:layout_marginBottom="6dp"
+            app:counterTextAppearance="@style/CounterText"
+            app:counterTextColor="@color/colorBlack"
+            app:hintTextAppearance="@style/HintText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieMeetings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:hint="@string/meetings"
+
+                android:padding="10dp"
+                android:focusable="false"
+                android:inputType="text"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/round"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:textSize="17dp"
+            android:layout_below="@+id/tilMeetingsTitle"
+            tools:ignore="MissingConstraints" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

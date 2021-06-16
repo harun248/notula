@@ -24,7 +24,6 @@ import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
 import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.fragments.notulas.PointFragment;
 import com.alrosyid.notula.models.Meetings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -111,7 +110,7 @@ public class AllMeetingsFragment extends Fragment {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_MEETING, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_MEETING, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);

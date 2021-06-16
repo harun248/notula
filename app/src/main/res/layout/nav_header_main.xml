@@ -30,7 +30,7 @@
               android:layout_height="wrap_content"
               android:textSize="20dp"
               android:textStyle="bold"
-              android:paddingLeft="30dp"
+              android:paddingLeft="10dp"
               android:text="Notula"
               android:layout_toRightOf="@+id/imageView"
               android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

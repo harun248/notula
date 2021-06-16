@@ -19,11 +19,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.alrosyid.notula.R;
-import com.alrosyid.notula.activities.attendances.AddAttendancesActivity;
 import com.alrosyid.notula.activities.meetings.AddMeetingsActivity;
 import com.alrosyid.notula.adapters.MeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
@@ -38,10 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +49,8 @@ public class MeetingsFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private MeetingsAdapter meetingsAdapter;
     private SharedPreferences sharedPreferences;
+    private ImageButton addNotulas;
+    private TextView dataEmpty,dataBadConnect;
 
     private ImageButton addMeetings;
     public MeetingsFragment(){}
@@ -71,6 +69,8 @@ public class MeetingsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeHome);
+        dataEmpty = view.findViewById(R.id.dataEmpty);
+        dataBadConnect =view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -108,19 +108,20 @@ public class MeetingsFragment extends Fragment {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.MY_MEETING, response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_MEETING, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("meetings"));
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject meetObject = array.getJSONObject(i);
-                        Meetings meetings = new Meetings();
-                        meetings.setId(meetObject.getInt("id"));
-                        meetings.setTitle(meetObject.getString("title"));
-                        meetings.setDate(meetObject.getString("date"));
-                        //covert string to date
+                    if(array.length() >0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject meetObject = array.getJSONObject(i);
+                            Meetings meetings = new Meetings();
+                            meetings.setId(meetObject.getInt("id"));
+                            meetings.setTitle(meetObject.getString("title"));
+                            meetings.setDate(meetObject.getString("date"));
+                            //covert string to date
 //                        String source = meetObject.getString("date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -136,8 +137,14 @@ public class MeetingsFragment extends Fragment {
 
 
 
-                        arrayList.add(meetings);
-                    }
+                            arrayList.add(meetings);
+                        }
+
+                }else{
+                    recyclerView.setVisibility(View.GONE);
+                    dataEmpty.setVisibility(View.VISIBLE);
+                }
+
 
                     meetingsAdapter = new MeetingsAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(meetingsAdapter);
@@ -151,6 +158,8 @@ public class MeetingsFragment extends Fragment {
         },error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
+
+            dataBadConnect.setVisibility(View.GONE);
         }){
 
             // provide token in header

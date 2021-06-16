@@ -58,6 +58,8 @@ public class PointFragment extends Fragment {
     private PointsAdapter pointsAdapter;
     private ImageButton addPoints;
     private SharedPreferences sharedPreferences;
+    private ImageButton addNotulas;
+    private TextView dataEmpty,dataBadConnect;
 
     public PointFragment() {
         // Required empty public constructor
@@ -86,6 +88,8 @@ public class PointFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipePoints);
+        dataEmpty = view.findViewById(R.id.dataEmpty);
+        dataBadConnect =view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -125,14 +129,20 @@ public class PointFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("points"));
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject pointsObject = array.getJSONObject(i);
-                        Points points = new Points();
-                        points.setId(pointsObject.getInt("id"));
-                        points.setPoints(pointsObject.getString("points"));
+                    if(array.length() >0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject pointsObject = array.getJSONObject(i);
+                            Points points = new Points();
+                            points.setId(pointsObject.getInt("id"));
+                            points.setPoints(pointsObject.getString("points"));
 
-                        arrayList.add(points);
+                            arrayList.add(points);
+                        }
+                    }else{
+                        recyclerView.setVisibility(View.GONE);
+                        dataEmpty.setVisibility(View.VISIBLE);
                     }
+
 
                     pointsAdapter = new PointsAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(pointsAdapter);
@@ -146,6 +156,7 @@ public class PointFragment extends Fragment {
         },error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
+            dataBadConnect.setVisibility(View.GONE);
         }){
 
             // provide token in header

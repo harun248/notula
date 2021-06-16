@@ -127,8 +127,8 @@ public class EditAccountsActivity extends AppCompatActivity {
                     editor.putString("email",txtEmail.getText().toString().trim());
 
                     editor.apply();
-                    Intent restarter = new Intent(EditAccountsActivity.this, MainActivity.class);
-                    startActivity(restarter);
+                    Intent restart = new Intent(EditAccountsActivity.this, MainActivity.class);
+                    startActivity(restart);
                     Toast.makeText(this, R.string.update_successfully, Toast.LENGTH_SHORT).show();
                     finish();
 

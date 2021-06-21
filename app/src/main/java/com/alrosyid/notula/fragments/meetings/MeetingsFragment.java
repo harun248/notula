@@ -114,7 +114,7 @@ public class MeetingsFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("meetings"));
-                    if(array.length() >0) {
+//                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject meetObject = array.getJSONObject(i);
                             Meetings meetings = new Meetings();
@@ -140,10 +140,10 @@ public class MeetingsFragment extends Fragment {
                             arrayList.add(meetings);
                         }
 
-                }else{
-                    recyclerView.setVisibility(View.GONE);
-                    dataEmpty.setVisibility(View.VISIBLE);
-                }
+//                }else{
+//                    recyclerView.setVisibility(View.GONE);
+//                    dataEmpty.setVisibility(View.VISIBLE);
+//                }
 
 
                     meetingsAdapter = new MeetingsAdapter(getContext(),arrayList);

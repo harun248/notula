@@ -38,25 +38,51 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/tvMeetTitle"
+                    android:id="@+id/tvSummary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rapat"
+                    android:text="Summary"
+                    android:maxLines="3"
                     android:textColor="@color/colorLightGrey"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/tvNotulatDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10-10-2010"
-                    android:textColor="@color/colorLightGrey"
-                    android:textSize="12sp" />
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tvMeetTitle"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="Rapat"-->
+                <!--                    android:textColor="@color/colorLightGrey"-->
+                <!--                    android:textSize="12sp" />-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tvNotulaDate"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="10-10-2010"-->
+                <!--                    android:textColor="@color/colorLightGrey"-->
+                <!--                    android:textSize="12sp" />-->
 
 
             </LinearLayout>
 
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_edit_24" />
 
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_delete_24" />
 
 
         </LinearLayout>

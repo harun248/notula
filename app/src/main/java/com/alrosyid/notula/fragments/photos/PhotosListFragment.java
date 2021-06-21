@@ -117,7 +117,7 @@ public class PhotosListFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("photos"));
-                    if(array.length() >0) {
+//                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject photosObject = array.getJSONObject(i);
 
@@ -131,10 +131,10 @@ public class PhotosListFragment extends Fragment {
                             arrayList.add(photos);
                         }
 
-                    }else{
-                        recyclerView.setVisibility(View.GONE);
-                        dataEmpty.setVisibility(View.VISIBLE);
-                    }
+//                    }else{
+//                        recyclerView.setVisibility(View.GONE);
+//                        dataEmpty.setVisibility(View.VISIBLE);
+//                    }
 
 
                     photosListAdapter = new PhotosListAdapter(getContext(),arrayList);

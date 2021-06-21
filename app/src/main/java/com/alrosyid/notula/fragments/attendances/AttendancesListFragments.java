@@ -123,7 +123,6 @@ public class AttendancesListFragments extends Fragment {
 
                        JSONArray array = new JSONArray(object.getString("attendances"));
 
-                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject attendancesObject = array.getJSONObject(i);
                             Attendances attendances = new Attendances();
@@ -132,16 +131,8 @@ public class AttendancesListFragments extends Fragment {
                             attendances.setPosition(attendancesObject.getString("position"));
                             arrayList.add(attendances);
                         }
-                    }else{
-                        recyclerView.setVisibility(View.GONE);
-                        dataEmpty.setVisibility(View.VISIBLE);
-                    }
-
-
-
                         attendancesAdapter = new AttendancesAdapter(getContext(), arrayList);
                         recyclerView.setAdapter(attendancesAdapter);
-
 
                 }
             } catch (JSONException e) {

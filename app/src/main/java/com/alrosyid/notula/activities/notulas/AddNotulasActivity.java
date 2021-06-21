@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
+import com.alrosyid.notula.activities.meetings.AddMeetingsHomeActivity;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.notulas.NotulasListFragment;
 import com.alrosyid.notula.models.Meetings;
@@ -41,16 +44,12 @@ import java.util.Map;
 public class AddNotulasActivity extends AppCompatActivity {
 
     private Button btnSave;
-    private TextInputLayout layoutTitle;
-    private TextInputEditText txtTitle;
+    private TextInputLayout lytTitle,lytSummary ;
+    private TextInputEditText txtTitle, txtSummary;
     private ProgressDialog dialog;
     private int meetingsId = 0;
     private SharedPreferences sharedPreferences;
 
-
-    Spinner spinner;
-    String url = "https://app.jeevva.my.id/api/meetings/spinner";
-    ArrayList<String> metode_pembayaran = new ArrayList<String>();
 
 
     public static ArrayList<Meetings> arrayList;
@@ -64,42 +63,6 @@ public class AddNotulasActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.add_notula);
 
-        spinner = (Spinner) findViewById(R.id.spinner);
-
-        //Adding an Item Selected Listener to our Spinner
-        //As we have implemented the class Spinner.OnItemSelectedListener to this class iteself we are passing this to setOnItemSelectedListener
-//        spinner.setOnItemSelectedListener(AddNotulasActivity.this);
-//        getData();
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, metode_pembayaran);
-        spinner.setAdapter(adapter);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray array = response.getJSONArray("meetings");
-                    for(int i=0;i<array.length();i++){
-                        JSONObject result = array.getJSONObject(i);
-                        metode_pembayaran.add(result.getString("title"));
-                        adapter.notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(AddNotulasActivity.this);
-        requestQueue.add(request);
-
-
-
-
-
 
         init();
     }
@@ -112,8 +75,10 @@ public class AddNotulasActivity extends AppCompatActivity {
 
         //Initializing Spinner
 //        spinner = (Spinner) findViewById(R.id.spinner);
-        layoutTitle = findViewById(R.id.tilTitle);
+        lytTitle = findViewById(R.id.tilTitle);
         txtTitle = findViewById(R.id.tieTitle);
+        lytSummary = findViewById(R.id.tilSummary);
+        txtSummary = findViewById(R.id.tieSummary);
         meetingsId = getIntent().getIntExtra("meetingsId", 0);
 
         btnSave.setOnClickListener(v -> {
@@ -127,17 +92,27 @@ public class AddNotulasActivity extends AppCompatActivity {
 
     private boolean validate() {
         if (txtTitle.getText().toString().isEmpty()) {
-            layoutTitle.setErrorEnabled(true);
-            layoutTitle.setError(getString(R.string.required));
+            lytTitle.setErrorEnabled(true);
+            lytTitle.setError(getString(R.string.required));
             return false;
         }
-
+        if (txtSummary.getText().toString().isEmpty()) {
+            lytSummary.setErrorEnabled(true);
+            lytSummary.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtSummary.getText().toString().trim().length() >1500) {
+            lytSummary.setErrorEnabled(true);
+            lytSummary.setError(getString(R.string.max_1500));
+            return false;
+        }
         return true;
     }
     private void create() {
         dialog.setMessage(getString(R.string.save_load));
         dialog.show();
         String titleText = txtTitle.getText().toString();
+        String summaryText = txtSummary.getText().toString();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.CREATE_NOTULA, response -> {
 
             try {
@@ -147,13 +122,14 @@ public class AddNotulasActivity extends AppCompatActivity {
 
                     Notula notula = new Notula();
                     notula.setId(notulaObject.getInt("id"));
+                    notula.setTitle(notulaObject.getString("summary"));
                     notula.setTitle(notulaObject.getString("title"));
 
                     NotulasListFragment.arrayList.add(0, notula);
-                    NotulasListFragment.recyclerView.getAdapter().notifyItemInserted(1);
+                    NotulasListFragment.recyclerView.getAdapter().notifyItemInserted(0);
                     NotulasListFragment.recyclerView.getAdapter().notifyDataSetChanged();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+//                    Intent restart = new Intent(AddNotulasActivity.this, MainActivity.class);
+//                    startActivity(restart);
 
                     Toast.makeText(this, R.string.added_successfully, Toast.LENGTH_SHORT).show();
                     finish();
@@ -188,6 +164,7 @@ public class AddNotulasActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("meetings_id", meetingsId + "");
+                map.put("summary", summaryText);
                 map.put("title", titleText);
                 return map;
             }

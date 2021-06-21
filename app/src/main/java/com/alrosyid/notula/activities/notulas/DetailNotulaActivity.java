@@ -10,8 +10,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.fragments.notulas.DetailNotulasFragment;
-import com.alrosyid.notula.fragments.notulas.FollowUpFragment;
-import com.alrosyid.notula.fragments.notulas.PointFragment;
+import com.alrosyid.notula.fragments.followup.FollowUpFragment;
+import com.alrosyid.notula.fragments.points.PointFragment;
 import com.alrosyid.notula.fragments.notulas.PreviewNotulasFragment;
 import com.google.android.material.tabs.TabLayout;
 

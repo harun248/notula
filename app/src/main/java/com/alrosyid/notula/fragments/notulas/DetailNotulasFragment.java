@@ -32,8 +32,8 @@ import java.util.Map;
 
 
 public class DetailNotulasFragment extends Fragment {
-    private TextInputLayout layoutTitle, layoutMeetingsTitle, layoutDate;
-    private TextInputEditText txtTitle, txtMeetingsTitle, txtDate;
+    private TextInputLayout lytTitle, lytMeetingsTitle, lytDate;
+    private TextInputEditText txtTitle, txtMeetingsTitle, txtDate,txtSummary;
     private int notulasId = 0, position =0;
     private  Button btnExport;
     private View view;
@@ -58,53 +58,17 @@ public class DetailNotulasFragment extends Fragment {
     }
     private void init(){
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-        layoutTitle = view.findViewById(R.id.tilTitle);
-        layoutMeetingsTitle =  view.findViewById(R.id.tilMeetingsTitle);
-        layoutDate =  view.findViewById(R.id.tilDate);
+        lytTitle = view.findViewById(R.id.tilTitle);
+        lytMeetingsTitle =  view.findViewById(R.id.tilMeetingsTitle);
+        lytDate =  view.findViewById(R.id.tilDate);
         txtTitle =  view.findViewById(R.id.tieTitle);
-//        btnExport= view.findViewById(R.id.btnExport);
+        txtSummary =  view.findViewById(R.id.tieSummary);
         txtMeetingsTitle =  view.findViewById(R.id.tieMeetingsTitle);
         txtDate =  view.findViewById(R.id.tieDate);
-//        notulaId = getIntent().getIntExtra("notulaId",0);
 
         setHasOptionsMenu(true);
 
         getDetailNotulas();
-
-
-
-
-//        btnExport.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//
-////                Intent intent = new Intent();
-////                intent.setAction(Intent.ACTION_VIEW);
-////                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-////                intent.setData(Uri.parse(Constant.EXPORT));
-////                startActivity(intent);
-////                Uri uri = Uri.parse(Constant.EXPORT); // missing 'http://' will cause crashed
-////                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-////                startActivity(intent);
-//
-////                getAddNotulasActivity();
-//
-//            }
-//
-////            private void getAddNotulasActivity() {
-////
-////                Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
-////                Intent i = new Intent(getActivity(), AddNotulasActivity.class);
-////                i.putExtra("meetingsId", (id_meetings));
-////                startActivity(i);
-////            }
-//        });
-
-
-
-
 
     }
 
@@ -125,6 +89,9 @@ public class DetailNotulasFragment extends Fragment {
                         txtTitle.setText(notula.getString("title"));
                         txtMeetingsTitle.setText(notula.getString("meetings_title"));
                         txtDate.setText(notula.getString("date"));
+                        txtSummary.setText
+                                (notula.getString("summary"));
+
 //                        String source = notula.getString("date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -162,40 +129,6 @@ public class DetailNotulasFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
-//    public void DownloadFiles() {
-////        dialog.setMessage("Downloading..");
-////        dialog.show();
-//
-//        try {
-//            URL u = new URL(Constant.EXPORT);
-//            InputStream is = u.openStream();
-//
-//            DataInputStream dis = new DataInputStream(is);
-//
-//            byte[] buffer = new byte[1024];
-//            int length;
-//
-//            FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/" + "Download/" + "tes.pdf"));
-//
-//
-//            while ((length = dis.read(buffer)) > 0) {
-//                fos.write(buffer, 0, length);
-//
-//            }
-//
-//
-//        } catch (MalformedURLException mue) {
-//            Log.e("SYNC getUpdate", "malformed url error", mue);
-//        } catch (IOException ioe) {
-//            Log.e("SYNC getUpdate", "io error", ioe);
-//        } catch (SecurityException se) {
-//            Log.e("SYNC getUpdate", "security error", se);
-//        }
-//
-//
-//    }
-
-
 
 
 }

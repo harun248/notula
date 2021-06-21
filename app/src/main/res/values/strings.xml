@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">notula</string>
+    <string name="app_name">Notula</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="delete_notula">Notula berhasil dihapus</string>
@@ -88,6 +88,13 @@
     <string name="preview">Preview</string>
     <string name="data_is_empty">Data is empty</string>
     <string name="meeting_today">Meetings Today</string>
+    <string name="summary">Summary</string>
+    <string name="max_1500">maximum character 1500</string>
+    <string name="no_meeting_today">No Meeting Today</string>
+    <string name="notes">Notes</string>
+    <string name="note">Note</string>
+    <string name="add_note">Add Notes</string>
+    <string name="detail_note">Detail Note</string>
 
 
     <string-array name="meetings_status">

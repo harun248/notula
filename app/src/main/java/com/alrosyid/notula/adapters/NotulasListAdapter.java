@@ -58,7 +58,7 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
     @NonNull
     @Override
     public NotulaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula,parent,false);
         return new NotulaHolder(view);
 
 
@@ -70,6 +70,9 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
     public void onBindViewHolder(@NonNull NotulaHolder holder, int position) {
         Notula notula = list.get(position);
         holder.txtTitle.setText(notula.getTitle());
+        holder.txtSummary.setText(notula.getSummary());
+//        holder.txtMeetings.setText(notula.getMeetings_title());
+//        holder.txtDate.setText(notula.getDate());
 
         holder.detailNotula.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,14 +208,17 @@ Filter filter = new Filter() {
     }
 
     class NotulaHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle;
-        private ImageButton  btnEdit, btnDelete;
+        private TextView txtTitle, txtSummary, txtDate, txtMeetings;
+        private ImageButton btnEdit, btnDelete;
         private CardView detailNotula;
 
         public NotulaHolder(@NonNull View itemView) {
             super(itemView);
             detailNotula = itemView.findViewById(R.id.cvNotula);
             txtTitle = itemView.findViewById(R.id.tvTitle);
+            txtSummary = itemView.findViewById(R.id.tvSummary);
+//            txtDate = itemView.findViewById(R.id.tvNotulaDate);
+//            txtMeetings = itemView.findViewById(R.id.tvMeetTitle);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }

@@ -2,11 +2,12 @@ package com.alrosyid.notula.models;
 
 public class Notula {
 
-    private String title,meetings_title,date;
+    private String title,meetings_title,date ,summary;
     private User user;
     private Meetings meetings;
 
     private int id,meetings_id,user_id;
+
 
     public int getId() {
         return id;
@@ -70,5 +71,13 @@ public class Notula {
 
     public void setMeetings(Meetings meetings) {
         this.meetings = meetings;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

@@ -40,26 +40,24 @@
             android:text="Can't display data. \nPlease, check your connection"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<RelativeLayout
+            android:id="@+id/layoutBtnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:gravity="right"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp">
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/layoutBtnAdd"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:gravity="right"-->
-<!--        android:paddingRight="30dp"-->
-<!--        android:paddingBottom="30dp">-->
+            <ImageButton
+                android:id="@+id/btnAdd"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/round_accent"
+                android:src="@drawable/ic_baseline_add_24" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnAdd"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:background="@drawable/round_accent"-->
-<!--            android:src="@drawable/ic_baseline_add_24" />-->
-
-
-<!--    </RelativeLayout>-->
+        </RelativeLayout>
 
 </RelativeLayout>

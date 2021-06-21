@@ -122,7 +122,7 @@ public class SignInFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://www.google.com"));
+                intent.setData(Uri.parse("https://web.jeevva.my.id/password/reset"));
                 startActivity(intent);
             }
         });

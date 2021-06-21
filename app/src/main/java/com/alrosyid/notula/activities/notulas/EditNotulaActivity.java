@@ -41,8 +41,8 @@ import java.util.Map;
 
 public class EditNotulaActivity extends AppCompatActivity {
     private Button btnSave;
-    private TextInputLayout layoutTitle;
-    private TextInputEditText txtTitle;
+    private TextInputLayout lytTitle,lytSummary ;
+    private TextInputEditText txtTitle, txtSummary;
     private ProgressDialog dialog;
     private int notulasId = 0 ,position =0;
     private SharedPreferences sharedPreferences;
@@ -60,8 +60,10 @@ public class EditNotulaActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         btnSave = findViewById(R.id.btnSave);
-        layoutTitle = findViewById(R.id.tilTitle);
+        lytTitle = findViewById(R.id.tilTitle);
         txtTitle = findViewById(R.id.tieTitle);
+        lytSummary = findViewById(R.id.tilSummary);
+        txtSummary = findViewById(R.id.tieSummary);
         position = getIntent().getIntExtra("position",0);
         notulasId = getIntent().getIntExtra("notulasId", 0);
 
@@ -77,11 +79,20 @@ public class EditNotulaActivity extends AppCompatActivity {
 
     private boolean validate() {
         if (txtTitle.getText().toString().isEmpty()) {
-            layoutTitle.setErrorEnabled(true);
-            layoutTitle.setError(getString(R.string.required));
+            lytTitle.setErrorEnabled(true);
+            lytTitle.setError(getString(R.string.required));
             return false;
         }
-
+        if (txtSummary.getText().toString().isEmpty()) {
+            lytSummary.setErrorEnabled(true);
+            lytSummary.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtSummary.getText().toString().trim().length() >1500) {
+            lytSummary.setErrorEnabled(true);
+            lytSummary.setError(getString(R.string.max_1500));
+            return false;
+        }
         return true;
     }
     private void  getNotulas() {
@@ -95,8 +106,8 @@ public class EditNotulaActivity extends AppCompatActivity {
                     JSONArray array = new JSONArray(object.getString("notulas"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notula = array.getJSONObject(i);
-
                         txtTitle.setText(notula.getString("title"));
+                        txtSummary.setText(notula.getString("summary"));
                     }
                 }
 
@@ -129,7 +140,7 @@ public class EditNotulaActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     Notula notula = NotulasListFragment.arrayList.get(position);
-
+                    notula.setSummary(txtSummary.getText().toString());
                     notula.setTitle(txtTitle.getText().toString());
 
                     NotulasListFragment.arrayList.set(position,notula);
@@ -161,6 +172,7 @@ public class EditNotulaActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
                 map.put("id",notulasId+"");
+                map.put("summary",txtSummary.getText().toString());
                 map.put("title",txtTitle.getText().toString());
                 return map;
             }

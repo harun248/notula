@@ -147,13 +147,15 @@ public class DetailMeetingsFragment extends Fragment {
                 final Intent email = new Intent(Intent.ACTION_SEND);
 //                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
                 email.putExtra(Intent.EXTRA_SUBJECT, ("Invitation / Schedule of Meeting : "+txtTitle.getText().toString()));
-                email.putExtra(Intent.EXTRA_TEXT, ("Dear Sir/Madam, \n\nWe are inviting you a scheduled meeting"
-                        +"\n\nTitle : " +txtTitle.getText().toString()
-                        +"\nDate : " +txtDate.getText().toString()
-                        +"\nStart Time : "+txtStartTime.getText().toString()
-                        +"\nEnd Time : "+txtEndTime.getText().toString()
-                        +"\n\nAgenda : \n"+txtAgenda.getText().toString()+"\n\n"
-                        +"Location : \n"+txtLocation.getText().toString()));
+                email.putExtra(Intent.EXTRA_TEXT, (
+//                        "Dear Sir/Madam, " +
+                                "\n\nWe are inviting you a scheduled meeting"
+                                +"\n\nTitle : " +txtTitle.getText().toString()
+                                +"\nDate : " +txtDate.getText().toString()
+                                +"\nStart Time : "+txtStartTime.getText().toString()
+                                +"\nEnd Time : "+txtEndTime.getText().toString()
+                                +"\n\nAgenda : \n"+txtAgenda.getText().toString()+"\n\n"
+                                +"Location : \n"+txtLocation.getText().toString()));
 
 
 //need this to prompt`enter code here`s email client only
@@ -183,7 +185,8 @@ public class DetailMeetingsFragment extends Fragment {
 //                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
 //                email.putExtra(Intent.EXTRA_SUBJECT, ("Invitation / Schedule of Meeting : "+txtTitle.getText().toString()));
                 share.putExtra(Intent.EXTRA_TEXT, ( "Invitation / Schedule of Meeting : "+txtTitle.getText().toString()
-                        +"\n\nDear Sir/Madam, \n\nWe are inviting you a scheduled meeting"
+//                        +"\n\nDear Sir/Madam, "
+                        +"\n\nWe are inviting you a scheduled meeting"
                         +"\n\nTitle : " +txtTitle.getText().toString()
                         +"\nDate : " +txtDate.getText().toString()
                         +"\nStart Time : "+txtStartTime.getText().toString()

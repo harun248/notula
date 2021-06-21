@@ -39,6 +39,36 @@
                 android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSummary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_below="@id/tilDate"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            app:boxStrokeColor="@color/colorAccent"
+            app:counterEnabled="true"
+            app:counterMaxLength="1500"
+            app:counterTextAppearance="@style/CounterText"
+            app:counterTextColor="@color/colorBlack"
+            app:hintTextAppearance="@style/HintText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieSummary"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:enabled="true"
+                android:gravity="top"
+                android:hint="@string/summary"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:singleLine="false"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSave"

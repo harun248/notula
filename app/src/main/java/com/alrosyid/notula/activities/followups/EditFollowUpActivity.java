@@ -14,10 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.fragments.notulas.FollowUpFragment;
-import com.alrosyid.notula.fragments.notulas.PointFragment;
+import com.alrosyid.notula.fragments.followup.FollowUpFragment;
+import com.alrosyid.notula.fragments.points.PointFragment;
 import com.alrosyid.notula.models.FollowUp;
-import com.alrosyid.notula.models.Points;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;

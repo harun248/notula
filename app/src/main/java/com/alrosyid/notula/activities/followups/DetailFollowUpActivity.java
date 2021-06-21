@@ -5,18 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.api.Constant;
-import com.alrosyid.notula.fragments.notulas.FollowUpFragment;
-import com.alrosyid.notula.fragments.notulas.PointFragment;
-import com.alrosyid.notula.models.FollowUp;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,10 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class DetailFollowUpActivity extends AppCompatActivity {

@@ -68,8 +68,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/email"
-
                             android:inputType="textEmailAddress"
+
+                            android:text="2@gmail.com"
 
                             android:textSize="15sp" />
 
@@ -91,9 +92,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/password"
-
-
                             android:inputType="textPassword"
+
+                            android:text="12345678"
 
                             android:textSize="15sp" />
 
@@ -101,14 +102,14 @@
 
                     <TextView
                         android:id="@+id/tvForgot"
-                        android:layout_below="@id/txtLayoutPasswordSignIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/txtLayoutPasswordSignIn"
                         android:layout_marginRight="6dp"
                         android:layout_marginBottom="10dp"
                         android:text="@string/forgot_password_"
-                        android:textSize="12sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/btnSignIn"

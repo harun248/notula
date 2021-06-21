@@ -25,6 +25,7 @@ import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.notulas.AddNotulasActivity;
 import com.alrosyid.notula.activities.notulas.AddNotulasOnlyActivity;
 import com.alrosyid.notula.adapters.NotulasAdapter;
+import com.alrosyid.notula.adapters.NotulasListAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.meetings.DetailMeetingsFragment;
 import com.alrosyid.notula.models.Notula;
@@ -51,6 +52,7 @@ public class NotulaFragment extends Fragment {
     public static ArrayList<Notula> arrayList;
     private SwipeRefreshLayout refreshLayout;
     private NotulasAdapter notulasAdapter;
+    private NotulasListAdapter notulasListAdapter;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
     private TextView dataEmpty,dataBadConnect;
@@ -63,6 +65,8 @@ public class NotulaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_notula,container,false);
         init();
+
+        refreshLayout.setRefreshing(true);
         return view;
     }
     private void init(){
@@ -84,22 +88,22 @@ public class NotulaFragment extends Fragment {
             }
         });
 
-//        addNotulas =(ImageButton)view.findViewById(R.id.btnAdd);
-//        addNotulas.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getAddNotulasActivity();
-//
-//            }
-//
-//            private void getAddNotulasActivity() {
-//
-//                Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
-//                Intent i = new Intent(getActivity(), AddNotulasOnlyActivity.class);
-//                i.putExtra("meetingsId", (id_meetings));
-//                startActivity(i);
-//            }
-//        });
+        addNotulas =(ImageButton)view.findViewById(R.id.btnAdd);
+        addNotulas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAddNotulasActivity();
+
+            }
+
+            private void getAddNotulasActivity() {
+
+                Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
+                Intent i = new Intent(getActivity(), AddNotulasOnlyActivity.class);
+                i.putExtra("meetingsId", (id_meetings));
+                startActivity(i);
+            }
+        });
 
 
 
@@ -117,15 +121,17 @@ public class NotulaFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("notulas"));
-                    if(array.length() >0) {
+//                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject notulaObject = array.getJSONObject(i);
                             Notula notula = new Notula();
                             notula.setId(notulaObject.getInt("id"));
-                            notula.setMeetings_title(notulaObject.getString("meetings_title"));
+//                            notula.setMeetings_title(notulaObject.getString("meetings_title"));
                             notula.setTitle(notulaObject.getString("title"));
+                            notula.setSummary(notulaObject.getString("summary"));
+
                             //covert string to date
-                            notula.setDate(notulaObject.getString("date"));
+//                            notula.setDate(notulaObject.getString("date"));
 //                        String source = notulaObject.getString("date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -143,11 +149,11 @@ public class NotulaFragment extends Fragment {
 
                             arrayList.add(notula);
                         }
-
-                    }else{
-                        recyclerView.setVisibility(View.GONE);
-                        dataEmpty.setVisibility(View.VISIBLE);
-                    }
+//
+//                    }else{
+//                        recyclerView.setVisibility(View.GONE);
+//                        dataEmpty.setVisibility(View.VISIBLE);
+//                    }
 
 
                     notulasAdapter = new NotulasAdapter(getContext(),arrayList);

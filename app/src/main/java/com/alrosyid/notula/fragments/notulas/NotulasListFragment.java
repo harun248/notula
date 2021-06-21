@@ -36,10 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +62,7 @@ public class NotulasListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_notulas,container,false);
+        view = inflater.inflate(R.layout.fragment_list_notulas,container,false);
         init();
         return view;
     }
@@ -126,21 +123,23 @@ public class NotulasListFragment extends Fragment {
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("notulas"));
                     String data = object.getString("notulas");
-                    if(array.length() >0) {
+//                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject notulaObject = array.getJSONObject(i);
                             Notula notula = new Notula();
                             notula.setId(notulaObject.getInt("id"));
                             notula.setTitle(notulaObject.getString("title"));
+                            notula.setSummary(notulaObject.getString("summary"));
 
                             arrayList.add(notula);
                         }
-                    }else{
-                        recyclerView.setVisibility(View.GONE);
-                        dataEmpty.setVisibility(View.VISIBLE);
-                    }
-                    notulasListAdapter = new NotulasListAdapter(getContext(),arrayList);
-                    recyclerView.setAdapter(notulasListAdapter);
+                        notulasListAdapter = new NotulasListAdapter(getContext(),arrayList);
+                        recyclerView.setAdapter(notulasListAdapter);
+//                    }else{
+//                        recyclerView.setVisibility(View.VISIBLE);
+//                        dataEmpty.setVisibility(View.VISIBLE);
+//                    }
+
 
 
 

@@ -35,13 +35,13 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final int MANAGE_EXTERNAL_STORAGE_SET = 1;
-    private static final int WRITE_EXTERNAL_STORAGE_SET= 2;
+    private static final int WRITE_EXTERNAL_STORAGE_SET = 2;
     private AppBarConfiguration mAppBarConfiguration;
-    private TextView txtName,txtEmail;
+    private TextView txtName, txtEmail;
     private SharedPreferences sharedPreferences;
 
-    private static final String TAG="MainActivity";
-    private static final String [] STORAGE_PERMISSIONS={
+    private static final String TAG = "MainActivity";
+    private static final String[] STORAGE_PERMISSIONS = {
             Manifest.permission.ACCESS_MEDIA_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_meet, R.id.nav_notula,  R.id.nav_account,
+                R.id.nav_home, R.id.nav_meet, R.id.nav_notula, R.id.nav_account,
                 R.id.nav_notes
         )
                 .setDrawerLayout(drawer)
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void init(){
+    private void init() {
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         txtName = findViewById(R.id.tvName);
@@ -81,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getUser() {
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res->{
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res -> {
 
             try {
                 JSONObject object = new JSONObject(res);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
 
                     JSONObject user = object.getJSONObject("user");
                     txtName.setText(user.getString("name"));
@@ -98,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(request);
     }
-
 
 
     @Override
@@ -130,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     public void getPermissions() {
         /* Check and Request permission */
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -138,12 +138,13 @@ public class MainActivity extends AppCompatActivity {
                     WRITE_EXTERNAL_STORAGE_SET);
         }
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.MANAGE_EXTERNAL_STORAGE},
-                MANAGE_EXTERNAL_STORAGE_SET);
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.MANAGE_EXTERNAL_STORAGE},
+                    MANAGE_EXTERNAL_STORAGE_SET);
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
 
             case MANAGE_EXTERNAL_STORAGE_SET: {

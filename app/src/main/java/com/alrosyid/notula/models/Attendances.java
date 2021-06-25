@@ -1,8 +1,8 @@
 package com.alrosyid.notula.models;
 
 public class Attendances {
-    private int id,user_id, meetings_id;
-    private String name,position;
+    private int id, user_id, meetings_id;
+    private String name, position;
 
     public int getId() {
         return id;

@@ -25,17 +25,15 @@ public class AuthActivity extends AppCompatActivity {
             public void run() {
 
                 SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-                boolean isLoggedIn = userPref.getBoolean("isLoggedIn",false);
+                boolean isLoggedIn = userPref.getBoolean("isLoggedIn", false);
 
-                if (isLoggedIn){
-                    startActivity(new Intent(AuthActivity.this,MainActivity.class));
+                if (isLoggedIn) {
+                    startActivity(new Intent(AuthActivity.this, MainActivity.class));
                     finish();
-                }
-
-                else {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignInFragment()).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SignInFragment()).commit();
                 }
             }
-        },1500);
+        }, 1500);
     }
 }

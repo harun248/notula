@@ -50,27 +50,30 @@ public class MeetingsFragment extends Fragment {
     private MeetingsAdapter meetingsAdapter;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
-    private TextView dataEmpty,dataBadConnect;
+    private TextView dataEmpty, dataBadConnect;
 
     private ImageButton addMeetings;
-    public MeetingsFragment(){}
+
+    public MeetingsFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_meetings,container,false);
+        view = inflater.inflate(R.layout.fragment_meetings, container, false);
         init();
         return view;
 
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerHome);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeHome);
         dataEmpty = view.findViewById(R.id.dataEmpty);
-        dataBadConnect =view.findViewById(R.id.dataBadConnect);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -83,7 +86,7 @@ public class MeetingsFragment extends Fragment {
         });
 
 
-        addMeetings =(ImageButton)view.findViewById(R.id.btnAdd);
+        addMeetings = (ImageButton) view.findViewById(R.id.btnAdd);
         addMeetings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +107,7 @@ public class MeetingsFragment extends Fragment {
     }
 
 
-    private void  getMeets() {
+    private void getMeets() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
@@ -112,16 +115,16 @@ public class MeetingsFragment extends Fragment {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("meetings"));
 //                    if(array.length() >0) {
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject meetObject = array.getJSONObject(i);
-                            Meetings meetings = new Meetings();
-                            meetings.setId(meetObject.getInt("id"));
-                            meetings.setTitle(meetObject.getString("title"));
-                            meetings.setDate(meetObject.getString("date"));
-                            //covert string to date
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject meetObject = array.getJSONObject(i);
+                        Meetings meetings = new Meetings();
+                        meetings.setId(meetObject.getInt("id"));
+                        meetings.setTitle(meetObject.getString("title"));
+                        meetings.setDate(meetObject.getString("date"));
+                        //covert string to date
 //                        String source = meetObject.getString("date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -136,9 +139,8 @@ public class MeetingsFragment extends Fragment {
 //                        meetings.setDate(dayFormatted);
 
 
-
-                            arrayList.add(meetings);
-                        }
+                        arrayList.add(meetings);
+                    }
 
 //                }else{
 //                    recyclerView.setVisibility(View.GONE);
@@ -146,7 +148,7 @@ public class MeetingsFragment extends Fragment {
 //                }
 
 
-                    meetingsAdapter = new MeetingsAdapter(getContext(),arrayList);
+                    meetingsAdapter = new MeetingsAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(meetingsAdapter);
                 }
             } catch (JSONException e) {
@@ -155,20 +157,20 @@ public class MeetingsFragment extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
 
             dataBadConnect.setVisibility(View.GONE);
-        }){
+        }) {
 
             // provide token in header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -180,10 +182,10 @@ public class MeetingsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.search);
 
-        SearchView searchView = (SearchView)item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

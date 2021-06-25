@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -39,19 +40,20 @@ import java.util.Map;
 
 public class SignInFragment extends Fragment {
     private View view;
-    private TextInputLayout layoutEmail,layoutPassword;
-    private TextInputEditText txtEmail,txtPassword;
+    private TextInputLayout layoutEmail, layoutPassword;
+    private TextInputEditText txtEmail, txtPassword;
     private Button btnSignIn;
     private TextView txtSignUp, txtForgot;
     private ProgressDialog dialog;
 
 
-    public SignInFragment(){}
+    public SignInFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_sign_in,container,false);
+        view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         init();
         return view;
     }
@@ -62,18 +64,18 @@ public class SignInFragment extends Fragment {
         txtPassword = view.findViewById(R.id.txtPasswordSignIn);
         txtEmail = view.findViewById(R.id.txtEmailSignIn);
         txtSignUp = view.findViewById(R.id.txtSignUp);
-        txtForgot= view.findViewById(R.id.tvForgot);
+        txtForgot = view.findViewById(R.id.tvForgot);
         btnSignIn = view.findViewById(R.id.btnSignIn);
         dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
 
-        txtSignUp.setOnClickListener(v->{
+        txtSignUp.setOnClickListener(v -> {
             //change fragments
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignUpFragment()).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SignUpFragment()).commit();
         });
-        btnSignIn.setOnClickListener(v->{
+        btnSignIn.setOnClickListener(v -> {
             //validate fields first
-            if (validate()){
+            if (validate()) {
                 login();
             }
         });
@@ -87,7 +89,7 @@ public class SignInFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!txtEmail.getText().toString().isEmpty()){
+                if (!txtEmail.getText().toString().isEmpty()) {
                     layoutEmail.setErrorEnabled(false);
                 }
             }
@@ -106,7 +108,7 @@ public class SignInFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (txtPassword.getText().toString().length()>7){
+                if (txtPassword.getText().toString().length() > 7) {
                     layoutPassword.setErrorEnabled(false);
                 }
             }
@@ -129,13 +131,13 @@ public class SignInFragment extends Fragment {
     }
 
 
-    private boolean validate (){
-        if (txtEmail.getText().toString().isEmpty()){
+    private boolean validate() {
+        if (txtEmail.getText().toString().isEmpty()) {
             layoutEmail.setErrorEnabled(true);
             layoutEmail.setError(getString(R.string.required));
             return false;
         }
-        if (txtPassword.getText().toString().length()<8){
+        if (txtPassword.getText().toString().length() < 8) {
             layoutPassword.setErrorEnabled(true);
             layoutPassword.setError(getString(R.string.required_password_characters));
             return false;
@@ -144,7 +146,7 @@ public class SignInFragment extends Fragment {
     }
 
 
-    private void login (){
+    private void login() {
         dialog.setMessage(getString(R.string.sign_in_load));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.LOGIN, response -> {
@@ -152,23 +154,23 @@ public class SignInFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(response);
                 boolean success = object.getBoolean("success");
-                if (success){
+                if (success) {
                     JSONObject user = object.getJSONObject("user");
                     //make shared preference user
-                    SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user",getContext().MODE_PRIVATE);
+                    SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = userPref.edit();
-                    editor.putString("token",object.getString("token"));
-                    editor.putInt("id",user.getInt("id"));
-                    editor.putString("name",user.getString("name"));
-                    editor.putString("email",user.getString("email"));
-                    editor.putBoolean("isLoggedIn",true);
+                    editor.putString("token", object.getString("token"));
+                    editor.putInt("id", user.getInt("id"));
+                    editor.putString("name", user.getString("name"));
+                    editor.putString("email", user.getString("email"));
+                    editor.putBoolean("isLoggedIn", true);
                     editor.apply();
                     //if success
-                    startActivity(new Intent(((AuthActivity)getContext()), MainActivity.class));
+                    startActivity(new Intent(((AuthActivity) getContext()), MainActivity.class));
                     ((AuthActivity) getContext()).finish();
                     Toast.makeText(getContext(), R.string.sign_in_successfully, Toast.LENGTH_SHORT).show();
                 }
-                if (!success){
+                if (!success) {
                     layoutPassword.setError(getString(R.string.incorrect));
                 }
 
@@ -178,22 +180,22 @@ public class SignInFragment extends Fragment {
             dialog.dismiss();
 //            Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
 
-        },error -> {
+        }, error -> {
             // error if connection not success
             error.printStackTrace();
             dialog.dismiss();
             Toast.makeText(getContext(), R.string.bad_connection, Toast.LENGTH_SHORT).show();
 
-        }){
+        }) {
 
             // add parameters
 
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("email",txtEmail.getText().toString().trim());
-                map.put("password",txtPassword.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("email", txtEmail.getText().toString().trim());
+                map.put("password", txtPassword.getText().toString());
                 return map;
             }
         };

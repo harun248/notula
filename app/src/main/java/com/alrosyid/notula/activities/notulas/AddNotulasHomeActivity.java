@@ -36,15 +36,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinner.OnItemSelectedListener{
+public class AddNotulasHomeActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
     private Button btnSave;
-    private TextInputLayout lytTitle,lytSummary ;
+    private TextInputLayout lytTitle, lytSummary;
     private TextInputEditText txtTitle, txtSummary;
     private ProgressDialog dialog;
     private int meetingsId = 0;
     private SharedPreferences sharedPreferences;
-    private TextView txtItemTitle,txtItemId,txtItemdNull;
+    private TextView txtItemTitle, txtItemId, txtItemdNull;
 
 
     Spinner spinner;
@@ -69,7 +69,7 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
         txtItemId = (TextView) findViewById(R.id.tvId);
 
 
-        meeting_list= new ArrayList<String>();
+        meeting_list = new ArrayList<String>();
 
 //        Adding an Item Selected Listener to our Spinner
 //        As we have implemented the class Spinner.OnItemSelectedListener to this class iteself we are passing this to setOnItemSelectedListener
@@ -120,12 +120,10 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
         spinner.setOnItemSelectedListener(this);
 
 
-
-
-
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -149,9 +147,9 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
         getData();
     }
 
-    private void getData(){
+    private void getData() {
         //Creating a string request
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,Constant.SPINNER_MEETING,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Constant.SPINNER_MEETING,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -162,7 +160,6 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
 
                             //Storing the Array of JSON String to our JSON Array
                             meetings = j.getJSONArray(Constant.JSON_ARRAY);
-
 
 
                             //Calling method getStudents to get the students from the JSON Array
@@ -179,18 +176,18 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
 //                    }
 //
 //                });
-                    error -> {
-                        error.printStackTrace();
-                    }) {
+                error -> {
+                    error.printStackTrace();
+                }) {
 
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            String token = sharedPreferences.getString("token", "");
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("Authorization", "Bearer " + token);
-                            return map;
-                        }
-                    };
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
+                return map;
+            }
+        };
 
         //Creating a request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -199,23 +196,22 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
         requestQueue.add(stringRequest);
     }
 
-    private void getMeetings(JSONArray j){
+    private void getMeetings(JSONArray j) {
         //Traversing through all the items in the json array
 
-        for(int i=0;i<j.length();i++){
+        for (int i = 0; i < j.length(); i++) {
 
             try {
                 //Getting json object
                 JSONObject json = j.getJSONObject(i);
 //                if(json.length() >0){
-                    //Adding the name of the student to array list
+                //Adding the name of the student to array list
 
-                    meeting_list.add(json.getString(Constant.MT_TITLE));
+                meeting_list.add(json.getString(Constant.MT_TITLE));
 //                }else if(json.length() !=1){
 //                    txtItemdNull.setText("No Meetings");
 ////                    txtItemdNull.setText("No Meetings");
 //                }
-
 
 
             } catch (JSONException e) {
@@ -227,7 +223,7 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
         spinner.setAdapter(new ArrayAdapter<String>(AddNotulasHomeActivity.this, android.R.layout.simple_spinner_dropdown_item, meeting_list));
     }
 
-//    private String getTitle(int position){
+    //    private String getTitle(int position){
 //        String title="";
 //        try {
 //            //Getting object of given index
@@ -241,8 +237,8 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
 //        //Returning the name
 //        return title;
 //    }
-    private String getId(int position){
-        String id="";
+    private String getId(int position) {
+        String id = "";
         try {
             //Getting object of given index
             JSONObject json = meetings.getJSONObject(position);
@@ -271,8 +267,6 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
     }
 
 
-
-
     private boolean validate() {
         if (txtTitle.getText().toString().isEmpty()) {
             lytTitle.setErrorEnabled(true);
@@ -284,13 +278,14 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
             lytSummary.setError(getString(R.string.required));
             return false;
         }
-        if (txtSummary.getText().toString().trim().length() >1500) {
+        if (txtSummary.getText().toString().trim().length() > 1500) {
             lytSummary.setErrorEnabled(true);
             lytSummary.setError(getString(R.string.max_1500));
             return false;
         }
         return true;
     }
+
     private void create() {
         dialog.setMessage(getString(R.string.save_load));
         dialog.show();
@@ -361,9 +356,6 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements  Spinne
         queue.add(request);
 
     }
-
-
-
 
 
     @Override

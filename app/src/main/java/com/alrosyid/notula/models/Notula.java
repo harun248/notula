@@ -2,11 +2,11 @@ package com.alrosyid.notula.models;
 
 public class Notula {
 
-    private String title,meetings_title,date ,summary;
+    private String title, meetings_title, date, summary;
     private User user;
     private Meetings meetings;
 
-    private int id,meetings_id,user_id;
+    private int id, meetings_id, user_id;
 
 
     public int getId() {

@@ -1,8 +1,8 @@
 package com.alrosyid.notula.models;
 
 public class Photos {
-    private int id,meetings_id,user_id;
-    private String photo,title , created_at;
+    private int id, meetings_id, user_id;
+    private String photo, title, created_at;
 
     public int getId() {
         return id;

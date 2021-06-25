@@ -52,19 +52,21 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private HomeMeetingsAdapter homeMeetingsAdapter;
     private SharedPreferences sharedPreferences;
-    private Button addMeetings,addNotulas;
+    private Button addMeetings, addNotulas;
     private TextView dataEmpty;
 
-    public HomeFragment(){}
+    public HomeFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home,container,false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         init();
         return view;
     }
-    private void init(){
+
+    private void init() {
         calendar = Calendar.getInstance();
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerMeetings);
@@ -83,7 +85,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        addMeetings =(Button)view.findViewById(R.id.addMeetings);
+        addMeetings = (Button) view.findViewById(R.id.addMeetings);
         addMeetings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +102,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        addNotulas =(Button)view.findViewById(R.id.addNotula);
+        addNotulas = (Button) view.findViewById(R.id.addNotula);
         addNotulas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,12 +120,10 @@ public class HomeFragment extends Fragment {
         });
 
 
-
     }
 
 
-
-    private void  getMeets() {
+    private void getMeets() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
@@ -131,16 +131,16 @@ public class HomeFragment extends Fragment {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("meetings"));
-                    if(array.length() >0) {
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject meetObject = array.getJSONObject(i);
-                        Meetings meetings = new Meetings();
-                        meetings.setId(meetObject.getInt("id"));
-                        meetings.setTitle(meetObject.getString("title"));
-                        //covert string to date
-                        meetings.setDate(meetObject.getString("date"));
+                    if (array.length() > 0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject meetObject = array.getJSONObject(i);
+                            Meetings meetings = new Meetings();
+                            meetings.setId(meetObject.getInt("id"));
+                            meetings.setTitle(meetObject.getString("title"));
+                            //covert string to date
+                            meetings.setDate(meetObject.getString("date"));
 //                        String source = meetObject.getString("date");
 //                        String[] sourceSplit= source.split("-");
 //                        int anno= Integer.parseInt(sourceSplit[0]);
@@ -155,15 +155,14 @@ public class HomeFragment extends Fragment {
 //                        meetings.setDate(dayFormatted);
 
 
-
-                        arrayList.add(meetings);
-                    }
-                    }else{
+                            arrayList.add(meetings);
+                        }
+                    } else {
                         recyclerView.setVisibility(View.GONE);
                         dataEmpty.setVisibility(View.VISIBLE);
                     }
 
-                    homeMeetingsAdapter = new HomeMeetingsAdapter(getContext(),arrayList);
+                    homeMeetingsAdapter = new HomeMeetingsAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(homeMeetingsAdapter);
                 }
             } catch (JSONException e) {
@@ -172,18 +171,18 @@ public class HomeFragment extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
-        }){
+        }) {
 
             // provide token in header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };

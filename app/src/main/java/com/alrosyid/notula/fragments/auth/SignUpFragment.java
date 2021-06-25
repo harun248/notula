@@ -43,18 +43,19 @@ import java.util.Map;
 public class SignUpFragment extends Fragment {
 
     private View view;
-    private TextInputLayout layoutName,layoutEmail,layoutPassword,layoutConfirm;
-    private TextInputEditText txtName,txtEmail,txtPassword,txtConfirm;
+    private TextInputLayout layoutName, layoutEmail, layoutPassword, layoutConfirm;
+    private TextInputEditText txtName, txtEmail, txtPassword, txtConfirm;
     private TextView txtSignIn;
     private Button btnSignUp;
     private ProgressDialog dialog;
 
-    public SignUpFragment(){}
+    public SignUpFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_sign_up,container,false);
+        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         init();
         return view;
     }
@@ -73,14 +74,14 @@ public class SignUpFragment extends Fragment {
         dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
 
-        txtSignIn.setOnClickListener(v->{
+        txtSignIn.setOnClickListener(v -> {
             //change fragments
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignInFragment()).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer, new SignInFragment()).commit();
         });
 
-        btnSignUp.setOnClickListener(v->{
+        btnSignUp.setOnClickListener(v -> {
             //validate fields first
-            if (validate()){
+            if (validate()) {
                 register();
             }
         });
@@ -93,7 +94,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!txtName.getText().toString().isEmpty()){
+                if (!txtName.getText().toString().isEmpty()) {
                     layoutName.setErrorEnabled(false);
                 }
             }
@@ -112,7 +113,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!txtEmail.getText().toString().isEmpty()){
+                if (!txtEmail.getText().toString().isEmpty()) {
                     layoutEmail.setErrorEnabled(false);
                 }
             }
@@ -131,7 +132,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (txtPassword.getText().toString().length()>7){
+                if (txtPassword.getText().toString().length() > 7) {
                     layoutPassword.setErrorEnabled(false);
                 }
             }
@@ -150,7 +151,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (txtConfirm.getText().toString().equals(txtPassword.getText().toString())){
+                if (txtConfirm.getText().toString().equals(txtPassword.getText().toString())) {
                     layoutConfirm.setErrorEnabled(false);
                 }
 
@@ -164,23 +165,23 @@ public class SignUpFragment extends Fragment {
     }
 
 
-    private boolean validate (){
-        if (txtName.getText().toString().isEmpty()){
+    private boolean validate() {
+        if (txtName.getText().toString().isEmpty()) {
             layoutName.setErrorEnabled(true);
             layoutName.setError(getString(R.string.required));
             return false;
         }
-        if (txtEmail.getText().toString().isEmpty()){
+        if (txtEmail.getText().toString().isEmpty()) {
             layoutEmail.setErrorEnabled(true);
             layoutEmail.setError(getString(R.string.required));
             return false;
         }
-        if (txtPassword.getText().toString().length()<8){
+        if (txtPassword.getText().toString().length() < 8) {
             layoutPassword.setErrorEnabled(true);
             layoutPassword.setError(getString(R.string.required_password_characters));
             return false;
         }
-        if (!txtConfirm.getText().toString().equals(txtPassword.getText().toString())){
+        if (!txtConfirm.getText().toString().equals(txtPassword.getText().toString())) {
             layoutConfirm.setErrorEnabled(true);
             layoutConfirm.setError(getString(R.string.password_does_not_match));
             return false;
@@ -191,7 +192,7 @@ public class SignUpFragment extends Fragment {
     }
 
 
-    private void register(){
+    private void register() {
         dialog.setMessage(getString(R.string.sign_up_load));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.REGISTER, response -> {
@@ -200,25 +201,24 @@ public class SignUpFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(response);
                 boolean success = object.getBoolean("success");
-                if (success){
+                if (success) {
                     JSONObject user = object.getJSONObject("user");
                     //make shared preference user
-                    SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user",getContext().MODE_PRIVATE);
+                    SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = userPref.edit();
-                    editor.putString("token",object.getString("token"));
-                    editor.putInt("id",user.getInt("id"));
+                    editor.putString("token", object.getString("token"));
+                    editor.putInt("id", user.getInt("id"));
 //                    editor.putString("name",user.getString("name"));
-                    editor.putBoolean("isLoggedUp",true);
+                    editor.putBoolean("isLoggedUp", true);
                     editor.apply();
                     //if success
-                    startActivity(new Intent(((AuthActivity)getContext()), MainActivity.class));
+                    startActivity(new Intent(((AuthActivity) getContext()), MainActivity.class));
                     ((AuthActivity) getContext()).finish();
                     Toast.makeText(getContext(), R.string.sign_up_successfully, Toast.LENGTH_SHORT).show();
 //                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameAuthContainer,new SignUpSucessFragment()).commit();
 
 
-                }
-                else if (!success){
+                } else if (!success) {
                     layoutPassword.setError(getString(R.string.sign_up_failed));
                 }
 
@@ -228,21 +228,21 @@ public class SignUpFragment extends Fragment {
             dialog.dismiss();
 
 
-        },error -> {
-                    if (error instanceof NetworkError) {
-                    } else if (error instanceof ServerError) {
-                        Toast.makeText(getContext(),
-                                R.string.oops_timeout,
-                                Toast.LENGTH_LONG).show();
-                    } else if (error instanceof AuthFailureError) {
-                    } else if (error instanceof ParseError) {
-                    } else if (error instanceof NoConnectionError) {
-                    } else if (error instanceof TimeoutError) {
-                        Toast.makeText(getContext(),
-                                R.string.timeout_error,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
+        }, error -> {
+            if (error instanceof NetworkError) {
+            } else if (error instanceof ServerError) {
+                Toast.makeText(getContext(),
+                        R.string.oops_timeout,
+                        Toast.LENGTH_LONG).show();
+            } else if (error instanceof AuthFailureError) {
+            } else if (error instanceof ParseError) {
+            } else if (error instanceof NoConnectionError) {
+            } else if (error instanceof TimeoutError) {
+                Toast.makeText(getContext(),
+                        R.string.timeout_error,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
 //        ,error -> {
 //            // error if connection not success
 //            error.printStackTrace();
@@ -250,17 +250,17 @@ public class SignUpFragment extends Fragment {
 //            Toast.makeText(getContext(), "Pendaftaran Error", Toast.LENGTH_SHORT).show();
 //
 //        }
-        ){
+        ) {
 
             // add parameters
 
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("name",txtName.getText().toString().trim());
-                map.put("email",txtEmail.getText().toString().trim());
-                map.put("password",txtPassword.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("name", txtName.getText().toString().trim());
+                map.put("email", txtEmail.getText().toString().trim());
+                map.put("password", txtPassword.getText().toString());
                 return map;
             }
         };

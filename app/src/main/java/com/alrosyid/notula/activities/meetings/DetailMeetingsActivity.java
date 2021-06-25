@@ -20,7 +20,7 @@ import java.util.List;
 
 public class DetailMeetingsActivity extends AppCompatActivity {
 
-    private int meetingsId = 0, position =0;
+    private int meetingsId = 0, position = 0;
     ViewPager viewPager;
     TabLayout tabLayout;
 
@@ -39,7 +39,7 @@ public class DetailMeetingsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(viewPager);
-        meetingsId = getIntent().getIntExtra("meetingsId",0);
+        meetingsId = getIntent().getIntExtra("meetingsId", 0);
 
     }
 
@@ -82,6 +82,7 @@ public class DetailMeetingsActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

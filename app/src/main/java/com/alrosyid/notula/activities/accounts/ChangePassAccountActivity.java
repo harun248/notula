@@ -33,6 +33,7 @@ public class ChangePassAccountActivity extends AppCompatActivity {
     private TextInputEditText txtPassword, txtConfirmPass;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,8 @@ public class ChangePassAccountActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.change_password);
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -51,31 +53,32 @@ public class ChangePassAccountActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.tiePass);
         txtConfirmPass = findViewById(R.id.tieConfirmPass);
         btnSave.setOnClickListener(v -> {
-            if (validate()){
+            if (validate()) {
                 update();
             }
         });
 
 
     }
-    private boolean validate (){
-        if (txtPassword.getText().toString().isEmpty()){
+
+    private boolean validate() {
+        if (txtPassword.getText().toString().isEmpty()) {
             lytPassword.setErrorEnabled(true);
             lytPassword.setError(getString(R.string.required));
             return false;
         }
-        if (txtConfirmPass.getText().toString().isEmpty()){
+        if (txtConfirmPass.getText().toString().isEmpty()) {
             lytConfirmPass.setErrorEnabled(true);
             lytConfirmPass.setError(getString(R.string.required));
             return false;
         }
 
-        if (txtPassword.getText().toString().length()<8){
+        if (txtPassword.getText().toString().length() < 8) {
             lytPassword.setErrorEnabled(true);
             lytPassword.setError(getString(R.string.required_password_characters));
             return false;
         }
-        if (!txtConfirmPass.getText().toString().equals(txtPassword.getText().toString())){
+        if (!txtConfirmPass.getText().toString().equals(txtPassword.getText().toString())) {
             lytConfirmPass.setErrorEnabled(true);
             lytConfirmPass.setError(getString(R.string.password_does_not_match));
             return false;
@@ -91,9 +94,9 @@ public class ChangePassAccountActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, Constant.CHANGE_PASSWORD, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("password",txtPassword.getText().toString().trim());
+                    editor.putString("password", txtPassword.getText().toString().trim());
 
                     editor.apply();
                     Intent restarter = new Intent(ChangePassAccountActivity.this, MainActivity.class);
@@ -108,22 +111,22 @@ public class ChangePassAccountActivity extends AppCompatActivity {
 
         }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             //add token to header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("password",txtPassword.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("password", txtPassword.getText().toString());
                 return map;
             }
         };

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/grey"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvMeetings"
-        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:cardCornerRadius="5dp"
-        >
+        android:background="@color/colorWhite"
+        app:cardCornerRadius="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,18 +34,17 @@
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="name"
                     android:layout_marginBottom="5dp"
+                    android:text="name"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
 
-
                 <TextView
                     android:id="@+id/tvPosition"
-                    android:layout_below="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvName"
                     android:text="position"
                     android:textColor="@color/colorLightGrey"
                     android:textSize="16sp" />
@@ -61,6 +61,7 @@
                 android:layout_marginRight="8dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_baseline_edit_24" />
+
             <ImageButton
                 android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
@@ -71,21 +72,20 @@
                 android:src="@drawable/ic_baseline_delete_24" />
 
 
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="5dp"-->
-<!--        android:elevation="5dp"-->
-<!--        android:background="@drawable/round_whites"-->
-<!--        android:orientation="vertical">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="5dp"-->
+    <!--        android:elevation="5dp"-->
+    <!--        android:background="@drawable/round_whites"-->
+    <!--        android:orientation="vertical">-->
 
 
-<!--        -->
+    <!--        -->
 
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 </LinearLayout>

@@ -63,14 +63,15 @@ public class AddPointsActivity extends AppCompatActivity {
 
 
     }
-//validasi
+
+    //validasi
     private boolean validate() {
         if (txtPoints.getText().toString().isEmpty()) {
             lytPoints.setErrorEnabled(true);
             lytPoints.setError(getString(R.string.required));
             return false;
         }
-        if (txtPoints.getText().toString().trim().length() >200) {
+        if (txtPoints.getText().toString().trim().length() > 200) {
             lytPoints.setErrorEnabled(true);
             lytPoints.setError(getString(R.string.maximum_character));
             return false;
@@ -82,7 +83,7 @@ public class AddPointsActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.save));
         dialog.show();
         String pointsText = txtPoints.getText().toString();
-        Integer id_notulas = getIntent().getIntExtra("notulasId",0);
+        Integer id_notulas = getIntent().getIntExtra("notulasId", 0);
         StringRequest request = new StringRequest(Request.Method.POST, Constant.CREATE_POINTS, response -> {
 
             try {
@@ -130,7 +131,7 @@ public class AddPointsActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-                map.put("notulas_id",id_notulas+ "");
+                map.put("notulas_id", id_notulas + "");
                 map.put("points", pointsText);
                 return map;
             }

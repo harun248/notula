@@ -28,6 +28,7 @@ public class DetailNotesActivity extends AppCompatActivity {
     private TextInputLayout lytTitle, lytNote;
     private TextInputEditText txtTitle, txtNote;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,15 +52,14 @@ public class DetailNotesActivity extends AppCompatActivity {
     }
 
 
-
-    private void  getDetailNotes() {
-        Integer id_notula = getIntent().getIntExtra("noteId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTES+ (id_notula), response -> {
+    private void getDetailNotes() {
+        Integer id_notula = getIntent().getIntExtra("noteId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTES + (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("notes"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notula = array.getJSONObject(i);
@@ -75,15 +75,15 @@ public class DetailNotesActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };

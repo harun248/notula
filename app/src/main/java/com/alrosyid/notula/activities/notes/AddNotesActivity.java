@@ -36,6 +36,7 @@ public class AddNotesActivity extends AppCompatActivity {
     private TextInputLayout lytTitle, lytNote;
     private TextInputEditText txtTitle, txtNote;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class AddNotesActivity extends AppCompatActivity {
         }
         return true;
     }
+
     private void create() {
         dialog.setMessage(getString(R.string.save));
         dialog.show();

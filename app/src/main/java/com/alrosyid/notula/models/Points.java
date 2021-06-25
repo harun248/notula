@@ -1,7 +1,7 @@
 package com.alrosyid.notula.models;
 
 public class Points {
-    private int id,user_id, notulas_id;
+    private int id, user_id, notulas_id;
     private String points;
 
     public int getId() {

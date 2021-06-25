@@ -48,20 +48,21 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
     private ArrayList<Attendances> listAll;
     private SharedPreferences preferences;
     private ProgressDialog dialog;
+
     public AttendancesAdapter(Context context, ArrayList<Attendances> list) {
         this.context = context;
         this.list = list;
         dialog = new ProgressDialog(context);
         dialog.setCancelable(false);
         this.listAll = new ArrayList<>(list);
-        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
 
 
     @NonNull
     @Override
     public AttendancesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_attendances,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_attendances, parent, false);
         return new AttendancesHolder(view);
 
 
@@ -70,21 +71,20 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
     @Override
     public void onBindViewHolder(@NonNull AttendancesHolder holder, int position) {
         Attendances attendances = list.get(position);
-        if(attendances.getId()==preferences.getInt("id",0)){
+        if (attendances.getId() == preferences.getInt("id", 0)) {
             holder.txtName.setText("Data Kosong");
-        }
-        else{
+        } else {
             holder.txtName.setText(attendances.getName());
             holder.txtPosition.setText(attendances.getPosition());
 
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(((Activity)context), EditAttendancesActivity.class);
-                    i.putExtra("attendancesId",attendances.getId());
-                    i.putExtra("position",position);
-                    i.putExtra("positions",attendances.getPosition());
-                    i.putExtra("name",attendances.getName());
+                    Intent i = new Intent(((Activity) context), EditAttendancesActivity.class);
+                    i.putExtra("attendancesId", attendances.getId());
+                    i.putExtra("position", position);
+                    i.putExtra("positions", attendances.getPosition());
+                    i.putExtra("name", attendances.getName());
                     context.startActivity(i);
 
                 }
@@ -92,7 +92,7 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
             holder.btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteAttendances(attendances.getId(),position);
+                    deleteAttendances(attendances.getId(), position);
 
                 }
             });
@@ -102,7 +102,7 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
 
     }
 
-    private void deleteAttendances(int attendancesId,int position){
+    private void deleteAttendances(int attendancesId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.confirm);
         builder.setMessage(R.string.delete_dialog);
@@ -113,7 +113,7 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")){
+                        if (object.getBoolean("success")) {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
@@ -125,21 +125,21 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
                         e.printStackTrace();
                     }
 
-                },error -> {
+                }, error -> {
 
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token","");
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("Authorization","Bearer "+token);
+                        String token = preferences.getString("token", "");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("Authorization", "Bearer " + token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("id",attendancesId+"");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", attendancesId + "");
                         return map;
                     }
                 };
@@ -159,19 +159,22 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
     }
 
     @Override
-    public int getItemCount() { return list.size(); }
+    public int getItemCount() {
+        return list.size();
+    }
+
     Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
             ArrayList<Attendances> filteredList = new ArrayList<>();
-            if (constraint.toString().isEmpty()){
+            if (constraint.toString().isEmpty()) {
                 filteredList.addAll(listAll);
             } else {
-                for (Attendances attendances : listAll){
-                    if(attendances.getName().toLowerCase().contains(constraint.toString().toLowerCase())
+                for (Attendances attendances : listAll) {
+                    if (attendances.getName().toLowerCase().contains(constraint.toString().toLowerCase())
                             || attendances.getPosition().toLowerCase().contains(constraint.toString().toLowerCase())
-                    ){
+                    ) {
                         filteredList.add(attendances);
                     }
                 }
@@ -180,7 +183,7 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-            return  results;
+            return results;
         }
 
         @Override
@@ -191,13 +194,14 @@ public class AttendancesAdapter extends RecyclerView.Adapter<AttendancesAdapter.
         }
     };
 
-    public  Filter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
-    class AttendancesHolder extends RecyclerView.ViewHolder{
-        private TextView txtName,txtPosition;
+    class AttendancesHolder extends RecyclerView.ViewHolder {
+        private TextView txtName, txtPosition;
         private ImageButton btnEdit, btnDelete;
+
         public AttendancesHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.tvName);

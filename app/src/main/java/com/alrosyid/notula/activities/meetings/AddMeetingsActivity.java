@@ -39,9 +39,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class AddMeetingsActivity extends AppCompatActivity  {
+public class AddMeetingsActivity extends AppCompatActivity {
     private Button btnSave;
-    private TextInputLayout lytTitle, lytAgenda, lytStartTime, lytEndTime, lytDate,lytLocation;
+    private TextInputLayout lytTitle, lytAgenda, lytStartTime, lytEndTime, lytDate, lytLocation;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
     private TextInputEditText txtTitle, txtAgenda, txtStartTime, txtEndTime, txtDate, txtLocation;
@@ -123,6 +123,7 @@ public class AddMeetingsActivity extends AppCompatActivity  {
 
         init();
     }
+
     private void init() {
 //        dialog.setMessage(getString(R.string.save));
         dialog = new ProgressDialog(this);
@@ -130,19 +131,19 @@ public class AddMeetingsActivity extends AppCompatActivity  {
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         lytTitle = findViewById(R.id.tilTitle);
-        lytAgenda= findViewById(R.id.tilAgenda);
-        lytLocation= findViewById(R.id.tilLocation);
-        lytDate= findViewById(R.id.tilDate);
-        lytStartTime= findViewById(R.id.tilStartTime);
-        lytEndTime= findViewById(R.id.tilEndTime);
+        lytAgenda = findViewById(R.id.tilAgenda);
+        lytLocation = findViewById(R.id.tilLocation);
+        lytDate = findViewById(R.id.tilDate);
+        lytStartTime = findViewById(R.id.tilStartTime);
+        lytEndTime = findViewById(R.id.tilEndTime);
 
 
-        txtTitle= findViewById(R.id.tieTitle);
-        txtAgenda= findViewById(R.id.tieAgenda);
-        txtLocation= findViewById(R.id.tieLocation);
-        txtDate= findViewById(R.id.tieDate);
-        txtStartTime= findViewById(R.id.tieStartTime);
-        txtEndTime= findViewById(R.id.tieEndTime);
+        txtTitle = findViewById(R.id.tieTitle);
+        txtAgenda = findViewById(R.id.tieAgenda);
+        txtLocation = findViewById(R.id.tieLocation);
+        txtDate = findViewById(R.id.tieDate);
+        txtStartTime = findViewById(R.id.tieStartTime);
+        txtEndTime = findViewById(R.id.tieEndTime);
 
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
@@ -170,12 +171,12 @@ public class AddMeetingsActivity extends AppCompatActivity  {
             lytLocation.setError(getString(R.string.required));
             return false;
         }
-        if (txtAgenda.getText().toString().trim().length() >200) {
+        if (txtAgenda.getText().toString().trim().length() > 200) {
             lytAgenda.setErrorEnabled(true);
             lytAgenda.setError(getString(R.string.maximum_character));
             return false;
         }
-        if (txtLocation.getText().toString().trim().length() >200) {
+        if (txtLocation.getText().toString().trim().length() > 200) {
             lytLocation.setErrorEnabled(true);
             lytLocation.setError(getString(R.string.maximum_character));
             return false;
@@ -230,7 +231,6 @@ public class AddMeetingsActivity extends AppCompatActivity  {
 
                     Toast.makeText(this, getString(R.string.added_successfully), Toast.LENGTH_SHORT).show();
                     finish();
-
 
 
                 }

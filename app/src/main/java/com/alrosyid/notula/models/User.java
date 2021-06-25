@@ -2,8 +2,7 @@ package com.alrosyid.notula.models;
 
 public class User {
     private int id;
-    private String name,email;
-
+    private String name, email;
 
     public int getId() {
         return id;

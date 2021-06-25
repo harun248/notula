@@ -47,13 +47,14 @@ import java.util.Map;
 
 public class DetailMeetingsFragment extends Fragment {
 
-    private TextInputLayout layoutTitle,  layoutDate ,layoutStartTime ,layoutEndTime ,layoutAgenda,layoutLocation;
-    private TextInputEditText txtTitle, txtDate, txtStartTime, txtEndTime, txtAgenda,txtLocation;
-    private int notulaId = 0, position =0;
-    private TextView addCalender,sendEmail;
+    private TextInputLayout layoutTitle, layoutDate, layoutStartTime, layoutEndTime, layoutAgenda, layoutLocation;
+    private TextInputEditText txtTitle, txtDate, txtStartTime, txtEndTime, txtAgenda, txtLocation;
+    private int notulaId = 0, position = 0;
+    private TextView addCalender, sendEmail;
     private ImageView imgShare;
     private View view;
     private SharedPreferences sharedPreferences;
+
     public static DetailMeetingsFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -62,37 +63,40 @@ public class DetailMeetingsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    public DetailMeetingsFragment(){}
+
+    public DetailMeetingsFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_detail_meetings,container,false);
+        view = inflater.inflate(R.layout.fragment_detail_meetings, container, false);
         init();
         return view;
 
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         layoutTitle = view.findViewById(R.id.tilTitle);
-        layoutDate =  view.findViewById(R.id.tilDate);
-        layoutStartTime =  view.findViewById(R.id.tilStartTime);
-        layoutEndTime =  view.findViewById(R.id.tilEndTime);
-        layoutAgenda =  view.findViewById(R.id.tilAgenda);
-        layoutLocation =  view.findViewById(R.id.tilLocation);
-        txtTitle =  view.findViewById(R.id.tieTitle);
-        txtDate =  view.findViewById(R.id.tieDate);
-        txtStartTime =  view.findViewById(R.id.tieStartTime);
-        txtEndTime =  view.findViewById(R.id.tieEndTime);
-        txtAgenda =  view.findViewById(R.id.tieAgenda);
-        txtLocation =  view.findViewById(R.id.tieLocation);
+        layoutDate = view.findViewById(R.id.tilDate);
+        layoutStartTime = view.findViewById(R.id.tilStartTime);
+        layoutEndTime = view.findViewById(R.id.tilEndTime);
+        layoutAgenda = view.findViewById(R.id.tilAgenda);
+        layoutLocation = view.findViewById(R.id.tilLocation);
+        txtTitle = view.findViewById(R.id.tieTitle);
+        txtDate = view.findViewById(R.id.tieDate);
+        txtStartTime = view.findViewById(R.id.tieStartTime);
+        txtEndTime = view.findViewById(R.id.tieEndTime);
+        txtAgenda = view.findViewById(R.id.tieAgenda);
+        txtLocation = view.findViewById(R.id.tieLocation);
 
 
         setHasOptionsMenu(true);
 
         getDetailMeetings();
 
-        addCalender =(TextView) view.findViewById(R.id.btnCalender);
+        addCalender = (TextView) view.findViewById(R.id.btnCalender);
         addCalender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,23 +120,22 @@ public class DetailMeetingsFragment extends Fragment {
                         , Integer.valueOf(txtEndTime.getText().toString().substring(3, 5)));
 
 
-
                 Intent intent = new Intent(Intent.ACTION_INSERT);
                 intent.setData(CalendarContract.Events.CONTENT_URI);
-                intent.putExtra(CalendarContract.Events.TITLE,  txtTitle.getText().toString());
-                intent.putExtra(CalendarContract.Events.EXDATE,  txtDate.getText().toString());
-                intent.putExtra(CalendarContract.Events.EVENT_LOCATION,  txtLocation.getText().toString());
-                intent.putExtra(CalendarContract.Events.DESCRIPTION,  txtAgenda.getText().toString());
+                intent.putExtra(CalendarContract.Events.TITLE, txtTitle.getText().toString());
+                intent.putExtra(CalendarContract.Events.EXDATE, txtDate.getText().toString());
+                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, txtLocation.getText().toString());
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, txtAgenda.getText().toString());
 
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,beginTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
 //
 //                );
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,  endTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
                 startActivity(intent);
             }
         });
 
-        sendEmail =(TextView) view.findViewById(R.id.btnEmail);
+        sendEmail = (TextView) view.findViewById(R.id.btnEmail);
         sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,29 +143,29 @@ public class DetailMeetingsFragment extends Fragment {
 
             }
 
-            private void getSendEmail(){
+            private void getSendEmail() {
                 Intent emailSelectorIntent = new Intent(Intent.ACTION_SENDTO);
                 emailSelectorIntent.setData(Uri.parse("mailto:"));
 
                 final Intent email = new Intent(Intent.ACTION_SEND);
 //                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
-                email.putExtra(Intent.EXTRA_SUBJECT, ("Invitation / Schedule of Meeting : "+txtTitle.getText().toString()));
+                email.putExtra(Intent.EXTRA_SUBJECT, ("Invitation / Schedule of Meeting : " + txtTitle.getText().toString()));
                 email.putExtra(Intent.EXTRA_TEXT, (
 //                        "Dear Sir/Madam, " +
-                                "\n\nWe are inviting you a scheduled meeting"
-                                +"\n\nTitle : " +txtTitle.getText().toString()
-                                +"\nDate : " +txtDate.getText().toString()
-                                +"\nStart Time : "+txtStartTime.getText().toString()
-                                +"\nEnd Time : "+txtEndTime.getText().toString()
-                                +"\n\nAgenda : \n"+txtAgenda.getText().toString()+"\n\n"
-                                +"Location : \n"+txtLocation.getText().toString()));
+                        "\n\nWe are inviting you a scheduled meeting"
+                                + "\n\nTitle : " + txtTitle.getText().toString()
+                                + "\nDate : " + txtDate.getText().toString()
+                                + "\nStart Time : " + txtStartTime.getText().toString()
+                                + "\nEnd Time : " + txtEndTime.getText().toString()
+                                + "\n\nAgenda : \n" + txtAgenda.getText().toString() + "\n\n"
+                                + "Location : \n" + txtLocation.getText().toString()));
 
 
 //need this to prompt`enter code here`s email client only
 //                email.setType("message/rfc822");
                 email.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 email.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                email.setSelector( emailSelectorIntent );
+                email.setSelector(emailSelectorIntent);
 
                 startActivity(email);
             }
@@ -170,7 +173,7 @@ public class DetailMeetingsFragment extends Fragment {
         });
 
 
-        imgShare =(ImageView) view.findViewById(R.id.btnShare);
+        imgShare = (ImageView) view.findViewById(R.id.btnShare);
         imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,21 +181,21 @@ public class DetailMeetingsFragment extends Fragment {
 
             }
 
-            private void getShare(){
+            private void getShare() {
 //                Intent emailSelectorIntent = new Intent(Intent.ACTION_SENDTO);
 //                emailSelectorIntent.setData(Uri.parse("mailto:"));
                 Intent share = new Intent(Intent.ACTION_SEND);
 //                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
 //                email.putExtra(Intent.EXTRA_SUBJECT, ("Invitation / Schedule of Meeting : "+txtTitle.getText().toString()));
-                share.putExtra(Intent.EXTRA_TEXT, ( "Invitation / Schedule of Meeting : "+txtTitle.getText().toString()
+                share.putExtra(Intent.EXTRA_TEXT, ("Invitation / Schedule of Meeting : " + txtTitle.getText().toString()
 //                        +"\n\nDear Sir/Madam, "
-                        +"\n\nWe are inviting you a scheduled meeting"
-                        +"\n\nTitle : " +txtTitle.getText().toString()
-                        +"\nDate : " +txtDate.getText().toString()
-                        +"\nStart Time : "+txtStartTime.getText().toString()
-                        +"\nEnd Time : "+txtEndTime.getText().toString()
-                        +"\n\nAgenda : \n"+txtAgenda.getText().toString()+"\n\n"
-                        +"Location : \n"+txtLocation.getText().toString()));
+                        + "\n\nWe are inviting you a scheduled meeting"
+                        + "\n\nTitle : " + txtTitle.getText().toString()
+                        + "\nDate : " + txtDate.getText().toString()
+                        + "\nStart Time : " + txtStartTime.getText().toString()
+                        + "\nEnd Time : " + txtEndTime.getText().toString()
+                        + "\n\nAgenda : \n" + txtAgenda.getText().toString() + "\n\n"
+                        + "Location : \n" + txtLocation.getText().toString()));
                 share.setType("text/plain");
 
 
@@ -210,14 +213,14 @@ public class DetailMeetingsFragment extends Fragment {
     }
 
 
-    private void  getDetailMeetings() {
-        Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId",0);
-        StringRequest request = new StringRequest(Request.Method.GET,Constant.DETAIL_MEETING+(id_meetings),response->{
+    private void getDetailMeetings() {
+        Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_MEETING + (id_meetings), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("meetings"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject meetings = array.getJSONObject(i);
@@ -244,14 +247,14 @@ public class DetailMeetingsFragment extends Fragment {
                         DateFormat outputformat = new SimpleDateFormat("HH:mm");
                         Date stInput = null;
                         String stOutput = null;
-                        try{
+                        try {
                             //Converting the input String to time
-                            stInput= df.parse(startTime);
+                            stInput = df.parse(startTime);
                             //Changing the format of date and storing it in String
                             stOutput = outputformat.format(stInput);
                             //Displaying the time
                             txtStartTime.setText(stOutput);
-                        }catch(ParseException pe){
+                        } catch (ParseException pe) {
                             pe.printStackTrace();
                         }
 
@@ -262,14 +265,14 @@ public class DetailMeetingsFragment extends Fragment {
                         DateFormat endOutputformat = new SimpleDateFormat("HH:mm");
                         Date enInput = null;
                         String enOutput = null;
-                        try{
+                        try {
                             //Converting the input String to time
-                            enInput= endDf.parse(endTime);
+                            enInput = endDf.parse(endTime);
                             //Changing the format of date and storing it in String
                             enOutput = endOutputformat.format(enInput);
                             //Displaying the time
                             txtEndTime.setText(enOutput);
-                        }catch(ParseException pe){
+                        } catch (ParseException pe) {
                             pe.printStackTrace();
                         }
                         txtAgenda.setText(meetings.getString("agenda"));
@@ -280,20 +283,19 @@ public class DetailMeetingsFragment extends Fragment {
                 }
 
 
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };

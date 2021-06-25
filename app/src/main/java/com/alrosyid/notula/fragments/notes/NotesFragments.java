@@ -52,27 +52,30 @@ public class NotesFragments extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private NotesAdapter notesAdapter;
     private SharedPreferences sharedPreferences;
-    private TextView dataEmpty,dataBadConnect;
+    private TextView dataEmpty, dataBadConnect;
 
     private ImageButton addNotes;
-    public NotesFragments(){}
+
+    public NotesFragments() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_meetings,container,false);
+        view = inflater.inflate(R.layout.fragment_meetings, container, false);
         init();
         return view;
 
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerHome);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeHome);
         dataEmpty = view.findViewById(R.id.dataEmpty);
-        dataBadConnect =view.findViewById(R.id.dataBadConnect);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -85,7 +88,7 @@ public class NotesFragments extends Fragment {
         });
 
 
-        addNotes =(ImageButton)view.findViewById(R.id.btnAdd);
+        addNotes = (ImageButton) view.findViewById(R.id.btnAdd);
         addNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +106,7 @@ public class NotesFragments extends Fragment {
     }
 
 
-    private void  getNotes() {
+    private void getNotes() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
@@ -111,7 +114,7 @@ public class NotesFragments extends Fragment {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("notes"));
 //                    if(array.length() >0) {
                     for (int i = 0; i < array.length(); i++) {
@@ -136,7 +139,6 @@ public class NotesFragments extends Fragment {
 //                        meetings.setDate(dayFormatted);
 
 
-
                         arrayList.add(notes);
                     }
 
@@ -146,7 +148,7 @@ public class NotesFragments extends Fragment {
 //                }
 
 
-                    notesAdapter = new NotesAdapter(getContext(),arrayList);
+                    notesAdapter = new NotesAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(notesAdapter);
                 }
             } catch (JSONException e) {
@@ -155,20 +157,20 @@ public class NotesFragments extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
 
             dataBadConnect.setVisibility(View.GONE);
-        }){
+        }) {
 
             // provide token in header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -180,10 +182,10 @@ public class NotesFragments extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.search);
 
-        SearchView searchView = (SearchView)item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

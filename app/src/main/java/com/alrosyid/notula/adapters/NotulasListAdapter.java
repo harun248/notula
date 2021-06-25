@@ -49,21 +49,18 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
         this.context = context;
         this.list = list;
         this.listAll = new ArrayList<>(list);
-        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
-
-
 
 
     @NonNull
     @Override
     public NotulaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_notula, parent, false);
         return new NotulaHolder(view);
 
 
     }
-
 
 
     @Override
@@ -79,9 +76,10 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
             public void onClick(View v) {
                 getDetailNotulaActivity();
             }
+
             private void getDetailNotulaActivity() {
 
-                Intent i = new Intent(((Activity)context), DetailNotulaActivity.class);
+                Intent i = new Intent(((Activity) context), DetailNotulaActivity.class);
                 i.putExtra("notulasId", notula.getId());
                 i.putExtra("position", position);
                 i.putExtra("title", notula.getTitle());
@@ -93,7 +91,7 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
             public void onClick(View v) {
                 Intent i = new Intent(((Activity) context), EditNotulaActivity.class);
                 i.putExtra("notulasId", notula.getId());
-                i.putExtra("meetingsId",notula.getMeetings_id());
+                i.putExtra("meetingsId", notula.getMeetings_id());
                 i.putExtra("position", position);
                 i.putExtra("title", notula.getTitle());
                 context.startActivity(i);
@@ -111,18 +109,18 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
 
     }
 
-    private void deleteNotula(int notulaId,int position){
+    private void deleteNotula(int notulaId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.confirm);
         builder.setMessage(R.string.delete_dialog);
-        builder.setPositiveButton(R.string.delete,  new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_NOTULA, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")){
+                        if (object.getBoolean("success")) {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
@@ -134,21 +132,21 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
                         e.printStackTrace();
                     }
 
-                },error -> {
+                }, error -> {
 
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token","");
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("Authorization","Bearer "+token);
+                        String token = preferences.getString("token", "");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("Authorization", "Bearer " + token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("id",notulaId+"");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", notulaId + "");
                         return map;
                     }
                 };
@@ -173,41 +171,41 @@ public class NotulasListAdapter extends RecyclerView.Adapter<NotulasListAdapter.
     }
 
 
-Filter filter = new Filter() {
-    @Override
-    protected FilterResults performFiltering(CharSequence constraint) {
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
 
-        ArrayList<Notula> filteredList = new ArrayList<>();
-        if (constraint.toString().isEmpty()){
-            filteredList.addAll(listAll);
-        } else {
-            for (Notula notula : listAll){
-                if(notula.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
-                ){
-                    filteredList.add(notula);
+            ArrayList<Notula> filteredList = new ArrayList<>();
+            if (constraint.toString().isEmpty()) {
+                filteredList.addAll(listAll);
+            } else {
+                for (Notula notula : listAll) {
+                    if (notula.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
+                    ) {
+                        filteredList.add(notula);
+                    }
                 }
+
             }
 
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
         }
 
-        FilterResults results = new FilterResults();
-        results.values = filteredList;
-        return  results;
-    }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((Collection<? extends Notula>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
-    @Override
-    protected void publishResults(CharSequence constraint, FilterResults results) {
-        list.clear();
-        list.addAll((Collection<? extends Notula>) results.values);
-        notifyDataSetChanged();
-    }
-};
-
-    public  Filter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
-    class NotulaHolder extends RecyclerView.ViewHolder{
+    class NotulaHolder extends RecyclerView.ViewHolder {
         private TextView txtTitle, txtSummary, txtDate, txtMeetings;
         private ImageButton btnEdit, btnDelete;
         private CardView detailNotula;

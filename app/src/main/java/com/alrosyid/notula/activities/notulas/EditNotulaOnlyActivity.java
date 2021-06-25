@@ -31,10 +31,10 @@ import java.util.Map;
 
 public class EditNotulaOnlyActivity extends AppCompatActivity {
     private Button btnSave;
-    private TextInputLayout lytTitle,lytSummary ;
+    private TextInputLayout lytTitle, lytSummary;
     private TextInputEditText txtTitle, txtSummary;
     private ProgressDialog dialog;
-    private int notulasId = 0 ,position =0;
+    private int notulasId = 0, position = 0;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -45,7 +45,8 @@ public class EditNotulaOnlyActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.edit_notula);
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -54,7 +55,7 @@ public class EditNotulaOnlyActivity extends AppCompatActivity {
         txtTitle = findViewById(R.id.tieTitle);
         lytSummary = findViewById(R.id.tilSummary);
         txtSummary = findViewById(R.id.tieSummary);
-        position = getIntent().getIntExtra("position",0);
+        position = getIntent().getIntExtra("position", 0);
         notulasId = getIntent().getIntExtra("notulasId", 0);
 
         btnSave.setOnClickListener(v -> {
@@ -78,21 +79,22 @@ public class EditNotulaOnlyActivity extends AppCompatActivity {
             lytSummary.setError(getString(R.string.required));
             return false;
         }
-        if (txtSummary.getText().toString().trim().length() >1500) {
+        if (txtSummary.getText().toString().trim().length() > 1500) {
             lytSummary.setErrorEnabled(true);
             lytSummary.setError(getString(R.string.max_1500));
             return false;
         }
         return true;
     }
-    private void  getNotulas() {
-        Integer id_notula = getIntent().getIntExtra("notulasId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTULA+ (id_notula), response -> {
+
+    private void getNotulas() {
+        Integer id_notula = getIntent().getIntExtra("notulasId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTULA + (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("notulas"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notula = array.getJSONObject(i);
@@ -106,15 +108,15 @@ public class EditNotulaOnlyActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -122,18 +124,19 @@ public class EditNotulaOnlyActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(EditNotulaOnlyActivity.this);
         queue.add(request);
     }
+
     private void update() {
         dialog.setMessage(getString(R.string.update));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_NOTULA, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     Notula notula = NotulaFragment.arrayList.get(position);
                     notula.setSummary(txtSummary.getText().toString());
                     notula.setTitle(txtTitle.getText().toString());
 
-                    NotulaFragment.arrayList.set(position,notula);
+                    NotulaFragment.arrayList.set(position, notula);
                     NotulaFragment.recyclerView.getAdapter().notifyItemChanged(position);
                     NotulaFragment.recyclerView.getAdapter().notifyDataSetChanged();
                     Toast.makeText(this, R.string.update_successfully, Toast.LENGTH_SHORT).show();
@@ -146,24 +149,24 @@ public class EditNotulaOnlyActivity extends AppCompatActivity {
 
         }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             //add token to header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id",notulasId+"");
-                map.put("summary",txtSummary.getText().toString());
-                map.put("title",txtTitle.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("id", notulasId + "");
+                map.put("summary", txtSummary.getText().toString());
+                map.put("title", txtTitle.getText().toString());
                 return map;
             }
         };

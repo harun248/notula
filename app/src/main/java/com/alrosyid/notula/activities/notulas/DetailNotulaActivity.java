@@ -20,7 +20,7 @@ import java.util.List;
 
 public class DetailNotulaActivity extends AppCompatActivity {
 
-    private int notulasId = 0, position =0;
+    private int notulasId = 0, position = 0;
     ViewPager viewPager;
     TabLayout tabLayout;
 
@@ -38,7 +38,7 @@ public class DetailNotulaActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        notulasId = getIntent().getIntExtra("notulasId",0);
+        notulasId = getIntent().getIntExtra("notulasId", 0);
 
     }
 
@@ -82,6 +82,7 @@ public class DetailNotulaActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

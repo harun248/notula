@@ -36,8 +36,9 @@ public class EditNotesActivity extends AppCompatActivity {
     private TextInputEditText txtTitle, txtNote;
     private SharedPreferences sharedPreferences;
     private Button btnSave;
-    private int  noteId = 0, position=0;
+    private int noteId = 0, position = 0;
     private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class EditNotesActivity extends AppCompatActivity {
         });
 
     }
+
     private boolean validate() {
         if (txtTitle.getText().toString().isEmpty()) {
             lytTitle.setErrorEnabled(true);
@@ -91,14 +93,14 @@ public class EditNotesActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_NOTES, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     Notes notes = NotesFragments.arrayList.get(position);
 
 
                     notes.setTitle(txtTitle.getText().toString());
                     notes.setNote(txtNote.getText().toString());
 
-                    NotesFragments.arrayList.set(position,notes);
+                    NotesFragments.arrayList.set(position, notes);
                     NotesFragments.recyclerView.getAdapter().notifyItemChanged(position);
                     NotesFragments.recyclerView.getAdapter().notifyDataSetChanged();
                     Toast.makeText(this, R.string.update_successfully, Toast.LENGTH_SHORT).show();
@@ -111,25 +113,25 @@ public class EditNotesActivity extends AppCompatActivity {
 
         }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             //add token to header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id",noteId+"");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("id", noteId + "");
 //                map.put("notulas_id",notulasId+"");
-                map.put("title",txtTitle.getText().toString());
-                map.put("note",txtNote.getText().toString());
+                map.put("title", txtTitle.getText().toString());
+                map.put("note", txtNote.getText().toString());
                 return map;
             }
         };
@@ -139,14 +141,14 @@ public class EditNotesActivity extends AppCompatActivity {
     }
 
 
-    private void  getDetailNotes() {
-        Integer id_notula = getIntent().getIntExtra("noteId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTES+ (id_notula), response -> {
+    private void getDetailNotes() {
+        Integer id_notula = getIntent().getIntExtra("noteId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTES + (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("notes"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notula = array.getJSONObject(i);
@@ -162,15 +164,15 @@ public class EditNotesActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };

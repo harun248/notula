@@ -44,14 +44,10 @@ import java.util.Map;
 
 public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsHolder> {
 
-
-
     private Context context;
     private ArrayList<Meetings> list;
     private ArrayList<Meetings> listAll;
     private SharedPreferences preferences;
-
-
 
 
     public MeetingsAdapter(Context context, ArrayList<Meetings> list) {
@@ -59,21 +55,18 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
         this.list = list;
         this.listAll = new ArrayList<>(list);
         this.notifyDataSetChanged();
-        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
-
-
 
 
     @NonNull
     @Override
     public MeetsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_meetings_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_meetings_list, parent, false);
         return new MeetsHolder(view);
 
 
     }
-
 
 
     @Override
@@ -85,19 +78,19 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
         holder.detailMeetings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(((Activity)context), DetailMeetingsActivity.class);
+                Intent i = new Intent(((Activity) context), DetailMeetingsActivity.class);
                 i.putExtra("meetingsId", meetings.getId());
-                i.putExtra("meetingsPosition",position);
+                i.putExtra("meetingsPosition", position);
                 context.startActivity(i);
             }
         });
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(((Activity)context), EditMeetingsActivity.class);
-                            i.putExtra("meetingsId", meetings.getId());
-                            i.putExtra("position",position);
-                            context.startActivity(i);
+                Intent i = new Intent(((Activity) context), EditMeetingsActivity.class);
+                i.putExtra("meetingsId", meetings.getId());
+                i.putExtra("position", position);
+                context.startActivity(i);
 
 
             }
@@ -105,7 +98,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteNotula(meetings.getId(),position);
+                deleteNotula(meetings.getId(), position);
 
             }
         });
@@ -140,18 +133,18 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
 
     }
 
-    private void deleteNotula(int meetId,int position){
+    private void deleteNotula(int meetId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.confirm);
         builder.setMessage(R.string.delete_dialog);
-        builder.setPositiveButton(R.string.delete,  new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_MEETINGS, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")){
+                        if (object.getBoolean("success")) {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
@@ -163,21 +156,21 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
                         e.printStackTrace();
                     }
 
-                },error -> {
+                }, error -> {
 
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token","");
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("Authorization","Bearer "+token);
+                        String token = preferences.getString("token", "");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("Authorization", "Bearer " + token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("id",meetId+"");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", meetId + "");
                         return map;
                     }
                 };
@@ -202,48 +195,49 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.MeetsH
     }
 
 
-Filter filter = new Filter() {
-    @Override
-    protected FilterResults performFiltering(CharSequence constraint) {
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
 
-        ArrayList<Meetings> filteredList = new ArrayList<>();
-        if (constraint.toString().isEmpty()){
-            filteredList.addAll(listAll);
-        } else {
-            for (Meetings meetings : listAll){
-                if(meetings.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
-                        || meetings.getDate().toLowerCase().contains(constraint.toString().toLowerCase())
-                ){
-                    filteredList.add(meetings);
+            ArrayList<Meetings> filteredList = new ArrayList<>();
+            if (constraint.toString().isEmpty()) {
+                filteredList.addAll(listAll);
+            } else {
+                for (Meetings meetings : listAll) {
+                    if (meetings.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
+                            || meetings.getDate().toLowerCase().contains(constraint.toString().toLowerCase())
+                    ) {
+                        filteredList.add(meetings);
+                    }
                 }
+
             }
 
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
         }
 
-        FilterResults results = new FilterResults();
-        results.values = filteredList;
-        return  results;
-    }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((Collection<? extends Meetings>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
-    @Override
-    protected void publishResults(CharSequence constraint, FilterResults results) {
-        list.clear();
-        list.addAll((Collection<? extends Meetings>) results.values);
-        notifyDataSetChanged();
-    }
-};
-
-    public  Filter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
-    class MeetsHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle,txtDate;
+    class MeetsHolder extends RecyclerView.ViewHolder {
+        private TextView txtTitle, txtDate;
         private ImageButton btnEdit, btnDelete;
         private CardView detailMeetings;
+
         public MeetsHolder(@NonNull View itemView) {
             super(itemView);
-            detailMeetings=itemView.findViewById(R.id.cvMeetings);
+            detailMeetings = itemView.findViewById(R.id.cvMeetings);
             txtTitle = itemView.findViewById(R.id.tvTitle);
             txtDate = itemView.findViewById(R.id.tvDate);
             btnEdit = itemView.findViewById(R.id.btnEdit);

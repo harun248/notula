@@ -37,6 +37,7 @@ public class EditAccountsActivity extends AppCompatActivity {
     private TextInputEditText txtName, txtEmail;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,8 @@ public class EditAccountsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.edit_account);
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -55,7 +57,7 @@ public class EditAccountsActivity extends AppCompatActivity {
         txtName = findViewById(R.id.tieName);
         txtEmail = findViewById(R.id.tieEmail);
         btnSave.setOnClickListener(v -> {
-            if (validate()){
+            if (validate()) {
                 update();
             }
         });
@@ -65,13 +67,14 @@ public class EditAccountsActivity extends AppCompatActivity {
 
 
     }
-    private boolean validate (){
-        if (txtName.getText().toString().isEmpty()){
+
+    private boolean validate() {
+        if (txtName.getText().toString().isEmpty()) {
             lytName.setErrorEnabled(true);
             lytName.setError(getString(R.string.required));
             return false;
         }
-        if (txtEmail.getText().toString().isEmpty()){
+        if (txtEmail.getText().toString().isEmpty()) {
             lytEmail.setErrorEnabled(true);
             lytEmail.setError(getString(R.string.required));
             return false;
@@ -80,12 +83,13 @@ public class EditAccountsActivity extends AppCompatActivity {
 
         return true;
     }
+
     private void getUser() {
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res->{
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.ACCOUNT, res -> {
 
             try {
                 JSONObject object = new JSONObject(res);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
 
                     JSONObject user = object.getJSONObject("user");
                     txtName.setText(user.getString("name"));
@@ -98,15 +102,15 @@ public class EditAccountsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -121,10 +125,10 @@ public class EditAccountsActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_USER, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("name",txtName.getText().toString().trim());
-                    editor.putString("email",txtEmail.getText().toString().trim());
+                    editor.putString("name", txtName.getText().toString().trim());
+                    editor.putString("email", txtEmail.getText().toString().trim());
 
                     editor.apply();
                     Intent restart = new Intent(EditAccountsActivity.this, MainActivity.class);
@@ -139,23 +143,23 @@ public class EditAccountsActivity extends AppCompatActivity {
 
         }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             //add token to header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("name",txtName.getText().toString());
-                map.put("email",txtEmail.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("name", txtName.getText().toString());
+                map.put("email", txtEmail.getText().toString());
                 return map;
             }
         };

@@ -49,10 +49,12 @@ public class PhotosListFragment extends Fragment {
     private ImageButton addPhotos;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
-    private TextView dataEmpty,dataBadConnect;
+    private TextView dataEmpty, dataBadConnect;
+
     public PhotosListFragment() {
         // Required empty public constructor
     }
+
     public static PhotosListFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -63,7 +65,7 @@ public class PhotosListFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_photos,container,false);
+        view = inflater.inflate(R.layout.fragment_photos, container, false);
         init();
         return view;
 
@@ -77,7 +79,7 @@ public class PhotosListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipePhotos);
         dataEmpty = view.findViewById(R.id.dataEmpty);
-        dataBadConnect =view.findViewById(R.id.dataBadConnect);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
         setHasOptionsMenu(true);
 
         getPhotos();
@@ -89,7 +91,7 @@ public class PhotosListFragment extends Fragment {
             }
         });
 
-        addPhotos =(ImageButton)view.findViewById(R.id.btnAdd);
+        addPhotos = (ImageButton) view.findViewById(R.id.btnAdd);
         addPhotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,29 +109,29 @@ public class PhotosListFragment extends Fragment {
         });
     }
 
-    private void getPhotos()  {
+    private void getPhotos() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
-        Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_PHOTOS+ (id_meetings), response -> {
+        Integer id_meetings = getActivity().getIntent().getIntExtra("meetingsId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_PHOTOS + (id_meetings), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("photos"));
 //                    if(array.length() >0) {
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject photosObject = array.getJSONObject(i);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject photosObject = array.getJSONObject(i);
 
-                            Photos photos = new Photos();
-                            photos.setId(photosObject.getInt("id"));
-                            photos.setPhoto(photosObject.getString("photo"));
-                            photos.setTitle(photosObject.getString("title"));
-                            photos.setCreated_at(photosObject.getString("created_at"));
+                        Photos photos = new Photos();
+                        photos.setId(photosObject.getInt("id"));
+                        photos.setPhoto(photosObject.getString("photo"));
+                        photos.setTitle(photosObject.getString("title"));
+                        photos.setCreated_at(photosObject.getString("created_at"));
 
 
-                            arrayList.add(photos);
-                        }
+                        arrayList.add(photos);
+                    }
 
 //                    }else{
 //                        recyclerView.setVisibility(View.GONE);
@@ -137,7 +139,7 @@ public class PhotosListFragment extends Fragment {
 //                    }
 
 
-                    photosListAdapter = new PhotosListAdapter(getContext(),arrayList);
+                    photosListAdapter = new PhotosListAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(photosListAdapter);
                 }
             } catch (JSONException e) {
@@ -146,18 +148,18 @@ public class PhotosListFragment extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
-        }){
+        }) {
 
             // provide token in header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -168,10 +170,10 @@ public class PhotosListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.search);
 
-        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView)item.getActionView();
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

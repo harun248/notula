@@ -40,8 +40,9 @@ public class EditAttendancesActivity extends AppCompatActivity {
     private TextInputLayout layoutName, layoutPosition;
     private TextInputEditText txtName, txtPosition;
     private ProgressDialog dialog;
-    private int attendancesId = 0, position =0;
+    private int attendancesId = 0, position = 0;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,8 @@ public class EditAttendancesActivity extends AppCompatActivity {
         );
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -60,10 +62,10 @@ public class EditAttendancesActivity extends AppCompatActivity {
         layoutPosition = findViewById(R.id.tilPosition);
         txtName = findViewById(R.id.tieName);
         txtPosition = findViewById(R.id.tiePosition);
-        position = getIntent().getIntExtra("position",0);
-        attendancesId = getIntent().getIntExtra("attendancesId",0);
+        position = getIntent().getIntExtra("position", 0);
+        attendancesId = getIntent().getIntExtra("attendancesId", 0);
         btnSave.setOnClickListener(v -> {
-            if (validate()){
+            if (validate()) {
                 update();
             }
         });
@@ -72,16 +74,15 @@ public class EditAttendancesActivity extends AppCompatActivity {
         getAttendances();
 
 
-
-
     }
-    private boolean validate (){
-        if (txtName.getText().toString().isEmpty()){
+
+    private boolean validate() {
+        if (txtName.getText().toString().isEmpty()) {
             layoutName.setErrorEnabled(true);
             layoutName.setError(getString(R.string.required));
             return false;
         }
-        if (txtPosition.getText().toString().isEmpty()){
+        if (txtPosition.getText().toString().isEmpty()) {
             layoutPosition.setErrorEnabled(true);
             layoutPosition.setError(getString(R.string.required));
             return false;
@@ -90,15 +91,16 @@ public class EditAttendancesActivity extends AppCompatActivity {
 
         return true;
     }
+
     private void getAttendances() {
 
-        Integer id_attendances = getIntent().getIntExtra("attendancesId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_ATTENDANCES+(id_attendances), res->{
+        Integer id_attendances = getIntent().getIntExtra("attendancesId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_ATTENDANCES + (id_attendances), res -> {
 
             try {
                 JSONObject object = new JSONObject(res);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("attendances"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject attendance = array.getJSONObject(i);
@@ -115,15 +117,15 @@ public class EditAttendancesActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -138,12 +140,12 @@ public class EditAttendancesActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_ATTENDANCES, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     Attendances attendances = AttendancesListFragments.arrayList.get(position);
 
                     attendances.setName(txtName.getText().toString());
                     attendances.setPosition(txtPosition.getText().toString());
-                    AttendancesListFragments.arrayList.set(position,attendances);
+                    AttendancesListFragments.arrayList.set(position, attendances);
                     AttendancesListFragments.recyclerView.getAdapter().notifyItemChanged(position);
                     AttendancesListFragments.recyclerView.getAdapter().notifyDataSetChanged();
 
@@ -157,24 +159,24 @@ public class EditAttendancesActivity extends AppCompatActivity {
 
         }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             //add token to header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id",attendancesId+"");
-                map.put("name",txtName.getText().toString());
-                map.put("position",txtPosition.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("id", attendancesId + "");
+                map.put("name", txtName.getText().toString());
+                map.put("position", txtPosition.getText().toString());
                 return map;
             }
         };

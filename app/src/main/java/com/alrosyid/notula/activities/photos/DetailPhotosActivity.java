@@ -253,7 +253,7 @@ public class DetailPhotosActivity extends AppCompatActivity {
 
                 startActivity(share);
 
-            return true;
+                return true;
             }
 
             case R.id.item_download: {

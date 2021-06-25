@@ -11,8 +11,6 @@ public class Constant {
     //    public static final String URL = "http://172.10.52.31:81/";
 
 
-
-
     //Root
     public static final String HOME = URL + "api";
     //auth
@@ -24,14 +22,13 @@ public class Constant {
     public static final String UPDATE_USER = HOME + "/userUpdate";
 
 
-
     //Notes
-    public static final String NOTES= HOME + "/notes";
-    public static final String LIST_NOTES= NOTES+ "/listNotes";
-    public static final String DETAIL_NOTES= NOTES+ "/detailNotes/";
-    public static final String DELETE_NOTES = NOTES+ "/delete";
-    public static final String CREATE_NOTES = NOTES+ "/create";
-    public static final String UPDATE_NOTES = NOTES+ "/update";
+    public static final String NOTES = HOME + "/notes";
+    public static final String LIST_NOTES = NOTES + "/listNotes";
+    public static final String DETAIL_NOTES = NOTES + "/detailNotes/";
+    public static final String DELETE_NOTES = NOTES + "/delete";
+    public static final String CREATE_NOTES = NOTES + "/create";
+    public static final String UPDATE_NOTES = NOTES + "/update";
 
     //Meetings
     public static final String MEETING = HOME + "/meetings";

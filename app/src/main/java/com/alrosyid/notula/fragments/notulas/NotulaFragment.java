@@ -55,28 +55,30 @@ public class NotulaFragment extends Fragment {
     private NotulasListAdapter notulasListAdapter;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
-    private TextView dataEmpty,dataBadConnect;
+    private TextView dataEmpty, dataBadConnect;
 
 
-    public NotulaFragment(){}
+    public NotulaFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_notula,container,false);
+        view = inflater.inflate(R.layout.fragment_notula, container, false);
         init();
 
         refreshLayout.setRefreshing(true);
         return view;
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerHome);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipeHome);
         dataEmpty = view.findViewById(R.id.dataEmpty);
-        dataBadConnect =view.findViewById(R.id.dataBadConnect);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -88,7 +90,7 @@ public class NotulaFragment extends Fragment {
             }
         });
 
-        addNotulas =(ImageButton)view.findViewById(R.id.btnAdd);
+        addNotulas = (ImageButton) view.findViewById(R.id.btnAdd);
         addNotulas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,8 +108,6 @@ public class NotulaFragment extends Fragment {
         });
 
 
-
-
     }
 
 
@@ -119,19 +119,19 @@ public class NotulaFragment extends Fragment {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("notulas"));
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject notulaObject = array.getJSONObject(i);
-                            Notula notula = new Notula();
-                            notula.setId(notulaObject.getInt("id"));
-                            notula.setTitle(notulaObject.getString("title"));
-                            notula.setSummary(notulaObject.getString("summary"));
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject notulaObject = array.getJSONObject(i);
+                        Notula notula = new Notula();
+                        notula.setId(notulaObject.getInt("id"));
+                        notula.setTitle(notulaObject.getString("title"));
+                        notula.setSummary(notulaObject.getString("summary"));
 
-                            arrayList.add(notula);
-                        }
+                        arrayList.add(notula);
+                    }
 
-                    notulasAdapter = new NotulasAdapter(getContext(),arrayList);
+                    notulasAdapter = new NotulasAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(notulasAdapter);
                 }
             } catch (JSONException e) {
@@ -140,18 +140,18 @@ public class NotulaFragment extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
-        }){
+        }) {
 
             // provide token in header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -162,10 +162,10 @@ public class NotulaFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.search);
 
-        SearchView searchView = (SearchView)item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

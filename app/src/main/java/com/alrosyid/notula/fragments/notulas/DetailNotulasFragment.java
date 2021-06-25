@@ -33,11 +33,12 @@ import java.util.Map;
 
 public class DetailNotulasFragment extends Fragment {
     private TextInputLayout lytTitle, lytMeetingsTitle, lytDate;
-    private TextInputEditText txtTitle, txtMeetingsTitle, txtDate,txtSummary;
-    private int notulasId = 0, position =0;
-    private  Button btnExport;
+    private TextInputEditText txtTitle, txtMeetingsTitle, txtDate, txtSummary;
+    private int notulasId = 0, position = 0;
+    private Button btnExport;
     private View view;
     private SharedPreferences sharedPreferences;
+
     public static DetailNotulasFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -46,25 +47,28 @@ public class DetailNotulasFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    public DetailNotulasFragment(){}
+
+    public DetailNotulasFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_detail_notula,container,false);
+        view = inflater.inflate(R.layout.fragment_detail_notula, container, false);
         init();
         return view;
 
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         lytTitle = view.findViewById(R.id.tilTitle);
-        lytMeetingsTitle =  view.findViewById(R.id.tilMeetingsTitle);
-        lytDate =  view.findViewById(R.id.tilDate);
-        txtTitle =  view.findViewById(R.id.tieTitle);
-        txtSummary =  view.findViewById(R.id.tieSummary);
-        txtMeetingsTitle =  view.findViewById(R.id.tieMeetingsTitle);
-        txtDate =  view.findViewById(R.id.tieDate);
+        lytMeetingsTitle = view.findViewById(R.id.tilMeetingsTitle);
+        lytDate = view.findViewById(R.id.tilDate);
+        txtTitle = view.findViewById(R.id.tieTitle);
+        txtSummary = view.findViewById(R.id.tieSummary);
+        txtMeetingsTitle = view.findViewById(R.id.tieMeetingsTitle);
+        txtDate = view.findViewById(R.id.tieDate);
 
         setHasOptionsMenu(true);
 
@@ -73,15 +77,14 @@ public class DetailNotulasFragment extends Fragment {
     }
 
 
-
-    private void  getDetailNotulas() {
-        Integer id_notula = getActivity().getIntent().getIntExtra("notulasId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTULA+ (id_notula), response -> {
+    private void getDetailNotulas() {
+        Integer id_notula = getActivity().getIntent().getIntExtra("notulasId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_NOTULA + (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("notulas"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject notula = array.getJSONObject(i);
@@ -113,15 +116,15 @@ public class DetailNotulasFragment extends Fragment {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };

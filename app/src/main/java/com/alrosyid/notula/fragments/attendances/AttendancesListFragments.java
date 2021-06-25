@@ -50,7 +50,7 @@ public class AttendancesListFragments extends Fragment {
     private AttendancesAdapter attendancesAdapter;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
-    private TextView dataEmpty,dataBadConnect;
+    private TextView dataEmpty, dataBadConnect;
 
     public AttendancesListFragments() {
         // Required empty public constructor
@@ -121,18 +121,18 @@ public class AttendancesListFragments extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")) {
 
-                       JSONArray array = new JSONArray(object.getString("attendances"));
+                    JSONArray array = new JSONArray(object.getString("attendances"));
 
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject attendancesObject = array.getJSONObject(i);
-                            Attendances attendances = new Attendances();
-                            attendances.setId(attendancesObject.getInt("id"));
-                            attendances.setName(attendancesObject.getString("name"));
-                            attendances.setPosition(attendancesObject.getString("position"));
-                            arrayList.add(attendances);
-                        }
-                        attendancesAdapter = new AttendancesAdapter(getContext(), arrayList);
-                        recyclerView.setAdapter(attendancesAdapter);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject attendancesObject = array.getJSONObject(i);
+                        Attendances attendances = new Attendances();
+                        attendances.setId(attendancesObject.getInt("id"));
+                        attendances.setName(attendancesObject.getString("name"));
+                        attendances.setPosition(attendancesObject.getString("position"));
+                        arrayList.add(attendances);
+                    }
+                    attendancesAdapter = new AttendancesAdapter(getContext(), arrayList);
+                    recyclerView.setAdapter(attendancesAdapter);
 
                 }
             } catch (JSONException e) {
@@ -164,10 +164,10 @@ public class AttendancesListFragments extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.search);
 
-        SearchView searchView = (SearchView)item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

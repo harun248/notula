@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".fragments.followup.FollowUpFragment">
 
 
@@ -20,37 +20,37 @@
             android:id="@+id/swipeFollowUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/dataEmpty"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:text="@string/data_is_empty"
                     android:textColor="@color/colorBlack"
-                    android:text="@string/data_is_empty"/>
+                    android:visibility="gone" />
+
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/dataBadConnect"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:text="Can't display data. \nPlease, check your connection"
                     android:textColor="@color/colorBlack"
-                    android:text="Can't display data. \nPlease, check your connection"/>
+                    android:visibility="gone" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerFollowUp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingBottom="60dp"/>
+                    android:paddingBottom="60dp" />
             </RelativeLayout>
-
 
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/grey"
     android:clickable="true"
-    android:focusable="true"
-    android:layout_height="match_parent">
+    android:focusable="true">
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -24,22 +23,24 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="60dp"></androidx.recyclerview.widget.RecyclerView>
+
         <TextView
-            android:visibility="gone"
             android:id="@+id/dataEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:text="@string/data_is_empty"
             android:textColor="@color/colorBlack"
-            android:text="@string/data_is_empty"/>
+            android:visibility="gone" />
+
         <TextView
-            android:visibility="gone"
             android:id="@+id/dataBadConnect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:text="Can't display data. \nPlease, check your connection"
             android:textColor="@color/colorBlack"
-            android:text="Can't display data. \nPlease, check your connection"/>
+            android:visibility="gone" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

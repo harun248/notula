@@ -2,7 +2,7 @@ package com.alrosyid.notula.models;
 
 public class Meetings {
     private int id;
-    private String title,agenda,date,start_time,end_time,location,status;
+    private String title, agenda, date, start_time, end_time, location, status;
 
     public String getLocation() {
         return location;
@@ -67,7 +67,6 @@ public class Meetings {
     public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
-
 
 
 }

@@ -51,7 +51,7 @@ public class PointFragment extends Fragment {
     private ImageButton addPoints;
     private SharedPreferences sharedPreferences;
     private ImageButton addNotulas;
-    private TextView dataEmpty,dataBadConnect;
+    private TextView dataEmpty, dataBadConnect;
 
     public PointFragment() {
         // Required empty public constructor
@@ -67,21 +67,21 @@ public class PointFragment extends Fragment {
     }
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_point,container,false);
+        view = inflater.inflate(R.layout.fragment_point, container, false);
         init();
         return view;
 
     }
-    private void init(){
+
+    private void init() {
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         recyclerView = view.findViewById(R.id.recyclerPoints);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = view.findViewById(R.id.swipePoints);
         dataEmpty = view.findViewById(R.id.dataEmpty);
-        dataBadConnect =view.findViewById(R.id.dataBadConnect);
+        dataBadConnect = view.findViewById(R.id.dataBadConnect);
 
         setHasOptionsMenu(true);
 
@@ -93,7 +93,7 @@ public class PointFragment extends Fragment {
             }
         });
 
-        addPoints =(ImageButton)view.findViewById(R.id.btnAdd);
+        addPoints = (ImageButton) view.findViewById(R.id.btnAdd);
         addPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,29 +114,29 @@ public class PointFragment extends Fragment {
     private void getPoints() {
         arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
-        Integer id_notula = getActivity().getIntent().getIntExtra("notulasId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_POINTS+ (id_notula), response -> {
+        Integer id_notula = getActivity().getIntent().getIntExtra("notulasId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LIST_POINTS + (id_notula), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("points"));
 //                    if(array.length() >0) {
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject pointsObject = array.getJSONObject(i);
-                            Points points = new Points();
-                            points.setId(pointsObject.getInt("id"));
-                            points.setPoints(pointsObject.getString("points"));
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject pointsObject = array.getJSONObject(i);
+                        Points points = new Points();
+                        points.setId(pointsObject.getInt("id"));
+                        points.setPoints(pointsObject.getString("points"));
 
-                            arrayList.add(points);
-                        }
+                        arrayList.add(points);
+                    }
 //                    }else{
 //                        recyclerView.setVisibility(View.GONE);
 //                        dataEmpty.setVisibility(View.VISIBLE);
 //                    }
 
 
-                    pointsAdapter = new PointsAdapter(getContext(),arrayList);
+                    pointsAdapter = new PointsAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(pointsAdapter);
                 }
             } catch (JSONException e) {
@@ -145,19 +145,19 @@ public class PointFragment extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
             dataBadConnect.setVisibility(View.GONE);
-        }){
+        }) {
 
             // provide token in header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -168,10 +168,10 @@ public class PointFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.search);
 
-        SearchView searchView = (SearchView)item.getActionView();
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -187,8 +187,6 @@ public class PointFragment extends Fragment {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-
 
 
 }

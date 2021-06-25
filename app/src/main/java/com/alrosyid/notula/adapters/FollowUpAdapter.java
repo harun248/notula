@@ -40,7 +40,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.FollowUpHolder>  {
+public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.FollowUpHolder> {
 
     private Context context;
     private ArrayList<FollowUp> list;
@@ -52,15 +52,14 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
 
         this.list = list;
         this.listAll = new ArrayList<>(list);
-        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
-
 
 
     @NonNull
     @Override
     public FollowUpHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_follow_up,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_follow_up, parent, false);
         return new FollowUpHolder(view);
 
 
@@ -78,9 +77,10 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
             public void onClick(View v) {
                 getDetailFollowUpActivity();
             }
+
             private void getDetailFollowUpActivity() {
 
-                Intent i = new Intent(((Activity)context), DetailFollowUpActivity.class);
+                Intent i = new Intent(((Activity) context), DetailFollowUpActivity.class);
                 i.putExtra("followUpId", followUp.getId());
                 i.putExtra("position", position);
                 context.startActivity(i);
@@ -108,18 +108,18 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
 
     }
 
-    private void deleteFollowUp(int followUpId,int position){
+    private void deleteFollowUp(int followUpId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.confirm);
         builder.setMessage(R.string.delete_dialog);
-        builder.setPositiveButton(R.string.delete,  new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_FOLLOW_UP, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")){
+                        if (object.getBoolean("success")) {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
@@ -131,21 +131,21 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
                         e.printStackTrace();
                     }
 
-                },error -> {
+                }, error -> {
 
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token","");
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("Authorization","Bearer "+token);
+                        String token = preferences.getString("token", "");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("Authorization", "Bearer " + token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("id",followUpId+"");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", followUpId + "");
                         return map;
                     }
                 };
@@ -167,22 +167,26 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
     public Object getItem(int position) {
         return this.list.get(position);
     }
+
     @Override
-    public int getItemCount() { return list.size(); }
+    public int getItemCount() {
+        return list.size();
+    }
+
     Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
             ArrayList<FollowUp> filteredList = new ArrayList<>();
-            if (constraint.toString().isEmpty()){
+            if (constraint.toString().isEmpty()) {
                 filteredList.addAll(listAll);
             } else {
-                for (FollowUp followUp : listAll){
-                    if(followUp.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
+                for (FollowUp followUp : listAll) {
+                    if (followUp.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
                             || followUp.getPic().toLowerCase().contains(constraint.toString().toLowerCase())
                             || followUp.getDue_date().toLowerCase().contains(constraint.toString().toLowerCase())
 
-                    ){
+                    ) {
                         filteredList.add(followUp);
                     }
                 }
@@ -191,7 +195,7 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-            return  results;
+            return results;
         }
 
         @Override
@@ -202,13 +206,15 @@ public class FollowUpAdapter extends RecyclerView.Adapter<FollowUpAdapter.Follow
         }
     };
 
-    public  Filter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
-    class FollowUpHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle,txtPic,txtDueDate;
-        private ImageButton  btnEdit, btnDelete;
+
+    class FollowUpHolder extends RecyclerView.ViewHolder {
+        private TextView txtTitle, txtPic, txtDueDate;
+        private ImageButton btnEdit, btnDelete;
         private CardView detailFollowUp;
+
         public FollowUpHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.tvTitle);

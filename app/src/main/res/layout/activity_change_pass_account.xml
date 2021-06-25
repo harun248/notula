@@ -68,7 +68,5 @@
             android:textSize="17dp" />
 
 
-
-
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

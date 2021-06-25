@@ -51,21 +51,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         this.context = context;
         this.list = list;
         this.listAll = new ArrayList<>(list);
-        preferences = context.getApplicationContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        preferences = context.getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
     }
-
-
 
 
     @NonNull
     @Override
     public NotesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_note_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_note_list, parent, false);
         return new NotesHolder(view);
 
 
     }
-
 
 
     @Override
@@ -80,9 +77,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
             public void onClick(View v) {
                 getDetailNotulaActivity();
             }
+
             private void getDetailNotulaActivity() {
 
-                Intent i = new Intent(((Activity)context), DetailNotesActivity.class);
+                Intent i = new Intent(((Activity) context), DetailNotesActivity.class);
                 i.putExtra("noteId", notes.getId());
                 i.putExtra("position", position);
                 i.putExtra("title", notes.getTitle());
@@ -111,18 +109,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
 
     }
 
-    private void deleteNotula(int notulaId,int position){
+    private void deleteNotula(int notulaId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.confirm);
         builder.setMessage(R.string.delete_dialog);
-        builder.setPositiveButton(R.string.delete,  new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StringRequest request = new StringRequest(Request.Method.POST, Constant.DELETE_NOTES, response -> {
 
                     try {
                         JSONObject object = new JSONObject(response);
-                        if (object.getBoolean("success")){
+                        if (object.getBoolean("success")) {
                             list.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
@@ -134,21 +132,21 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
                         e.printStackTrace();
                     }
 
-                },error -> {
+                }, error -> {
 
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String token = preferences.getString("token","");
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("Authorization","Bearer "+token);
+                        String token = preferences.getString("token", "");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("Authorization", "Bearer " + token);
                         return map;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String,String> map = new HashMap<>();
-                        map.put("id",notulaId+"");
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("id", notulaId + "");
                         return map;
                     }
                 };
@@ -178,14 +176,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         protected FilterResults performFiltering(CharSequence constraint) {
 
             ArrayList<Notes> filteredList = new ArrayList<>();
-            if (constraint.toString().isEmpty()){
+            if (constraint.toString().isEmpty()) {
                 filteredList.addAll(listAll);
             } else {
-                for (Notes notes : listAll){
-                    if(notes.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
+                for (Notes notes : listAll) {
+                    if (notes.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
                             || notes.getNote().toLowerCase().contains(constraint.toString().toLowerCase())
-                            ||notes.getCreated_at().toLowerCase().contains(constraint.toString().toLowerCase())
-                    ){
+                            || notes.getCreated_at().toLowerCase().contains(constraint.toString().toLowerCase())
+                    ) {
                         filteredList.add(notes);
                     }
                 }
@@ -194,7 +192,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-            return  results;
+            return results;
         }
 
         @Override
@@ -205,13 +203,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         }
     };
 
-    public  Filter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
-    class NotesHolder extends RecyclerView.ViewHolder{
-        private TextView txtTitle,txtDate,txtNote;
-        private ImageButton  btnEdit, btnDelete;
+    class NotesHolder extends RecyclerView.ViewHolder {
+        private TextView txtTitle, txtDate, txtNote;
+        private ImageButton btnEdit, btnDelete;
         private CardView detailNotula;
 
         public NotesHolder(@NonNull View itemView) {

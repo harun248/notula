@@ -31,7 +31,7 @@ public class DetailFollowUpActivity extends AppCompatActivity {
     private TextInputLayout lytTitle, lytPic, lytDuedate, lytDetail;
     private TextInputEditText txtTitle, txtPic, txtDuedate, txtDetail;
     private ProgressDialog dialog;
-    private int notulasId = 0,followUpId =0;
+    private int notulasId = 0, followUpId = 0;
     private SharedPreferences sharedPreferences;
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
@@ -55,14 +55,13 @@ public class DetailFollowUpActivity extends AppCompatActivity {
         lytTitle = findViewById(R.id.tilTitle);
         lytPic = findViewById(R.id.tilPic);
         lytDuedate = findViewById(R.id.tilDueDate);
-        lytDetail= findViewById(R.id.tilDetail);
+        lytDetail = findViewById(R.id.tilDetail);
         txtTitle = findViewById(R.id.tieTitle);
         txtPic = findViewById(R.id.tiePic);
         txtDuedate = findViewById(R.id.tieDueDate);
         txtDetail = findViewById(R.id.tieDetail);
         notulasId = getIntent().getIntExtra("notulasId", 0);
         followUpId = getIntent().getIntExtra("followUpId", 0);
-
 
 
         getFollowUp();
@@ -90,7 +89,6 @@ public class DetailFollowUpActivity extends AppCompatActivity {
                         txtDetail.setText(followUp.getString("detail"));
 
 
-
                     }
                 }
 
@@ -115,7 +113,6 @@ public class DetailFollowUpActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(DetailFollowUpActivity.this);
         queue.add(request);
     }
-
 
 
     @Override

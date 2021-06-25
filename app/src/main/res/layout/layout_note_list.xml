@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvMeetings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
         android:layout_marginTop="10dp"
-        >
+        app:cardCornerRadius="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,8 +32,8 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Meets"
                     android:layout_marginBottom="5dp"
+                    android:text="Meets"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
@@ -41,10 +42,11 @@
                     android:id="@+id/tvNote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="note"
                     android:maxLines="2"
+                    android:text="note"
                     android:textColor="@color/colorLightGrey"
                     android:textSize="12sp" />
+
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
@@ -52,7 +54,6 @@
                     android:text="10-10-2010"
                     android:textColor="@color/colorLightGrey"
                     android:textSize="12sp" />
-
 
 
             </LinearLayout>
@@ -66,6 +67,7 @@
                 android:layout_marginRight="8dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_baseline_edit_24" />
+
             <ImageButton
                 android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"

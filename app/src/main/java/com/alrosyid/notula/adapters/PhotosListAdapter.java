@@ -83,9 +83,10 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
             public void onClick(View v) {
                 getDetailNotulaActivity();
             }
+
             private void getDetailNotulaActivity() {
 
-                Intent i = new Intent(((Activity)context), DetailPhotosActivity.class);
+                Intent i = new Intent(((Activity) context), DetailPhotosActivity.class);
                 i.putExtra("photosId", photos.getId());
                 i.putExtra("photo", photos.getPhoto());
                 i.putExtra("title", photos.getTitle());
@@ -97,9 +98,9 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(((Activity)context), EditPhotosActivity.class);
+                Intent i = new Intent(((Activity) context), EditPhotosActivity.class);
                 i.putExtra("photosId", photos.getId());
-                i.putExtra("position",position);
+                i.putExtra("position", position);
                 context.startActivity(i);
 
 
@@ -108,7 +109,7 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletePhoto(photos.getId(),position);
+                deletePhoto(photos.getId(), position);
 
             }
         });
@@ -116,7 +117,7 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
 
     }
 
-//     delete post
+    //     delete post
     private void deletePhoto(int postId, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Confirm");
@@ -183,13 +184,13 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
         protected FilterResults performFiltering(CharSequence constraint) {
 
             ArrayList<Photos> filteredList = new ArrayList<>();
-            if (constraint.toString().isEmpty()){
+            if (constraint.toString().isEmpty()) {
                 filteredList.addAll(listAll);
             } else {
-                for (Photos photos : listAll){
-                    if(photos.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
+                for (Photos photos : listAll) {
+                    if (photos.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())
 
-                    ){
+                    ) {
                         filteredList.add(photos);
                     }
                 }
@@ -198,7 +199,7 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-            return  results;
+            return results;
         }
 
         @Override
@@ -209,13 +210,13 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
         }
     };
 
-    public  Filter getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
     class PhotosHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtTitle,txtPhoto;
+        private TextView txtTitle, txtPhoto;
         private ImageView imgPhotos;
         private ImageButton btnEdit, btnDelete;
         private CardView detailPhotos;
@@ -227,7 +228,7 @@ public class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.Ph
             imgPhotos = itemView.findViewById(R.id.imgPhoto);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
-            detailPhotos= itemView.findViewById(R.id.cvImage);
+            detailPhotos = itemView.findViewById(R.id.cvImage);
 
         }
     }

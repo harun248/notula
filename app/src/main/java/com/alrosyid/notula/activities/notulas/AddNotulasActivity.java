@@ -44,18 +44,18 @@ import java.util.Map;
 public class AddNotulasActivity extends AppCompatActivity {
 
     private Button btnSave;
-    private TextInputLayout lytTitle,lytSummary ;
+    private TextInputLayout lytTitle, lytSummary;
     private TextInputEditText txtTitle, txtSummary;
     private ProgressDialog dialog;
     private int meetingsId = 0;
     private SharedPreferences sharedPreferences;
 
 
-
     public static ArrayList<Meetings> arrayList;
 
     //TextViews to display details
     private TextView txtTitles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,8 @@ public class AddNotulasActivity extends AppCompatActivity {
 
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -101,13 +102,14 @@ public class AddNotulasActivity extends AppCompatActivity {
             lytSummary.setError(getString(R.string.required));
             return false;
         }
-        if (txtSummary.getText().toString().trim().length() >1500) {
+        if (txtSummary.getText().toString().trim().length() > 1500) {
             lytSummary.setErrorEnabled(true);
             lytSummary.setError(getString(R.string.max_1500));
             return false;
         }
         return true;
     }
+
     private void create() {
         dialog.setMessage(getString(R.string.save_load));
         dialog.show();
@@ -176,9 +178,6 @@ public class AddNotulasActivity extends AppCompatActivity {
         queue.add(request);
 
     }
-
-
-
 
 
     @Override

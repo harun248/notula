@@ -41,8 +41,8 @@
                     android:id="@+id/tvSummary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Summary"
                     android:maxLines="3"
+                    android:text="Summary"
                     android:textColor="@color/colorLightGrey"
                     android:textSize="12sp" />
 

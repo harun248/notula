@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     android:padding="20dp"
     tools:context=".activities.followups.AddFollowUpActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,17 +15,18 @@
         android:overScrollMode="always"
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/colorAccent"
                 android:id="@+id/tilTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
+                app:boxStrokeColor="@color/colorAccent"
                 app:counterOverflowTextAppearance="@style/CounterOverFlow"
                 app:counterTextAppearance="@style/CounterText"
                 app:counterTextColor="@color/colorBlack"
@@ -34,21 +36,22 @@
                     android:id="@+id/tieTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/follow_up"
                     android:enabled="false"
-                     android:inputType="text"
+                    android:hint="@string/follow_up"
+                    android:inputType="text"
                     android:textColor="@color/colorBlack"
                     android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/colorAccent"
                 android:id="@+id/tilPic"
-                android:layout_below="@+id/tilTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tilTitle"
                 android:layout_marginBottom="6dp"
+                app:boxStrokeColor="@color/colorAccent"
                 app:counterOverflowTextAppearance="@style/CounterOverFlow"
                 app:counterTextAppearance="@style/CounterText"
                 app:counterTextColor="@color/colorBlack"
@@ -56,12 +59,12 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tiePic"
-                    android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/pic"
                     android:enabled="false"
+                    android:hint="@string/pic"
                     android:inputType="text"
+                    android:padding="10dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="15sp" />
 
@@ -69,13 +72,13 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/colorAccent"
                 android:id="@+id/tilDueDate"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tilPic"
                 android:layout_marginBottom="6dp"
+                app:boxStrokeColor="@color/colorAccent"
                 app:counterTextAppearance="@style/CounterText"
                 app:counterTextColor="@color/colorBlack"
                 app:hintTextAppearance="@style/HintText">
@@ -85,24 +88,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:padding="10dp"
                     android:drawableRight="@drawable/ic_baseline_date_range_24"
-                    android:hint="Due Date"
                     android:enabled="false"
                     android:focusable="false"
+                    android:hint="Due Date"
                     android:inputType="date"
+                    android:padding="10dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/colorAccent"
                 android:id="@+id/tilDetail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tilDueDate"
                 android:layout_marginBottom="6dp"
+                app:boxStrokeColor="@color/colorAccent"
                 app:counterTextAppearance="@style/CounterText"
 
                 app:counterTextColor="@color/colorBlack"
@@ -112,13 +116,13 @@
                     android:id="@+id/tieDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Detail"
                     android:enabled="false"
-
-                    android:padding="10dp"
                     android:gravity="top"
+
+                    android:hint="Detail"
                     android:inputType="textMultiLine"
                     android:overScrollMode="always"
+                    android:padding="10dp"
                     android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
                     android:textColor="@color/colorBlack"

@@ -45,7 +45,7 @@ public class AddPhotosActivity extends AppCompatActivity {
     private TextInputLayout lytTitle;
     private TextInputEditText txtTitle;
     private Bitmap bitmap = null;
-    private static final  int PICK_IMAGE_REQUEST = 1;
+    private static final int PICK_IMAGE_REQUEST = 1;
     private int meetingsId = 0;
     private ProgressDialog dialog;
     private SharedPreferences preferences;
@@ -63,7 +63,7 @@ public class AddPhotosActivity extends AppCompatActivity {
         preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         btnUpload = findViewById(R.id.btnUpload);
         imgPhotos = findViewById(R.id.imgAddPhotos);
-        lytTitle=findViewById(R.id.tilTitle);
+        lytTitle = findViewById(R.id.tilTitle);
         txtTitle = findViewById(R.id.tieTitle);
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
@@ -82,7 +82,7 @@ public class AddPhotosActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        btnUpload.setOnClickListener(v->{
+        btnUpload.setOnClickListener(v -> {
             if (validate()) {
                 create();
             }
@@ -110,15 +110,16 @@ public class AddPhotosActivity extends AppCompatActivity {
         return true;
 
     }
-    private void create(){
+
+    private void create() {
         dialog.setMessage("Uploading..");
         dialog.show();
         String titleText = txtTitle.getText().toString();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.CREATE_PHOTOS,response -> {
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.CREATE_PHOTOS, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONObject postObject = object.getJSONObject("photos");
 
                     Photos photos = new Photos();
@@ -127,7 +128,7 @@ public class AddPhotosActivity extends AppCompatActivity {
                     photos.setTitle(postObject.getString("title"));
 
 
-                    PhotosListFragment.arrayList.add(0,photos);
+                    PhotosListFragment.arrayList.add(0, photos);
                     PhotosListFragment.recyclerView.getAdapter().notifyItemInserted(0);
                     PhotosListFragment.recyclerView.getAdapter().notifyDataSetChanged();
                     Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
@@ -141,20 +142,20 @@ public class AddPhotosActivity extends AppCompatActivity {
             dialog.dismiss();
 
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             dialog.dismiss();
 
-        }){
+        }) {
 
             // add token to header
 
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = preferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = preferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
@@ -162,10 +163,10 @@ public class AddPhotosActivity extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
+                HashMap<String, String> map = new HashMap<>();
                 map.put("meetings_id", meetingsId + "");
                 map.put("title", titleText);
-                map.put("photo",bitmapToString(bitmap));
+                map.put("photo", bitmapToString(bitmap));
                 return map;
             }
         };
@@ -176,11 +177,11 @@ public class AddPhotosActivity extends AppCompatActivity {
     }
 
     private String bitmapToString(Bitmap bitmap) {
-        if (bitmap!=null){
+        if (bitmap != null) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
-            byte [] array = byteArrayOutputStream.toByteArray();
-            return Base64.encodeToString(array,Base64.DEFAULT);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+            byte[] array = byteArrayOutputStream.toByteArray();
+            return Base64.encodeToString(array, Base64.DEFAULT);
         }
 
         return "";
@@ -194,18 +195,18 @@ public class AddPhotosActivity extends AppCompatActivity {
     public void changePhoto(View view) {
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
-        startActivityForResult(i,PICK_IMAGE_REQUEST);
+        startActivityForResult(i, PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
             Uri imgUri = data.getData();
             imgPhotos.setImageURI(imgUri);
 
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
 //                ByteArrayOutputStream out = new ByteArrayOutputStream();
 //                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
 

@@ -178,7 +178,7 @@ public class EditMeetingsActivity extends AppCompatActivity {
             lytAgenda.setError(getString(R.string.required));
             return false;
         }
-        if (txtAgenda.getText().toString().trim().length() >200) {
+        if (txtAgenda.getText().toString().trim().length() > 200) {
             lytAgenda.setErrorEnabled(true);
             lytAgenda.setError(getString(R.string.maximum_character));
             return false;
@@ -188,7 +188,7 @@ public class EditMeetingsActivity extends AppCompatActivity {
             lytLocation.setError(getString(R.string.required));
             return false;
         }
-        if (txtLocation.getText().toString().trim().length() >200) {
+        if (txtLocation.getText().toString().trim().length() > 200) {
             lytLocation.setErrorEnabled(true);
             lytLocation.setError(getString(R.string.maximum_character));
             return false;

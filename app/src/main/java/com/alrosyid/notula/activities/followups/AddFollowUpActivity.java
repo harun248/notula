@@ -90,7 +90,7 @@ public class AddFollowUpActivity extends AppCompatActivity {
         lytTitle = findViewById(R.id.tilTitle);
         lytPic = findViewById(R.id.tilPic);
         lytDuedate = findViewById(R.id.tilDueDate);
-        lytDetail= findViewById(R.id.tilDetail);
+        lytDetail = findViewById(R.id.tilDetail);
         txtTitle = findViewById(R.id.tieTitle);
         txtPic = findViewById(R.id.tiePic);
         txtDuedate = findViewById(R.id.tieDueDate);
@@ -118,7 +118,8 @@ public class AddFollowUpActivity extends AppCompatActivity {
             lytPic.setErrorEnabled(true);
             lytPic.setError(getString(R.string.required));
             return false;
-        }if (txtDuedate.getText().toString().isEmpty()) {
+        }
+        if (txtDuedate.getText().toString().isEmpty()) {
             lytDuedate.setErrorEnabled(true);
             lytDuedate.setError(getString(R.string.required));
             return false;

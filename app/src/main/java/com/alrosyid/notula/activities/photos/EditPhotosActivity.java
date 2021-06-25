@@ -35,7 +35,7 @@ public class EditPhotosActivity extends AppCompatActivity {
     private TextInputLayout layoutTitle;
     private TextInputEditText txtTitle;
     private ProgressDialog dialog;
-    private int photosId = 0 ,position =0;
+    private int photosId = 0, position = 0;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -46,14 +46,15 @@ public class EditPhotosActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.rename_photo);
         init();
     }
-    private void init(){
+
+    private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         btnSave = findViewById(R.id.btnSave);
         layoutTitle = findViewById(R.id.tilTitle);
         txtTitle = findViewById(R.id.tieTitle);
-        position = getIntent().getIntExtra("position",0);
+        position = getIntent().getIntExtra("position", 0);
         photosId = getIntent().getIntExtra("photosId", 0);
 
         btnSave.setOnClickListener(v -> {
@@ -75,14 +76,15 @@ public class EditPhotosActivity extends AppCompatActivity {
 
         return true;
     }
-    private void  getPhotos() {
-        Integer id_photo = getIntent().getIntExtra("photosId",0);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_PHOTOS+ (id_photo), response -> {
+
+    private void getPhotos() {
+        Integer id_photo = getIntent().getIntExtra("photosId", 0);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.DETAIL_PHOTOS + (id_photo), response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
 
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     JSONArray array = new JSONArray(object.getString("photos"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject photos = array.getJSONObject(i);
@@ -96,15 +98,15 @@ public class EditPhotosActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
@@ -112,18 +114,19 @@ public class EditPhotosActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(EditPhotosActivity.this);
         queue.add(request);
     }
+
     private void update() {
         dialog.setMessage(getString(R.string.update));
         dialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_PHOTOS, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     Photos photo = PhotosListFragment.arrayList.get(position);
 
                     photo.setTitle(txtTitle.getText().toString());
 
-                    PhotosListFragment.arrayList.set(position,photo);
+                    PhotosListFragment.arrayList.set(position, photo);
                     PhotosListFragment.recyclerView.getAdapter().notifyItemChanged(position);
                     PhotosListFragment.recyclerView.getAdapter().notifyDataSetChanged();
                     Toast.makeText(this, R.string.update_successfully, Toast.LENGTH_SHORT).show();
@@ -136,23 +139,23 @@ public class EditPhotosActivity extends AppCompatActivity {
 
         }, error -> {
             error.printStackTrace();
-        }){
+        }) {
 
             //add token to header
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id",photosId+"");
-                map.put("title",txtTitle.getText().toString());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("id", photosId + "");
+                map.put("title", txtTitle.getText().toString());
                 return map;
             }
         };

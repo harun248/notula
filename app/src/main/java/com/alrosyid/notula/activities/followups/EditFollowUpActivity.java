@@ -51,7 +51,7 @@ public class EditFollowUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_follow_up);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.edit_attendances
+        getSupportActionBar().setTitle(R.string.edit_follow_up
         );
         init();
         txtDuedate = findViewById(R.id.tieDueDate);

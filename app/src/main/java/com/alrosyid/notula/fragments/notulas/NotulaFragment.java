@@ -121,40 +121,15 @@ public class NotulaFragment extends Fragment {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
                     JSONArray array = new JSONArray(object.getString("notulas"));
-//                    if(array.length() >0) {
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject notulaObject = array.getJSONObject(i);
                             Notula notula = new Notula();
                             notula.setId(notulaObject.getInt("id"));
-//                            notula.setMeetings_title(notulaObject.getString("meetings_title"));
                             notula.setTitle(notulaObject.getString("title"));
                             notula.setSummary(notulaObject.getString("summary"));
 
-                            //covert string to date
-//                            notula.setDate(notulaObject.getString("date"));
-//                        String source = notulaObject.getString("date");
-//                        String[] sourceSplit= source.split("-");
-//                        int anno= Integer.parseInt(sourceSplit[0]);
-//                        int mese= Integer.parseInt(sourceSplit[1]);
-//                        int giorno= Integer.parseInt(sourceSplit[2]);
-//                        GregorianCalendar calendar = new GregorianCalendar();
-//                        calendar.set(anno,mese-1,giorno);
-//                        Date data1= calendar.getTime();
-//                        SimpleDateFormat myFormat = new SimpleDateFormat("dd MMMM yyyy");
-//
-//                        String   dayFormatted= myFormat.format(data1);
-//                        notula.setDate(dayFormatted);
-
-
-
                             arrayList.add(notula);
                         }
-//
-//                    }else{
-//                        recyclerView.setVisibility(View.GONE);
-//                        dataEmpty.setVisibility(View.VISIBLE);
-//                    }
-
 
                     notulasAdapter = new NotulasAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(notulasAdapter);

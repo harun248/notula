@@ -95,6 +95,11 @@
     <string name="note">Note</string>
     <string name="add_note">Add Notes</string>
     <string name="detail_note">Detail Note</string>
+    <string name="add_follow_up">Add Follow Up</string>
+    <string name="detail_follow_up">Detail Follow Up</string>
+    <string name="edit_follow_up">Edit Follow Up</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="add_point">Add Point</string>
 
 
     <string-array name="meetings_status">

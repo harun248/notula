@@ -42,7 +42,7 @@ public class DetailFollowUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_follow_up);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.follow_up_detail
+        getSupportActionBar().setTitle(R.string.detail_follow_up
         );
         init();
 

@@ -1,9 +1,9 @@
 package com.alrosyid.notula.api;
 
 public class Constant {
-//    public static final String URL = "https://app.jeevva.my.id/";
+    public static final String URL = "https://app.jeevva.my.id/";
 //    public static final String URL = "http://10.0.2.2:81/";
-    public static final String URL = "http://192.168.100.4:81/";
+//    public static final String URL = "http://192.168.100.4:81/";
 //public static final String URL = "http://192.168.100.116:81/";
 //    public static final String URL = "http://192.168.64.133:81/";
 //    public static final String URL = "http://10.100.141.228:81/";

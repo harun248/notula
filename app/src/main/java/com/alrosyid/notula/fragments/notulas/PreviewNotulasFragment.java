@@ -67,7 +67,7 @@ public class PreviewNotulasFragment extends Fragment {
 
         // loading the URL
         Integer id_notula = getActivity().getIntent().getIntExtra("notulasId",0);
-        webView.loadUrl(Constant.URL +"notula/"+(id_notula));
+        webView.loadUrl(Constant.URL +"notulas/"+(id_notula));
 
         // setting clickListener for Save Pdf Button
         savePdfBtn.setOnClickListener(new View.OnClickListener() {

@@ -40,7 +40,7 @@ public class AddPointsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_points);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.add_attendances);
+        getSupportActionBar().setTitle(R.string.add_point);
 
         init();
     }

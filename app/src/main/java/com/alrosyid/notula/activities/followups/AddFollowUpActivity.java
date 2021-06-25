@@ -48,7 +48,7 @@ public class AddFollowUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_follow_up);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.add_attendances);
+        getSupportActionBar().setTitle(R.string.add_follow_up);
 
         init();
 

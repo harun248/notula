@@ -41,7 +41,7 @@ public class EditPointsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_points);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.edit_attendances
+        getSupportActionBar().setTitle("Edit Point"
         );
         init();
     }

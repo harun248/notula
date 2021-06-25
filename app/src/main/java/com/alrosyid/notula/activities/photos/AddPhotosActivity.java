@@ -55,7 +55,7 @@ public class AddPhotosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photos);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Add Notula");
+        getSupportActionBar().setTitle(R.string.add_photo);
         init();
     }
 

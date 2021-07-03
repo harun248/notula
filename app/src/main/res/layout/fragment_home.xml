@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:drawableRight="@drawable/ic_baseline_add_24"
-                android:text="@string/meetings"
+                android:text="Meeting"
                 app:layout_constraintLeft_toLeftOf="@+id/left_guideline"
                 app:layout_constraintRight_toRightOf="@+id/center_guideline"
                 tools:ignore="MissingConstraints" />

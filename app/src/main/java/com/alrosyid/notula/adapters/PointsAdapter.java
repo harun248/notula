@@ -44,6 +44,7 @@ import java.util.Map;
 
 public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.PointsHolder> {
 
+
     private Context context;
     private ArrayList<Points> list;
     private ArrayList<Points> listAll;
@@ -196,6 +197,7 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.PointsHold
     public int getItemCount() {
         return list.size();
     }
+
 
     class PointsHolder extends RecyclerView.ViewHolder {
         private TextView txtNumber, txtPoints;

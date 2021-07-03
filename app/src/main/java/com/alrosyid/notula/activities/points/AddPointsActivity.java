@@ -3,15 +3,19 @@ package com.alrosyid.notula.activities.points;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alrosyid.notula.R;
+import com.alrosyid.notula.adapters.PointsAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.points.PointFragment;
+import com.alrosyid.notula.models.Meetings;
 import com.alrosyid.notula.models.Points;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,7 +28,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddPointsActivity extends AppCompatActivity {
@@ -32,8 +40,10 @@ public class AddPointsActivity extends AppCompatActivity {
     private TextInputLayout lytPoints;
     private TextInputEditText txtPoints;
     private ProgressDialog dialog;
+    public static ArrayList<Points> arrayList;
     private int notulasId = 0;
     private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +92,9 @@ public class AddPointsActivity extends AppCompatActivity {
     private void create() {
         dialog.setMessage(getString(R.string.save));
         dialog.show();
+        arrayList = new ArrayList<>();
+        Point strArray = new Point();
+        List<Point> strList = Arrays.asList(strArray);
         String pointsText = txtPoints.getText().toString();
         Integer id_notulas = getIntent().getIntExtra("notulasId", 0);
         StringRequest request = new StringRequest(Request.Method.POST, Constant.CREATE_POINTS, response -> {
@@ -95,17 +108,31 @@ public class AddPointsActivity extends AppCompatActivity {
                     Points points = new Points();
                     points.setId(pointsObject.getInt("id"));
                     points.setPoints(pointsObject.getString("points"));
-                    PointFragment.arrayList.add(0, points);
+//                    PointFragment.arrayList.addAll(0, (Collection<? extends Points>) pointsObject);
+//                    PointFragment.arrayList.clear();
+                    PointFragment.arrayList.add(0,points);
+
                     PointFragment.recyclerView.getAdapter().notifyItemInserted(0);
+//
                     PointFragment.recyclerView.getAdapter().notifyDataSetChanged();
 
                     Toast.makeText(this, R.string.added_successfully, Toast.LENGTH_SHORT).show();
+//                    strList.addAll(0, (Collection) pointsObject);
+
+
+
                     finish();
 
 
+
                 }
+
+
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
+
             }
             dialog.dismiss();
 

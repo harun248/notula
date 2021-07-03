@@ -39,12 +39,13 @@ import java.util.Map;
 public class AddNotulasHomeActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
     private Button btnSave;
-    private TextInputLayout lytTitle, lytSummary;
-    private TextInputEditText txtTitle, txtSummary;
+    private TextInputLayout lytTitle, lytSummary, lytId;
+    private TextInputEditText txtTitle, txtSummary,txtItemId;
     private ProgressDialog dialog;
     private int meetingsId = 0;
     private SharedPreferences sharedPreferences;
-    private TextView txtItemTitle, txtItemId, txtItemdNull;
+    private TextView txtItemTitle, txtItemdNull;
+
 
 
     Spinner spinner;
@@ -66,61 +67,17 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements Spinner
 
         spinner = (Spinner) findViewById(R.id.spinner);
         txtItemTitle = (TextView) findViewById(R.id.tvTitle);
-        txtItemId = (TextView) findViewById(R.id.tvId);
+        txtItemId = (TextInputEditText) findViewById(R.id.tvId);
 
 
         meeting_list = new ArrayList<String>();
 
-//        Adding an Item Selected Listener to our Spinner
-//        As we have implemented the class Spinner.OnItemSelectedListener to this class iteself we are passing this to setOnItemSelectedListener
-//        spinner.setOnItemSelectedListener(AddNotulasOnlyActivity.this);
-//        getData();
-//
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, meeting_list);
-//        spinner.setAdapter(adapter);
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray array = response.getJSONArray("meetings");
-//                    for(int i=0;i<array.length();i++){
-//                        JSONObject result = array.getJSONObject(i);
-//
-//                        meeting_list.add(result.getString("title"));
-////                        +" "+ result.getString("id")
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(AddNotulasOnlyActivity.this);
-//        requestQueue.add(request);
 
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                // TODO Auto-generated method stub
-//                String spinner = parent.getItemAtPosition(position).toString();
-//                count = position; //this would give you the id of the selected item
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
         spinner.setOnItemSelectedListener(this);
 
 
         init();
+
     }
 
     private void init() {
@@ -136,12 +93,15 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements Spinner
         txtTitle = findViewById(R.id.tieTitle);
         lytSummary = findViewById(R.id.tilSummary);
         txtSummary = findViewById(R.id.tieSummary);
+        lytId = findViewById(R.id.tilId);
+        txtItemId = findViewById(R.id.tvId);
         meetingsId = getIntent().getIntExtra("meetingsId", 0);
 
         btnSave.setOnClickListener(v -> {
             //validate fields first
             if (validate()) {
                 create();
+//                NotulaFragment.recyclerView.getAdapter().notifyDataSetChanged();
             }
         });
         getData();
@@ -271,6 +231,11 @@ public class AddNotulasHomeActivity extends AppCompatActivity implements Spinner
         if (txtTitle.getText().toString().isEmpty()) {
             lytTitle.setErrorEnabled(true);
             lytTitle.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtItemId.getText().toString().isEmpty()) {
+            lytId.setErrorEnabled(true);
+            lytId.setError(getString(R.string.required_meeting));
             return false;
         }
         if (txtSummary.getText().toString().isEmpty()) {

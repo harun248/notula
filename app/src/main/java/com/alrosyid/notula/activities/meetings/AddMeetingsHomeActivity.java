@@ -225,7 +225,6 @@ public class AddMeetingsHomeActivity extends AppCompatActivity  {
 
                     HomeFragment.arrayList.add(0, meetings);
                     HomeFragment.recyclerView.getAdapter().notifyItemInserted(1);
-
                     HomeFragment.recyclerView.getAdapter().notifyDataSetChanged();
 
                     Intent restart = new Intent(AddMeetingsHomeActivity.this, MainActivity.class);

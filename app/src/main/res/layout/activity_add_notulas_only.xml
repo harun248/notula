@@ -22,30 +22,26 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="6dp">
 
-            <View
+x`            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilId"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/border" />
-
-            <TextView
-                android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
-                android:background="@color/grey"
-                android:gravity="center"
-                android:text="Meetings"
-                android:textSize="14sp" />
-            <!--            <TextView-->
-            <!--                android:id="@+id/string_null"-->
-            <!--                android:layout_marginTop="10dp"-->
+                android:hint="Meetings"
+                app:placeholderText="No Meetings"
+                app:expandedHintEnabled="false"
+                app:boxStrokeColor="@color/colorAccent">
 
-            <!--                android:layout_marginLeft="10dp"-->
-            <!--                android:hint="test"-->
-            <!--                android:gravity="center_vertical"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="55dp"/>-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tvId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="No Meetings"
+                    android:textColor="@color/colorTrans" />
+                <!--                -->
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spinner"
@@ -53,9 +49,34 @@
                 android:layout_height="55dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="10dp" />
+            <!--            <View-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="55dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:background="@drawable/border" />-->
+
+            <!--            <TextView-->
+            <!--                android:layout_width="55dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginLeft="10dp"-->
+            <!--                android:layout_marginTop="3dp"-->
+            <!--                android:background="@color/grey"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="Meetings"-->
+            <!--                android:textSize="14sp" />-->
+            <!--            &lt;!&ndash;            <TextView&ndash;&gt;-->
+            <!--            &lt;!&ndash;                android:id="@+id/string_null"&ndash;&gt;-->
+            <!--            &lt;!&ndash;                android:layout_marginTop="10dp"&ndash;&gt;-->
+
+            <!--            &lt;!&ndash;                android:layout_marginLeft="10dp"&ndash;&gt;-->
+            <!--            &lt;!&ndash;                android:hint="test"&ndash;&gt;-->
+            <!--            &lt;!&ndash;                android:gravity="center_vertical"&ndash;&gt;-->
+            <!--            &lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+            <!--            &lt;!&ndash;                android:layout_height="55dp"/>&ndash;&gt;-->
 
 
         </RelativeLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilTitle"
@@ -85,7 +106,7 @@
             android:id="@+id/tilSummary"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             app:boxStrokeColor="@color/colorAccent"
             app:counterEnabled="true"
@@ -116,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_below="@+id/tilMeetingsTitle"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/round"
             android:text="@string/save"
@@ -126,12 +147,12 @@
             tools:ignore="MissingConstraints" />
 
 
-        <TextView
-            android:id="@+id/tvId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="tes"
-            android:textColor="@color/grey" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvId"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="tes"-->
+        <!--            android:textColor="@color/grey" />-->
 
     </LinearLayout>
 

@@ -45,12 +45,12 @@ import java.util.Map;
 public class AddNotulasOnlyActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
     private Button btnSave;
-    private TextInputLayout lytTitle, lytSummary;
-    private TextInputEditText txtTitle, txtSummary;
+    private TextInputLayout lytTitle, lytSummary, lytId;
+    private TextInputEditText txtTitle, txtSummary,txtItemId;
     private ProgressDialog dialog;
     private int meetingsId = 0;
     private SharedPreferences sharedPreferences;
-    private TextView txtItemTitle, txtItemId, txtItemdNull;
+    private TextView txtItemTitle, txtItemdNull;
 
 
     Spinner spinner;
@@ -72,7 +72,7 @@ public class AddNotulasOnlyActivity extends AppCompatActivity implements Spinner
 
         spinner = (Spinner) findViewById(R.id.spinner);
         txtItemTitle = (TextView) findViewById(R.id.tvTitle);
-        txtItemId = (TextView) findViewById(R.id.tvId);
+        txtItemId = (TextInputEditText) findViewById(R.id.tvId);
 
 
         meeting_list = new ArrayList<String>();
@@ -97,6 +97,8 @@ public class AddNotulasOnlyActivity extends AppCompatActivity implements Spinner
         txtTitle = findViewById(R.id.tieTitle);
         lytSummary = findViewById(R.id.tilSummary);
         txtSummary = findViewById(R.id.tieSummary);
+        lytId = findViewById(R.id.tilId);
+        txtItemId = findViewById(R.id.tvId);
         meetingsId = getIntent().getIntExtra("meetingsId", 0);
 
         btnSave.setOnClickListener(v -> {
@@ -233,6 +235,11 @@ public class AddNotulasOnlyActivity extends AppCompatActivity implements Spinner
         if (txtTitle.getText().toString().isEmpty()) {
             lytTitle.setErrorEnabled(true);
             lytTitle.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtItemId.getText().toString().isEmpty()) {
+            lytId.setErrorEnabled(true);
+            lytId.setError(getString(R.string.required_meeting));
             return false;
         }
         if (txtSummary.getText().toString().isEmpty()) {

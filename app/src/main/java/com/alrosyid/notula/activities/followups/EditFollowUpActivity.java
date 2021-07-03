@@ -98,6 +98,7 @@ public class EditFollowUpActivity extends AppCompatActivity {
         txtDuedate = findViewById(R.id.tieDueDate);
         txtDetail = findViewById(R.id.tieDetail);
         notulasId = getIntent().getIntExtra("notulasId", 0);
+        position = getIntent().getIntExtra("position", 0);
         followUpId = getIntent().getIntExtra("followUpId", 0);
 
         btnSave.setOnClickListener(v -> {

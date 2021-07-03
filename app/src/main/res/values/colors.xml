@@ -26,6 +26,7 @@
 <color name="colorAccent">#FFB953</color>
 <color name="colorAccent2">#F6C276</color>
 <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTrans">#00000000</color>
 <color name="colorBlack">#000000</color>
 <color name="colorGrey">#666666</color>
 <color name="colorLightGrey">#999999</color>

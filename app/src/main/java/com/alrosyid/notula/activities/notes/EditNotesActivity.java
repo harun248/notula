@@ -61,6 +61,7 @@ public class EditNotesActivity extends AppCompatActivity {
         txtNote = findViewById(R.id.tieNote);
         btnSave = findViewById(R.id.btnSave);
         noteId = getIntent().getIntExtra("noteId", 0);
+        position = getIntent().getIntExtra("position", 0);
 
         getDetailNotes();
 

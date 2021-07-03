@@ -100,6 +100,8 @@
     <string name="edit_follow_up">Edit Follow Up</string>
     <string name="add_photo">Add Photo</string>
     <string name="add_point">Add Point</string>
+    <string name="edit_point">Edit Point</string>
+    <string name="required_meeting">Required. Please create meeting before create a notula</string>
 
 
     <string-array name="meetings_status">

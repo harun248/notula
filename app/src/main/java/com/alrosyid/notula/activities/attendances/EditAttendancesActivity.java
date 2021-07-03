@@ -3,6 +3,7 @@ package com.alrosyid.notula.activities.attendances;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,6 +17,7 @@ import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.MainActivity;
 import com.alrosyid.notula.activities.accounts.EditAccountsActivity;
 import com.alrosyid.notula.activities.meetings.DetailMeetingsActivity;
+import com.alrosyid.notula.adapters.AttendancesAdapter;
 import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
 import com.alrosyid.notula.fragments.meetings.MeetingsFragment;
@@ -110,6 +112,7 @@ public class EditAttendancesActivity extends AppCompatActivity {
 
 
                     }
+
                 }
 
 

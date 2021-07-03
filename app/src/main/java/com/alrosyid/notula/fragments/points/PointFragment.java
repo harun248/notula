@@ -26,6 +26,7 @@ import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.points.AddPointsActivity;
 import com.alrosyid.notula.adapters.PointsAdapter;
 import com.alrosyid.notula.api.Constant;
+import com.alrosyid.notula.models.Meetings;
 import com.alrosyid.notula.models.Points;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,7 +131,12 @@ public class PointFragment extends Fragment {
                         points.setPoints(pointsObject.getString("points"));
 
                         arrayList.add(points);
+
+
                     }
+
+
+
 //                    }else{
 //                        recyclerView.setVisibility(View.GONE);
 //                        dataEmpty.setVisibility(View.VISIBLE);
@@ -138,7 +145,9 @@ public class PointFragment extends Fragment {
 
                     pointsAdapter = new PointsAdapter(getContext(), arrayList);
                     recyclerView.setAdapter(pointsAdapter);
+
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

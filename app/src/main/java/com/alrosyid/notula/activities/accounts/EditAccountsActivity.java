@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +18,13 @@ import com.alrosyid.notula.api.Constant;
 import com.alrosyid.notula.fragments.attendances.AttendancesListFragments;
 import com.alrosyid.notula.models.Attendances;
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,8 +39,8 @@ import java.util.Map;
 
 public class EditAccountsActivity extends AppCompatActivity {
     private Button btnSave;
-    private TextInputLayout lytName, lytEmail;
-    private TextInputEditText txtName, txtEmail;
+    private TextInputLayout lytName, lytEmail,lytAddressOrg, lytOrg;
+    private TextView txtName, txtEmail, txtOrg, txtAddressOrg;
     private ProgressDialog dialog;
     private SharedPreferences sharedPreferences;
 
@@ -54,8 +60,12 @@ public class EditAccountsActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         lytName = findViewById(R.id.tilName);
         lytEmail = findViewById(R.id.tilEmail);
+        lytOrg = findViewById(R.id.tilOrg);
+        lytAddressOrg = findViewById(R.id.tilAddressOrg);
         txtName = findViewById(R.id.tieName);
         txtEmail = findViewById(R.id.tieEmail);
+        txtOrg= findViewById(R.id.tieOrg);
+        txtAddressOrg = findViewById(R.id.tieAddressOrg);
         btnSave.setOnClickListener(v -> {
             if (validate()) {
                 update();
@@ -79,7 +89,21 @@ public class EditAccountsActivity extends AppCompatActivity {
             lytEmail.setError(getString(R.string.required));
             return false;
         }
-
+        if (txtOrg.getText().toString().isEmpty()) {
+            lytOrg.setErrorEnabled(true);
+            lytOrg.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtAddressOrg.getText().toString().isEmpty()) {
+            lytAddressOrg.setErrorEnabled(true);
+            lytAddressOrg.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtAddressOrg.getText().toString().length() > 200) {
+            lytAddressOrg.setErrorEnabled(true);
+            lytAddressOrg.setError(getString(R.string.maximum_character));
+            return false;
+        }
 
         return true;
     }
@@ -94,7 +118,8 @@ public class EditAccountsActivity extends AppCompatActivity {
                     JSONObject user = object.getJSONObject("user");
                     txtName.setText(user.getString("name"));
                     txtEmail.setText(user.getString("email"));
-
+                    txtOrg.setText(user.getString("name_organization"));
+                    txtAddressOrg.setText(user.getString("address_organization"));
                 }
 
 
@@ -129,6 +154,8 @@ public class EditAccountsActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", txtName.getText().toString().trim());
                     editor.putString("email", txtEmail.getText().toString().trim());
+                    editor.putString("name_organization", txtOrg.getText().toString().trim());
+                    editor.putString("address_organization", txtAddressOrg.getText().toString().trim());
 
                     editor.apply();
                     Intent restart = new Intent(EditAccountsActivity.this, MainActivity.class);
@@ -142,7 +169,20 @@ public class EditAccountsActivity extends AppCompatActivity {
             }
 
         }, error -> {
-            error.printStackTrace();
+            if (error instanceof NetworkError) {
+            } else if (error instanceof ServerError) {
+                dialog.dismiss();
+                lytEmail.setErrorEnabled(true);
+                lytEmail.setError(getString(R.string.owned_by_someone));
+
+            } else if (error instanceof AuthFailureError) {
+            } else if (error instanceof ParseError) {
+            } else if (error instanceof NoConnectionError) {
+            } else if (error instanceof TimeoutError) {
+                Toast.makeText(getApplication(),
+                        R.string.timeout_error,
+                        Toast.LENGTH_LONG).show();
+            }
         }) {
 
             //add token to header
@@ -160,6 +200,8 @@ public class EditAccountsActivity extends AppCompatActivity {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("name", txtName.getText().toString());
                 map.put("email", txtEmail.getText().toString());
+                map.put("name_organization", txtOrg.getText().toString());
+                map.put("address_organization", txtAddressOrg.getText().toString());
                 return map;
             }
         };

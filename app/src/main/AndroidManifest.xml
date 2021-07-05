@@ -22,9 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.notes.EditNotesActivity"></activity>
-        <activity android:name=".activities.notes.DetailNotesActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".activities.notulas.ReportActivity"></activity>
+        <activity android:name=".activities.notes.EditNotesActivity" />
+        <activity
+            android:name=".activities.notes.DetailNotesActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activities.notes.AddNotesActivity" />
         <activity android:name=".activities.photos.DetailPhotosActivity">
             <intent-filter>
@@ -37,6 +39,9 @@
         </activity>
         <activity
             android:name=".activities.meetings.DetailMeetingsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.notulas.DetailReportActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.notulas.DetailNotulaActivity"

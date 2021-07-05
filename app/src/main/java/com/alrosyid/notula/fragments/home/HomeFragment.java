@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,8 +21,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.alrosyid.notula.R;
 import com.alrosyid.notula.activities.meetings.AddMeetingsHomeActivity;
 import com.alrosyid.notula.activities.notulas.AddNotulasHomeActivity;
+import com.alrosyid.notula.activities.notulas.ReportActivity;
 import com.alrosyid.notula.adapters.HomeMeetingsAdapter;
 import com.alrosyid.notula.api.Constant;
+import com.alrosyid.notula.fragments.notulas.ReportFragment;
 import com.alrosyid.notula.models.Meetings;
 import com.alrosyid.notula.models.Notula;
 import com.android.volley.AuthFailureError;
@@ -52,7 +55,7 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private HomeMeetingsAdapter homeMeetingsAdapter;
     private SharedPreferences sharedPreferences;
-    private Button addMeetings, addNotulas;
+    private Button addMeetings, addNotulas, allReport;
     private TextView dataEmpty;
 
     public HomeFragment() {
@@ -82,6 +85,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 getMeets();
+            }
+        });
+
+        allReport = (Button) view.findViewById(R.id.allReport);
+        allReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getReportList();
+
+            }
+
+            private void getReportList() {
+
+                Intent i = new Intent(getActivity(), ReportActivity.class);
+
+                startActivity(i);
+
             }
         });
 

@@ -47,8 +47,7 @@ x`            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginLeft="2dp" />
             <!--            <View-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="55dp"-->

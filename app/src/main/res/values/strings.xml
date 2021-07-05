@@ -102,6 +102,11 @@
     <string name="add_point">Add Point</string>
     <string name="edit_point">Edit Point</string>
     <string name="required_meeting">Required. Please create meeting before create a notula</string>
+    <string name="report">Report</string>
+    <string name="detail_report">Detail Report</string>
+    <string name="organization_address">Organization Address</string>
+    <string name="your_organization">Your Organization</string>
+    <string name="owned_by_someone">Your email already ,owned by someone</string>
 
 
     <string-array name="meetings_status">

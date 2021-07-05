@@ -43,8 +43,8 @@ import java.util.Map;
 public class SignUpFragment extends Fragment {
 
     private View view;
-    private TextInputLayout layoutName, layoutEmail, layoutPassword, layoutConfirm;
-    private TextInputEditText txtName, txtEmail, txtPassword, txtConfirm;
+    private TextInputLayout layoutName, layoutEmail,layoutOrg, layoutAddressOrg, layoutPassword, layoutConfirm;
+    private TextInputEditText txtName, txtEmail,txtOrg, txttAddressOrg, txtPassword, txtConfirm;
     private TextView txtSignIn;
     private Button btnSignUp;
     private ProgressDialog dialog;
@@ -64,8 +64,12 @@ public class SignUpFragment extends Fragment {
         layoutName = view.findViewById(R.id.txtLayoutName);
         layoutPassword = view.findViewById(R.id.txtLayoutPasswordSignUp);
         layoutEmail = view.findViewById(R.id.txtLayoutEmailSignUp);
+        layoutOrg = view.findViewById(R.id.txtLayoutOrg);
+        layoutAddressOrg = view.findViewById(R.id.txtLayoutAddressOrg);
         layoutConfirm = view.findViewById(R.id.txtLayoutConfirmPassword);
         txtName = view.findViewById(R.id.txtName);
+        txtOrg = view.findViewById(R.id.txtOrg);
+        txttAddressOrg = view.findViewById(R.id.txtAddressOrg);
         txtPassword = view.findViewById(R.id.txtPasswordSignUp);
         txtConfirm = view.findViewById(R.id.txtConfirmPassword);
         txtSignIn = view.findViewById(R.id.txtSignIn);
@@ -164,6 +168,15 @@ public class SignUpFragment extends Fragment {
         });
     }
 
+//    private boolean validateEmail() {
+//        if (txtName.getText().toString().isEmpty()) {
+//            layoutName.setErrorEnabled(true);
+//            layoutName.setError(getString(R.string.required));
+//            return false;
+//        }
+//        return true;
+//    }
+
 
     private boolean validate() {
         if (txtName.getText().toString().isEmpty()) {
@@ -174,6 +187,21 @@ public class SignUpFragment extends Fragment {
         if (txtEmail.getText().toString().isEmpty()) {
             layoutEmail.setErrorEnabled(true);
             layoutEmail.setError(getString(R.string.required));
+            return false;
+        }
+        if (txtOrg.getText().toString().isEmpty()) {
+            layoutOrg.setErrorEnabled(true);
+            layoutOrg.setError(getString(R.string.required));
+            return false;
+        }
+        if (txttAddressOrg.getText().toString().isEmpty()) {
+            layoutAddressOrg.setErrorEnabled(true);
+            layoutAddressOrg.setError(getString(R.string.required));
+            return false;
+        }
+        if (txttAddressOrg.getText().toString().length() > 200) {
+            layoutAddressOrg.setErrorEnabled(true);
+            layoutAddressOrg.setError(getString(R.string.maximum_character));
             return false;
         }
         if (txtPassword.getText().toString().length() < 8) {
@@ -231,9 +259,10 @@ public class SignUpFragment extends Fragment {
         }, error -> {
             if (error instanceof NetworkError) {
             } else if (error instanceof ServerError) {
-                Toast.makeText(getContext(),
-                        R.string.oops_timeout,
-                        Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                layoutEmail.setErrorEnabled(true);
+                layoutEmail.setError(getString(R.string.owned_by_someone));
+
             } else if (error instanceof AuthFailureError) {
             } else if (error instanceof ParseError) {
             } else if (error instanceof NoConnectionError) {
@@ -260,6 +289,8 @@ public class SignUpFragment extends Fragment {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("name", txtName.getText().toString().trim());
                 map.put("email", txtEmail.getText().toString().trim());
+                map.put("name_organization", txtOrg.getText().toString().trim());
+                map.put("address_organization", txttAddressOrg.getText().toString().trim());
                 map.put("password", txtPassword.getText().toString());
                 return map;
             }

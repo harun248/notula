@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class AccountFragment extends Fragment {
     private View view;
-    private TextView txtName, txtEmail;
+    private TextView txtName, txtEmail, txtOrg, txtAddressOrg;
     private SharedPreferences sharedPreferences;
     private Button btnEdit, btnChangePass;
 
@@ -65,6 +65,8 @@ public class AccountFragment extends Fragment {
         btnChangePass = view.findViewById(R.id.btnChangePassword);
         txtName = view.findViewById(R.id.tieName);
         txtEmail = view.findViewById(R.id.tieEmail);
+        txtOrg= view.findViewById(R.id.tieOrg);
+        txtAddressOrg = view.findViewById(R.id.tieAddressOrg);
         setHasOptionsMenu(true);
 
         getUser();
@@ -113,6 +115,8 @@ public class AccountFragment extends Fragment {
 
                     txtName.setText(user.getString("name"));
                     txtEmail.setText(user.getString("email"));
+                    txtOrg.setText(user.getString("name_organization"));
+                    txtAddressOrg.setText(user.getString("address_organization"));
 
                 }
 

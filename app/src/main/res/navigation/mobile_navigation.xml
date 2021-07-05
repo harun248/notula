@@ -20,15 +20,21 @@
         android:name="com.alrosyid.notula.fragments.notulas.NotulaFragment"
         android:label="@string/notula"
         tools:layout="@layout/fragment_notula" />
+    <fragment
+        android:id="@+id/nav_report"
+        android:name="com.alrosyid.notula.fragments.notulas.ReportFragment"
+        android:label="@string/report"
+        tools:layout="@layout/fragment_notula" />
 
     <fragment
         android:id="@+id/nav_notes"
         android:name="com.alrosyid.notula.fragments.notes.NotesFragments"
         android:label="@string/notes"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_report" />
     <fragment
         android:id="@+id/nav_account"
         android:name="com.alrosyid.notula.fragments.account.AccountFragment"
         android:label="@string/account"
         tools:layout="@layout/fragment_account" />
+
 </navigation>

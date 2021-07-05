@@ -98,7 +98,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical">
-
+                            <Button
+                                android:id="@+id/allReport"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:text="All Report"
+                                />
                             <CalendarView
                                 android:id="@+id/simpleCalendarView"
                                 android:layout_width="match_parent"

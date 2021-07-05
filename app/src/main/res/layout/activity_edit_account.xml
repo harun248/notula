@@ -62,13 +62,57 @@
                 android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilOrg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilEmail"
+            android:layout_marginBottom="6dp"
+            app:boxStrokeColor="@color/colorAccent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieOrg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/your_organization"
+                android:inputType="text"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAddressOrg"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilOrg"
+            android:layout_marginBottom="20dp"
+            app:boxStrokeColor="@color/colorAccent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieAddressOrg"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:overScrollMode="always"
+                android:padding="10dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:textColor="@color/colorBlack"
+                android:hint="@string/organization_address"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:layout_below="@+id/tilEmail"
+            android:layout_below="@+id/tilAddressOrg"
             android:layout_marginBottom="20dp"
             android:background="@drawable/round"
             android:text="@string/save"
